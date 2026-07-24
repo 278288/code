@@ -32,6 +32,9 @@ let router = createRouter({
                 { path: 'dicvalue', component : () => import('../view/DicValueView.vue') },
                 { path: 'dicvalue/add', component : () => import('../view/DicValueRecordView.vue') },
                 { path: 'dicvalue/edit/:id', component : () => import('../view/DicValueRecordView.vue') },
+                { path: 'system', component : () => import('../view/SystemView.vue') },
+                { path: 'system/add', component : () => import('../view/SystemRecordView.vue') },
+                { path: 'system/edit/:id', component : () => import('../view/SystemRecordView.vue') },
             ]
         },
         { path: '/hello', component : () => import('../components/HelloWorld.vue') }

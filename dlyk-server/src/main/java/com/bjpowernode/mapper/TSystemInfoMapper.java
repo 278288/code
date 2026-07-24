@@ -1,6 +1,7 @@
 package com.bjpowernode.mapper;
 
 import com.bjpowernode.model.TSystemInfo;
+import java.util.List;
 
 public interface TSystemInfoMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +15,6 @@ public interface TSystemInfoMapper {
     int updateByPrimaryKeySelective(TSystemInfo record);
 
     int updateByPrimaryKey(TSystemInfo record);
+
+    List<TSystemInfo> selectAll();
 }

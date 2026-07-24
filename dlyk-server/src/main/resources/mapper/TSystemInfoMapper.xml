@@ -23,6 +23,10 @@
     <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
     <result column="edit_by" jdbcType="INTEGER" property="editBy" />
   </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from t_system_info order by id
+  </select>
+
   <sql id="Base_Column_List">
     id, system_code, `name`, site, logo, title, description, keywords, shortcuticon, 
     tel, weixin, email, address, version, closeMsg, isopen, create_time, create_by, edit_time, 
