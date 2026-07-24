@@ -3,13 +3,8 @@ import { createRouter, createWebHistory } from "vue-router";
 let router = createRouter({
     history: createWebHistory(),
     routes: [
-        {
-            path: '/',
-            component : () => import('../view/LoginView.vue'),
-        },
-        {
-            path: '/dashboard',
-            component : () => import('../view/DashboardView.vue'),
+        { path: '/', component : () => import('../view/LoginView.vue') },
+        { path: '/dashboard', component : () => import('../view/DashboardView.vue'),
             children : [
                 { path: '', component : () => import('../view/StatisticView.vue') },
                 { path: 'user', component : () => import('../view/UserView.vue') },
@@ -31,12 +26,15 @@ let router = createRouter({
                 { path: 'product', component : () => import('../view/ProductView.vue') },
                 { path: 'product/add', component : () => import('../view/ProductRecordView.vue') },
                 { path: 'product/edit/:id', component : () => import('../view/ProductRecordView.vue') },
+                { path: 'dictype', component : () => import('../view/DicTypeView.vue') },
+                { path: 'dictype/add', component : () => import('../view/DicTypeRecordView.vue') },
+                { path: 'dictype/edit/:id', component : () => import('../view/DicTypeRecordView.vue') },
+                { path: 'dicvalue', component : () => import('../view/DicValueView.vue') },
+                { path: 'dicvalue/add', component : () => import('../view/DicValueRecordView.vue') },
+                { path: 'dicvalue/edit/:id', component : () => import('../view/DicValueRecordView.vue') },
             ]
         },
-        {
-            path: '/hello',
-            component : () => import('../components/HelloWorld.vue'),
-        }
+        { path: '/hello', component : () => import('../components/HelloWorld.vue') }
     ]
 })
 export default router;
