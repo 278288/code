@@ -23,4 +23,8 @@ public interface UserService extends UserDetailsService {
     int batchDelUserIds(List<String> idList);
 
     List<TUser> getOwnerList();
+
+    int updateProfile(UserQuery userQuery);
+
+    boolean changePassword(Integer userId, String oldPwd, String newPwd);
 }

@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     private TPermissionMapper tPermissionMapper;
 
     /**
-     * 登录查询
+     * 鐧诲綍鏌ヨ
      *
      * @param username
      * @return
@@ -59,40 +59,40 @@ public class UserServiceImpl implements UserService {
 
         TUser tUser = tUserMapper.selectByLoginAct(username);
         if (tUser == null) {
-            throw new UsernameNotFoundException("登录账号不存在");
+            throw new UsernameNotFoundException("鐧诲綍璐﹀彿涓嶅瓨鍦?);
         }
 
-        //查询一下当前用户的角色
+        //鏌ヨ涓€涓嬪綋鍓嶇敤鎴风殑瑙掕壊
         List<TRole> tRoleList = tRoleMapper.selectByUserId(tUser.getId());
-        //字符串的角色列表
+        //瀛楃涓茬殑瑙掕壊鍒楄〃
         List<String> stringRoleList = new ArrayList<>();
         tRoleList.forEach(tRole -> {
             stringRoleList.add(tRole.getRole());
         });
-        tUser.setRoleList(stringRoleList); //设置用户的角色
+        tUser.setRoleList(stringRoleList); //璁剧疆鐢ㄦ埛鐨勮鑹?
 
-        //查询一下该用户有哪些菜单权限
+        //鏌ヨ涓€涓嬭鐢ㄦ埛鏈夊摢浜涜彍鍗曟潈闄?
         List<TPermission> menuPermissionList = tPermissionMapper.selectMenuPermissionByUserId(tUser.getId());
         tUser.setMenuPermissionList(menuPermissionList);
 
-        //查询一下该用户有哪些功能权限
+        //鏌ヨ涓€涓嬭鐢ㄦ埛鏈夊摢浜涘姛鑳芥潈闄?
         List<TPermission> buttonPermissionList = tPermissionMapper.selectButtonPermissionByUserId(tUser.getId());
         List<String> stringPermissionList = new ArrayList<>();
         buttonPermissionList.forEach(tPermission -> {
-            stringPermissionList.add(tPermission.getCode());//权限标识符
+            stringPermissionList.add(tPermission.getCode());//鏉冮檺鏍囪瘑绗?
         });
-        tUser.setPermissionList(stringPermissionList);//设置用户的权限标识符
+        tUser.setPermissionList(stringPermissionList);//璁剧疆鐢ㄦ埛鐨勬潈闄愭爣璇嗙
 
         return tUser;
     }
 
     @Override
     public PageInfo<TUser> getUserByPage(Integer current) {
-        // 1.设置PageHelper
+        // 1.璁剧疆PageHelper
         PageHelper.startPage(current, Constants.PAGE_SIZE);
-        // 2.查询
+        // 2.鏌ヨ
         List<TUser> list = tUserMapper.selectUserByPage(BaseQuery.builder().build());
-        // 3.封装分页数据到PageInfo
+        // 3.灏佽鍒嗛〉鏁版嵁鍒癙ageInfo
         PageInfo<TUser> info = new PageInfo<>(list);
         return info;
     }
@@ -108,15 +108,15 @@ public class UserServiceImpl implements UserService {
 
         TUser tUser = new TUser();
 
-        //把UserQuery对象里面的属性数据复制到TUser对象里面去(复制要求：两个对象的属性名相同，属性类型要相同，这样才能复制)
+        //鎶奤serQuery瀵硅薄閲岄潰鐨勫睘鎬ф暟鎹鍒跺埌TUser瀵硅薄閲岄潰鍘?澶嶅埗瑕佹眰锛氫袱涓璞＄殑灞炴€у悕鐩稿悓锛屽睘鎬х被鍨嬭鐩稿悓锛岃繖鏍锋墠鑳藉鍒?
         BeanUtils.copyProperties(userQuery, tUser);
 
-        tUser.setLoginPwd(passwordEncoder.encode(userQuery.getLoginPwd())); //密码加密
-        tUser.setCreateTime(new Date()); //创建时间
+        tUser.setLoginPwd(passwordEncoder.encode(userQuery.getLoginPwd())); //瀵嗙爜鍔犲瘑
+        tUser.setCreateTime(new Date()); //鍒涘缓鏃堕棿
 
-        //登录人的id
+        //鐧诲綍浜虹殑id
         Integer loginUserId = JWTUtils.parseUserFromJWT(userQuery.getToken()).getId();
-        tUser.setCreateBy(loginUserId); //创建人
+        tUser.setCreateBy(loginUserId); //鍒涘缓浜?
 
         return tUserMapper.insertSelective(tUser);
     }
@@ -126,18 +126,18 @@ public class UserServiceImpl implements UserService {
     public int updateUser(UserQuery userQuery) {
         TUser tUser = new TUser();
 
-        //把UserQuery对象里面的属性数据复制到TUser对象里面去(复制要求：两个对象的属性名相同，属性类型要相同，这样才能复制)
+        //鎶奤serQuery瀵硅薄閲岄潰鐨勫睘鎬ф暟鎹鍒跺埌TUser瀵硅薄閲岄潰鍘?澶嶅埗瑕佹眰锛氫袱涓璞＄殑灞炴€у悕鐩稿悓锛屽睘鎬х被鍨嬭鐩稿悓锛岃繖鏍锋墠鑳藉鍒?
         BeanUtils.copyProperties(userQuery, tUser);
 
         if (StringUtils.hasText(userQuery.getLoginPwd())) {
-            tUser.setLoginPwd(passwordEncoder.encode(userQuery.getLoginPwd())); //密码加密
+            tUser.setLoginPwd(passwordEncoder.encode(userQuery.getLoginPwd())); //瀵嗙爜鍔犲瘑
         }
 
-        tUser.setEditTime(new Date()); //编辑时间
+        tUser.setEditTime(new Date()); //缂栬緫鏃堕棿
 
-        //登录人的id
+        //鐧诲綍浜虹殑id
         Integer loginUserId = JWTUtils.parseUserFromJWT(userQuery.getToken()).getId();
-        tUser.setEditBy(loginUserId); //创建人
+        tUser.setEditBy(loginUserId); //鍒涘缓浜?
 
         return tUserMapper.updateByPrimaryKeySelective(tUser);
     }
@@ -156,20 +156,44 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<TUser> getOwnerList() {
-        //1、从redis查询
-        //2、redis查不到，就从数据库查询，并且把数据放入redis（5分钟过期）
+        //1銆佷粠redis鏌ヨ
+        //2銆乺edis鏌ヤ笉鍒帮紝灏变粠鏁版嵁搴撴煡璇紝骞朵笖鎶婃暟鎹斁鍏edis锛?鍒嗛挓杩囨湡锛?
         return CacheUtils.getCacheData(() -> {
-            //生产，从缓存redis查询数据
+            //鐢熶骇锛屼粠缂撳瓨redis鏌ヨ鏁版嵁
             return (List<TUser>)redisManager.getValue(Constants.REDIS_OWNER_KEY);
         },
         () -> {
-            //生产，从mysql查询数据
+            //鐢熶骇锛屼粠mysql鏌ヨ鏁版嵁
             return (List<TUser>)tUserMapper.selectByOwner();
         },
         (t) -> {
-            //消费，把数据放入缓存redis
+            //娑堣垂锛屾妸鏁版嵁鏀惧叆缂撳瓨redis
             redisManager.setValue(Constants.REDIS_OWNER_KEY, t);
         }
        );
+    }
+
+    @Override
+    public int updateProfile(UserQuery userQuery) {
+        TUser tUser = new TUser();
+        tUser.setId(userQuery.getId());
+        tUser.setName(userQuery.getName());
+        tUser.setPhone(userQuery.getPhone());
+        tUser.setEmail(userQuery.getEmail());
+        tUser.setEditTime(new Date());
+        return tUserMapper.updateByPrimaryKeySelective(tUser);
+    }
+
+    @Override
+    public boolean changePassword(Integer userId, String oldPwd, String newPwd) {
+        TUser user = tUserMapper.selectByPrimaryKey(userId);
+        if (user == null || !passwordEncoder.matches(oldPwd, user.getLoginPwd())) {
+            return false;
+        }
+        TUser tUser = new TUser();
+        tUser.setId(userId);
+        tUser.setLoginPwd(passwordEncoder.encode(newPwd));
+        tUser.setEditTime(new Date());
+        return tUserMapper.updateByPrimaryKeySelective(tUser) >= 1;
     }
 }

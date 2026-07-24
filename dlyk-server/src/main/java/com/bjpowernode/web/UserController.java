@@ -21,7 +21,7 @@ public class UserController {
     private UserService userService;
 
     /**
-     * 获取登录人信息
+     * 鑾峰彇鐧诲綍浜轰俊鎭?
      *
      * @param authentication
      * @return
@@ -33,7 +33,7 @@ public class UserController {
     }
 
     /**
-     * 免登录
+     * 鍏嶇櫥褰?
      *
      * @return
      */
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     /**
-     * 用户列表分页查询
+     * 鐢ㄦ埛鍒楄〃鍒嗛〉鏌ヨ
      *
      * @param current
      * @return
@@ -51,8 +51,8 @@ public class UserController {
     @PreAuthorize(value = "hasAuthority('user:list')")
     @GetMapping(value = "/api/users")
     public R userPage(@RequestParam(value = "current", required = false) Integer current) {
-        //required = false 表示参数可以传，也可以不传；
-        //required = true 表示参数必须要传，不传会报错；
+        //required = false 琛ㄧず鍙傛暟鍙互浼狅紝涔熷彲浠ヤ笉浼狅紱
+        //required = true 琛ㄧず鍙傛暟蹇呴』瑕佷紶锛屼笉浼犱細鎶ラ敊锛?
         if (current == null) {
             current = 1;
         }
@@ -68,7 +68,7 @@ public class UserController {
     }
 
     /**
-     * 新增用户
+     * 鏂板鐢ㄦ埛
      *
      * @param userQuery
      * @return
@@ -82,7 +82,7 @@ public class UserController {
     }
 
     /**
-     * 编辑用户
+     * 缂栬緫鐢ㄦ埛
      *
      * @param userQuery
      * @return
@@ -116,5 +116,20 @@ public class UserController {
     public R owner() {
         List<TUser> ownerList = userService.getOwnerList();
         return R.OK(ownerList);
+    }
+
+    @PutMapping(value = "/api/user/profile")
+    public R updateProfile(UserQuery userQuery) {
+        int update = userService.updateProfile(userQuery);
+        return update >= 1 ? R.OK() : R.FAIL();
+    }
+
+    @PutMapping(value = "/api/user/password")
+    public R changePassword(@RequestParam("oldPwd") String oldPwd,
+                             @RequestParam("newPwd") String newPwd,
+                             Authentication authentication) {
+        TUser currentUser = (TUser) authentication.getPrincipal();
+        boolean result = userService.changePassword(currentUser.getId(), oldPwd, newPwd);
+        return result ? R.OK() : R.FAIL("原密码错误");
     }
 }
