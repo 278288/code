@@ -107,10 +107,15 @@ export default defineComponent({
       this.getData(number);
     },
 
+    //查看客户详情
+    view(id) {
+      this.$router.push("/dashboard/customer/" + id);
+    },
+
     //批量导出客户的Excel数据
     exportExcel(ids) {
       let token = getToken();
-      //1、向后端发送一个请求 （我们来实现）
+      //1、向后端发送一个请求（我们来实现）
       let iframe = document.createElement("iframe")
       if (ids) {
         iframe.src = axios.defaults.baseURL + "/api/exportExcel?Authorization="+token + "&ids="+ ids;
@@ -119,7 +124,7 @@ export default defineComponent({
       }
       iframe.style.display = "none"; //iframe隐藏，页面上不要显示出来
       document.body.appendChild(iframe);
-      //2、后端查询数据库的数据，把数据写入Excel，然后把Excel以IO流的方式输出到前端浏览器（我们来实现）
+      //2、后端查询数据库的数据，把数据写入excel，然后把Excel以IO流的方式输出到前端浏览器（我们来实现）
       //3、前端浏览器弹出一个下载框进行文件下载（浏览器本身实现的，不需要我们去实现）
     },
 

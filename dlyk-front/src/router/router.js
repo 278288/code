@@ -92,6 +92,12 @@ let router = createRouter({
                     path: 'customer',
                     //路由路径所对应的页面
                     component : () => import('../view/CustomerView.vue'),
+                },
+                {
+                    //路由路径，子路由路径不能以斜杠开头，id是动态变量
+                    path: 'customer/:id',
+                    //路由路径所对应的页面
+                    component : () => import('../view/CustomerDetailView.vue'),
                 }
 
 

@@ -2,7 +2,6 @@ package com.bjpowernode.service.impl;
 
 import com.bjpowernode.constant.Constants;
 import com.bjpowernode.manager.CustomerManager;
-import com.bjpowernode.mapper.TClueMapper;
 import com.bjpowernode.mapper.TCustomerMapper;
 import com.bjpowernode.model.TCustomer;
 import com.bjpowernode.query.CustomerQuery;
@@ -14,7 +13,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -44,8 +43,15 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public TCustomer getCustomerById(Integer id) {
+        //重用 selectCustomerByExcel，传单个id进去即可获取带所有关联对象的完整客户信息
+        List<TCustomer> list = tCustomerMapper.selectCustomerByExcel(Arrays.asList(String.valueOf(id)));
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    @Override
     public List<CustomerExcel> getCustomerByExcel(List<String> idList) {
-        List<CustomerExcel> customerExcelList = new ArrayList<>();
+        List<CustomerExcel> customerExcelList = new java.util.ArrayList<>();
 
         List<TCustomer> tCustomerList = tCustomerMapper.selectCustomerByExcel(idList);
 
