@@ -14,4 +14,6 @@ public interface TTranRemarkMapper {
     int updateByPrimaryKeySelective(TTranRemark record);
 
     int updateByPrimaryKey(TTranRemark record);
+
+    int deleteByTranId(Integer tranId);
 }

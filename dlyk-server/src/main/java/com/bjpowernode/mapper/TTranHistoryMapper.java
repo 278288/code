@@ -14,4 +14,6 @@ public interface TTranHistoryMapper {
     int updateByPrimaryKeySelective(TTranHistory record);
 
     int updateByPrimaryKey(TTranHistory record);
+
+    int deleteByTranId(Integer tranId);
 }

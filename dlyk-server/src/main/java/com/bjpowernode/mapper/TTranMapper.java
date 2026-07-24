@@ -1,8 +1,8 @@
 package com.bjpowernode.mapper;
 
 import com.bjpowernode.model.TTran;
-
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface TTranMapper {
 
@@ -25,4 +25,8 @@ public interface TTranMapper {
     int selectByTotalTranCount();
 
     int selectBySuccessTranCount();
+
+    List<TTran> selectTranPage();
+
+    TTran selectTranDetail(Integer id);
 }

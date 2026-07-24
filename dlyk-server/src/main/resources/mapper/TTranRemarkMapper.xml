@@ -26,6 +26,10 @@
     delete from t_tran_remark
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <delete id="deleteByTranId" parameterType="java.lang.Integer">
+    delete from t_tran_remark where tran_id = #{tranId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.bjpowernode.model.TTranRemark" useGeneratedKeys="true">
     insert into t_tran_remark (tran_id, note_way, note_content, 
       create_time, create_by, edit_time, 

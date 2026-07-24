@@ -23,6 +23,10 @@
     delete from t_tran_history
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <delete id="deleteByTranId" parameterType="java.lang.Integer">
+    delete from t_tran_history where tran_id = #{tranId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.bjpowernode.model.TTranHistory" useGeneratedKeys="true">
     insert into t_tran_history (tran_id, stage, money, 
       expected_date, create_time, create_by
