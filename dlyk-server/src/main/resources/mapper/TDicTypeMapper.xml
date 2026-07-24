@@ -28,7 +28,7 @@
     select
         tdt.*,
         tdv.id dicId, tdv.type_value dicName
-    from t_dic_type tdt left join t_dic_value tdv on tdt.type_code = tdv.type_code
+    from t_dic_type tdt left join t_dic_value tdv on tdt.type_code = tdv.type_code order by tdv.`order`
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
