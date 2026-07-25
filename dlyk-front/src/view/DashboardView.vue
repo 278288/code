@@ -8,7 +8,7 @@
         <el-sub-menu :index="index" v-for="(menuPermission, index) in user.menuPermissionList" :key="menuPermission.id">
           <template #title>
             <el-icon><component :is="menuPermission.icon"></component></el-icon>
-            <span> {{menuPermission.name}} </span>
+            <span>{{menuPermission.name}}</span>
           </template>
           <el-menu-item v-for="subPermission in menuPermission.subPermissionList" :key="subPermission.id" :index="subPermission.url">
             <el-icon><component :is="subPermission.icon"></component></el-icon>
@@ -17,7 +17,6 @@
         </el-sub-menu>
       </el-menu>
     </el-aside>
-
     <el-container class="rightContent">
       <el-header>
         <el-icon class="show" @click="showMenu"><Fold /></el-icon>
@@ -35,27 +34,16 @@
           </template>
         </el-dropdown>
       </el-header>
-
-      <el-main>
-        <router-view v-if="isRouterAlive" />
-      </el-main>
-
+      <el-main><router-view v-if="isRouterAlive" /></el-main>
       <el-footer>@版权所有 zzx个人项目</el-footer>
     </el-container>
   </el-container>
 
-  <!-- 我的资料弹窗 -->
   <el-dialog v-model="profileDialogVisible" title="我的资料" width="450px">
     <el-form :model="profileForm" label-width="80px">
-      <el-form-item label="姓名">
-        <el-input v-model="profileForm.name"/>
-      </el-form-item>
-      <el-form-item label="手机">
-        <el-input v-model="profileForm.phone"/>
-      </el-form-item>
-      <el-form-item label="邮箱">
-        <el-input v-model="profileForm.email"/>
-      </el-form-item>
+      <el-form-item label="姓名"><el-input v-model="profileForm.name"/></el-form-item>
+      <el-form-item label="手机"><el-input v-model="profileForm.phone"/></el-form-item>
+      <el-form-item label="邮箱"><el-input v-model="profileForm.email"/></el-form-item>
     </el-form>
     <template #footer>
       <el-button @click="profileDialogVisible = false">取消</el-button>
@@ -63,18 +51,11 @@
     </template>
   </el-dialog>
 
-  <!-- 修改密码弹窗 -->
   <el-dialog v-model="passwordDialogVisible" title="修改密码" width="400px">
     <el-form :model="passwordForm" label-width="100px">
-      <el-form-item label="原密码">
-        <el-input v-model="passwordForm.oldPwd" type="password" show-password/>
-      </el-form-item>
-      <el-form-item label="新密码">
-        <el-input v-model="passwordForm.newPwd" type="password" show-password/>
-      </el-form-item>
-      <el-form-item label="确认密码">
-        <el-input v-model="passwordForm.confirmPwd" type="password" show-password/>
-      </el-form-item>
+      <el-form-item label="原密码"><el-input v-model="passwordForm.oldPwd" type="password" show-password/></el-form-item>
+      <el-form-item label="新密码"><el-input v-model="passwordForm.newPwd" type="password" show-password/></el-form-item>
+      <el-form-item label="确认密码"><el-input v-model="passwordForm.confirmPwd" type="password" show-password/></el-form-item>
     </el-form>
     <template #footer>
       <el-button @click="passwordDialogVisible = false">取消</el-button>
@@ -171,9 +152,13 @@ export default defineComponent({
       fd.append("newPwd", this.passwordForm.newPwd);
       doPut("/api/user/password", fd).then(resp => {
         if (resp.data.code === 200) {
-          messageTip("修改成功", "success");
+          messageTip("密码已修改，请重新登录", "success");
           this.passwordDialogVisible = false;
-        } else { messageTip(resp.data.msg || "原密码错误", "error"); }
+          removeToken();
+          window.location.href = "/";
+        } else {
+          messageTip(resp.data.msg || "原密码错误", "error");
+        }
       })
     },
 

@@ -5,7 +5,6 @@ import com.bjpowernode.manager.RedisManager;
 import com.bjpowernode.mapper.TPermissionMapper;
 import com.bjpowernode.mapper.TRoleMapper;
 import com.bjpowernode.mapper.TUserMapper;
-import com.bjpowernode.model.TActivityRemark;
 import com.bjpowernode.model.TPermission;
 import com.bjpowernode.model.TRole;
 import com.bjpowernode.model.TUser;
@@ -47,52 +46,38 @@ public class UserServiceImpl implements UserService {
     @Resource
     private TPermissionMapper tPermissionMapper;
 
-    /**
-     * 鐧诲綍鏌ヨ
-     *
-     * @param username
-     * @return
-     * @throws UsernameNotFoundException
-     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         TUser tUser = tUserMapper.selectByLoginAct(username);
         if (tUser == null) {
-            throw new UsernameNotFoundException("鐧诲綍璐﹀彿涓嶅瓨鍦?);
+            throw new UsernameNotFoundException("DDDDDDDD");
         }
 
-        //鏌ヨ涓€涓嬪綋鍓嶇敤鎴风殑瑙掕壊
         List<TRole> tRoleList = tRoleMapper.selectByUserId(tUser.getId());
-        //瀛楃涓茬殑瑙掕壊鍒楄〃
         List<String> stringRoleList = new ArrayList<>();
         tRoleList.forEach(tRole -> {
             stringRoleList.add(tRole.getRole());
         });
-        tUser.setRoleList(stringRoleList); //璁剧疆鐢ㄦ埛鐨勮鑹?
+        tUser.setRoleList(stringRoleList);
 
-        //鏌ヨ涓€涓嬭鐢ㄦ埛鏈夊摢浜涜彍鍗曟潈闄?
         List<TPermission> menuPermissionList = tPermissionMapper.selectMenuPermissionByUserId(tUser.getId());
         tUser.setMenuPermissionList(menuPermissionList);
 
-        //鏌ヨ涓€涓嬭鐢ㄦ埛鏈夊摢浜涘姛鑳芥潈闄?
         List<TPermission> buttonPermissionList = tPermissionMapper.selectButtonPermissionByUserId(tUser.getId());
         List<String> stringPermissionList = new ArrayList<>();
         buttonPermissionList.forEach(tPermission -> {
-            stringPermissionList.add(tPermission.getCode());//鏉冮檺鏍囪瘑绗?
+            stringPermissionList.add(tPermission.getCode());
         });
-        tUser.setPermissionList(stringPermissionList);//璁剧疆鐢ㄦ埛鐨勬潈闄愭爣璇嗙
+        tUser.setPermissionList(stringPermissionList);
 
         return tUser;
     }
 
     @Override
     public PageInfo<TUser> getUserByPage(Integer current) {
-        // 1.璁剧疆PageHelper
         PageHelper.startPage(current, Constants.PAGE_SIZE);
-        // 2.鏌ヨ
         List<TUser> list = tUserMapper.selectUserByPage(BaseQuery.builder().build());
-        // 3.灏佽鍒嗛〉鏁版嵁鍒癙ageInfo
         PageInfo<TUser> info = new PageInfo<>(list);
         return info;
     }
@@ -105,19 +90,12 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public int saveUser(UserQuery userQuery) {
-
         TUser tUser = new TUser();
-
-        //鎶奤serQuery瀵硅薄閲岄潰鐨勫睘鎬ф暟鎹鍒跺埌TUser瀵硅薄閲岄潰鍘?澶嶅埗瑕佹眰锛氫袱涓璞＄殑灞炴€у悕鐩稿悓锛屽睘鎬х被鍨嬭鐩稿悓锛岃繖鏍锋墠鑳藉鍒?
         BeanUtils.copyProperties(userQuery, tUser);
-
-        tUser.setLoginPwd(passwordEncoder.encode(userQuery.getLoginPwd())); //瀵嗙爜鍔犲瘑
-        tUser.setCreateTime(new Date()); //鍒涘缓鏃堕棿
-
-        //鐧诲綍浜虹殑id
+        tUser.setLoginPwd(passwordEncoder.encode(userQuery.getLoginPwd()));
+        tUser.setCreateTime(new Date());
         Integer loginUserId = JWTUtils.parseUserFromJWT(userQuery.getToken()).getId();
-        tUser.setCreateBy(loginUserId); //鍒涘缓浜?
-
+        tUser.setCreateBy(loginUserId);
         return tUserMapper.insertSelective(tUser);
     }
 
@@ -125,20 +103,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateUser(UserQuery userQuery) {
         TUser tUser = new TUser();
-
-        //鎶奤serQuery瀵硅薄閲岄潰鐨勫睘鎬ф暟鎹鍒跺埌TUser瀵硅薄閲岄潰鍘?澶嶅埗瑕佹眰锛氫袱涓璞＄殑灞炴€у悕鐩稿悓锛屽睘鎬х被鍨嬭鐩稿悓锛岃繖鏍锋墠鑳藉鍒?
         BeanUtils.copyProperties(userQuery, tUser);
-
         if (StringUtils.hasText(userQuery.getLoginPwd())) {
-            tUser.setLoginPwd(passwordEncoder.encode(userQuery.getLoginPwd())); //瀵嗙爜鍔犲瘑
+            tUser.setLoginPwd(passwordEncoder.encode(userQuery.getLoginPwd()));
         }
-
-        tUser.setEditTime(new Date()); //缂栬緫鏃堕棿
-
-        //鐧诲綍浜虹殑id
+        tUser.setEditTime(new Date());
         Integer loginUserId = JWTUtils.parseUserFromJWT(userQuery.getToken()).getId();
-        tUser.setEditBy(loginUserId); //鍒涘缓浜?
-
+        tUser.setEditBy(loginUserId);
         return tUserMapper.updateByPrimaryKeySelective(tUser);
     }
 
@@ -156,18 +127,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<TUser> getOwnerList() {
-        //1銆佷粠redis鏌ヨ
-        //2銆乺edis鏌ヤ笉鍒帮紝灏变粠鏁版嵁搴撴煡璇紝骞朵笖鎶婃暟鎹斁鍏edis锛?鍒嗛挓杩囨湡锛?
         return CacheUtils.getCacheData(() -> {
-            //鐢熶骇锛屼粠缂撳瓨redis鏌ヨ鏁版嵁
             return (List<TUser>)redisManager.getValue(Constants.REDIS_OWNER_KEY);
         },
         () -> {
-            //鐢熶骇锛屼粠mysql鏌ヨ鏁版嵁
             return (List<TUser>)tUserMapper.selectByOwner();
         },
         (t) -> {
-            //娑堣垂锛屾妸鏁版嵁鏀惧叆缂撳瓨redis
             redisManager.setValue(Constants.REDIS_OWNER_KEY, t);
         }
        );
