@@ -13,13 +13,13 @@
     <el-form-item label="版本">
       <el-input v-model="query.version"/>
     </el-form-item>
-    <el-form-item label="标题">
+    <el-form-item label="标题" prop="title">
       <el-input v-model="query.title"/>
     </el-form-item>
-    <el-form-item label="描述">
+    <el-form-item label="描述" prop="description">
       <el-input v-model="query.description" type="textarea"/>
     </el-form-item>
-    <el-form-item label="关键词">
+    <el-form-item label="关键词" prop="keywords">
       <el-input v-model="query.keywords"/>
     </el-form-item>
     <el-form-item label="Logo地址">
@@ -70,6 +70,9 @@ export default defineComponent({
         systemCode: [{ required: true, message: '请输入系统编码', trigger: 'blur' }],
         name: [{ required: true, message: '请输入系统名称', trigger: 'blur' }],
         site: [{ required: true, message: '请输入站点地址', trigger: 'blur' }],
+        title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+        description: [{ required: true, message: '请输入描述', trigger: 'blur' }],
+        keywords: [{ required: true, message: '请输入关键词', trigger: 'blur' }],
         isopen: [{ required: true, message: '请选择是否开启', trigger: 'change' }],
       }
     }
