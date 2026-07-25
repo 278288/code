@@ -1,4 +1,4 @@
-# DLYK (动力云客) -- Customer Relationship Management System
+# 数字化营销与客户端管理平台 -- Customer Relationship Management System
 
 A full-stack CRM system for BYD electric vehicle dealerships, covering customer management, lead tracking, transaction management, product catalog, and system configuration.
 
