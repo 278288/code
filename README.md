@@ -1,76 +1,76 @@
-# 数字化营销与客户端管理平台 -- Customer Relationship Management System
+# 数字化营销与客户管理平台
 
-A full-stack CRM system for BYD electric vehicle dealerships, covering customer management, lead tracking, transaction management, product catalog, and system configuration.
+全栈 CRM 系统，涵盖客户管理、线索追踪、交易管理、产品目录和系统配置。
 
-## Tech Stack
+## 技术栈
 
-| Layer    | Technology                                          |
-| -------- | --------------------------------------------------- |
-| Frontend | Vue 3 + Vite + Element Plus + ECharts + Axios       |
-| Backend  | Spring Boot 3.3 + Spring Security + MyBatis + JWT   |
-| Database | MySQL 8                                              |
-| Cache    | Redis                                                |
-| Build    | Maven (backend) / npm (frontend)                    |
+| 层级   | 技术                                               |
+| ------ | -------------------------------------------------- |
+| 前端   | Vue 3 + Vite + Element Plus + ECharts + Axios      |
+| 后端   | Spring Boot 3.3 + Spring Security + MyBatis + JWT  |
+| 数据库 | MySQL 8                                             |
+| 缓存   | Redis                                               |
+| 构建   | Maven（后端）/ npm（前端）                           |
 
-## Project Structure
+## 项目结构
 
 ```
 dlyk/
-├── dlyk-front/          # Vue 3 frontend
+├── dlyk-front/          # Vue 3 前端
 │   ├── src/
-│   │   ├── view/        # Page components
-│   │   ├── router/      # Vue Router config
-│   │   ├── http/        # Axios request wrapper
-│   │   └── util/        # Utility functions
+│   │   ├── view/        # 页面组件
+│   │   ├── router/      # Vue Router 路由配置
+│   │   ├── http/        # Axios 请求封装
+│   │   └── util/        # 工具函数
 │   ├── package.json
 │   └── vite.config.js
-├── dlyk-server/         # Spring Boot backend
+├── dlyk-server/         # Spring Boot 后端
 │   ├── src/main/java/com/bjpowernode/
-│   │   ├── web/         # REST controllers
-│   │   ├── service/     # Business logic
-│   │   ├── mapper/      # MyBatis mapper interfaces
-│   │   ├── model/       # Entity classes
-│   │   ├── config/      # Security & filter config
-│   │   └── util/        # JWT & JSON utilities
+│   │   ├── web/         # REST 控制器
+│   │   ├── service/     # 业务逻辑
+│   │   ├── mapper/      # MyBatis 映射接口
+│   │   ├── model/       # 实体类
+│   │   ├── config/      # 安全与过滤器配置
+│   │   └── util/        # JWT 与 JSON 工具
 │   ├── src/main/resources/
-│   │   ├── mapper/      # MyBatis XML mappings
+│   │   ├── mapper/      # MyBatis XML 映射文件
 │   │   └── application.yml
 │   └── pom.xml
 └── README.md
 ```
 
-## Prerequisites
+## 环境要求
 
-- **JDK 17** or later
-- **MySQL 8.0** (running on port 3306)
-- **Redis** (running on port 6379)
-- **Node.js 18+** and **npm**
-- **Maven 3.8+** (or use the included `mvnw` wrapper)
+- **JDK 17** 或更高版本
+- **MySQL 8.0**（运行在 3306 端口）
+- **Redis**（运行在 6379 端口）
+- **Node.js 18+** 和 **npm**
+- **Maven 3.8+**（也可使用项目自带的 `mvnw` 包装器）
 
-## Quick Start
+## 快速启动
 
-### 1. Database Setup
+### 1. 数据库准备
 
-Create a MySQL database named `dlyk` and import the SQL script:
+创建 MySQL 数据库 `dlyk` 并导入 SQL 脚本：
 
 ```sql
 CREATE DATABASE dlyk DEFAULT CHARACTER SET utf8mb4;
 ```
 
-Then import the provided `dlyk.sql` file into the database.
+然后将项目中提供的 `dlyk.sql` 文件导入该数据库。
 
-Default database credentials in the project are:
+项目默认数据库连接信息：
 
-| Config   | Value          |
+| 配置项   | 值             |
 | -------- | -------------- |
-| Host     | 127.0.0.1:3306 |
-| Database | dlyk           |
-| Username | root           |
-| Password | root           |
+| 主机     | 127.0.0.1:3306 |
+| 数据库   | dlyk           |
+| 用户名   | root           |
+| 密码     | root           |
 
-You can change these in [application.yml](dlyk-server/src/main/resources/application.yml).
+可在 [application.yml](dlyk-server/src/main/resources/application.yml) 中修改。
 
-### 2. Backend
+### 2. 启动后端
 
 ```bash
 cd dlyk-server
@@ -82,54 +82,54 @@ mvnw spring-boot:run
 ./mvnw spring-boot:run
 ```
 
-The backend starts on **port 8089**.
+后端启动在 **8089 端口**。
 
-### 3. Frontend
+### 3. 启动前端
 
 ```bash
 cd dlyk-front
 
-# Install dependencies (first time only)
+# 首次运行需安装依赖
 npm install
 
-# Start dev server
+# 启动开发服务器
 npm run dev
 ```
 
-The frontend dev server starts on **port 5173**. Open `http://localhost:5173` in your browser.
+前端开发服务器启动在 **5173 端口**，浏览器打开 `http://localhost:5173`。
 
-### 4. Login
+### 4. 登录
 
-Default admin account:
+默认管理员账号：
 
-| Field    | Value     |
-| -------- | --------- |
-| Account  | admin     |
-| Password | 123456    |
+| 字段 | 值     |
+| ---- | ------ |
+| 账号 | admin  |
+| 密码 | 123456 |
 
-## Production Deployment
+## 生产部署
 
-### Backend
+### 后端
 
 ```bash
 cd dlyk-server
 ./mvnw package -DskipTests
 ```
 
-The JAR file is generated at `target/dlyk-server-0.0.1-SNAPSHOT.jar`. Run it with:
+JAR 文件生成在 `target/dlyk-server-0.0.1-SNAPSHOT.jar`，运行：
 
 ```bash
 java -jar target/dlyk-server-0.0.1-SNAPSHOT.jar
 ```
 
-### Frontend
+### 前端
 
 ```bash
 cd dlyk-front
 npm run build
 ```
 
-The static files are generated in the `dist/` directory. Serve them with **Nginx** or any static file server. Example Nginx config:
+静态文件生成在 `dist/` 目录，使用 **Nginx** 或任意静态文件服务器部署。Nginx 配置示例：
 
 ```nginx
 server {
@@ -151,32 +151,32 @@ server {
 }
 ```
 
-## Features
+## 功能模块
 
-- **Dashboard** -- sales statistics with ECharts charts
-- **User Management** -- user CRUD with role-based permissions
-- **Market Activity** -- manage marketing campaigns and track participation
-- **Lead Management** -- capture and follow up on sales leads
-- **Customer Management** -- convert leads to customers, view details, export to Excel
-- **Transaction Management** -- track deals through stages (created -> confirmed -> deposit -> inspection -> closed)
-- **Product Management** -- manage vehicle catalog with pricing
-- **Dictionary Management** -- maintain dropdown options (lead sources, stages, etc.)
-- **System Configuration** -- manage system-level settings
-- **Profile & Password** -- update personal info and change password
+- **仪表盘** —— ECharts 图表展示销售统计数据
+- **用户管理** —— 用户增删改查，基于角色的权限控制
+- **市场活动** —— 管理营销活动及参与情况
+- **线索管理** —— 录入和跟进销售线索
+- **客户管理** —— 线索转客户、查看详情、导出 Excel
+- **交易管理** —— 跟踪交易阶段流转（创建→确认清单→交付定金→产品检验→付款成交→丢失关闭）
+- **产品管理** —— 管理车型目录与定价
+- **字典管理** —— 维护下拉选项（线索来源、交易阶段等）
+- **系统管理** —— 管理系统级配置信息
+- **个人中心** —— 修改个人资料和密码
 
-## Configuration
+## 配置说明
 
-Key settings in [application.yml](dlyk-server/src/main/resources/application.yml):
+[application.yml](dlyk-server/src/main/resources/application.yml) 中的关键配置项：
 
-| Property                        | Default                | Description              |
-| ------------------------------- | ---------------------- | ------------------------ |
-| `server.port`                   | 8089                   | Backend port             |
-| `spring.datasource.url`         | `jdbc:mysql://...`     | MySQL connection         |
-| `spring.datasource.username`    | root                   | Database user            |
-| `spring.datasource.password`    | root                   | Database password        |
-| `spring.data.redis.host`        | 127.0.0.1              | Redis host               |
-| `spring.data.redis.port`        | 6379                   | Redis port               |
+| 配置属性                        | 默认值                 | 说明         |
+| ------------------------------- | ---------------------- | ------------ |
+| `server.port`                   | 8089                   | 后端端口     |
+| `spring.datasource.url`         | `jdbc:mysql://...`     | MySQL 连接   |
+| `spring.datasource.username`    | root                   | 数据库用户名 |
+| `spring.datasource.password`    | root                   | 数据库密码   |
+| `spring.data.redis.host`        | 127.0.0.1              | Redis 主机   |
+| `spring.data.redis.port`        | 6379                   | Redis 端口   |
 
-## License
+## 许可证
 
-This project is for educational purposes.
+本项目仅用于学习目的。
