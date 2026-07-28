@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
         TUser tUser = tUserMapper.selectByLoginAct(username);
         if (tUser == null) {
-            throw new UsernameNotFoundException("DDDDDDDD");
+            throw new UsernameNotFoundException("用户不存在");
         }
 
         List<TRole> tRoleList = tRoleMapper.selectByUserId(tUser.getId());
@@ -128,15 +128,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<TUser> getOwnerList() {
         return CacheUtils.getCacheData(() -> {
-            return (List<TUser>)redisManager.getValue(Constants.REDIS_OWNER_KEY);
+            return (List<TUser>) redisManager.getValue(Constants.REDIS_OWNER_KEY);
         },
-        () -> {
-            return (List<TUser>)tUserMapper.selectByOwner();
-        },
-        (t) -> {
-            redisManager.setValue(Constants.REDIS_OWNER_KEY, t);
-        }
-       );
+                () -> {
+                    return (List<TUser>) tUserMapper.selectByOwner();
+                },
+                (t) -> {
+                    redisManager.setValue(Constants.REDIS_OWNER_KEY, t);
+                });
     }
 
     @Override
