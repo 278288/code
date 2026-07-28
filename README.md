@@ -59,18 +59,31 @@ CREATE DATABASE dlyk DEFAULT CHARACTER SET utf8mb4;
 
 然后将项目中提供的 `dlyk.sql` 文件导入该数据库。
 
-项目默认数据库连接信息：
+### 2. 配置环境变量（可选）
 
-| 配置项   | 值             |
-| -------- | -------------- |
-| 主机     | 127.0.0.1:3306 |
-| 数据库   | dlyk           |
-| 用户名   | root           |
-| 密码     | root           |
+项目已为所有敏感配置提供了默认值，本地开发可直接跳过此步骤。如需自定义，设置以下环境变量：
 
-可在 [application.yml](dlyk-server/src/main/resources/application.yml) 中修改。
+| 环境变量        | 默认值                       | 说明           |
+| --------------- | ---------------------------- | -------------- |
+| `DB_USERNAME`   | root                         | 数据库用户名   |
+| `DB_PASSWORD`   | root                         | 数据库密码     |
+| `REDIS_HOST`    | 127.0.0.1                    | Redis 主机地址 |
+| `REDIS_PORT`    | 6379                         | Redis 端口     |
+| `JWT_SECRET`    | (内置默认值)                 | JWT 签名密钥   |
 
-### 2. 启动后端
+**Windows (PowerShell):**
+```powershell
+$env:DB_PASSWORD="你的密码"
+$env:JWT_SECRET="你的密钥"
+```
+
+**Linux / macOS:**
+```bash
+export DB_PASSWORD="你的密码"
+export JWT_SECRET="你的密钥"
+```
+
+### 3. 启动后端
 
 ```bash
 cd dlyk-server
@@ -84,7 +97,7 @@ mvnw spring-boot:run
 
 后端启动在 **8089 端口**。
 
-### 3. 启动前端
+### 4. 启动前端
 
 ```bash
 cd dlyk-front
@@ -98,7 +111,7 @@ npm run dev
 
 前端开发服务器启动在 **5173 端口**，浏览器打开 `http://localhost:5173`。
 
-### 4. 登录
+### 5. 登录
 
 默认管理员账号：
 
@@ -116,9 +129,11 @@ cd dlyk-server
 ./mvnw package -DskipTests
 ```
 
-JAR 文件生成在 `target/dlyk-server-0.0.1-SNAPSHOT.jar`，运行：
+JAR 文件生成在 `target/dlyk-server-0.0.1-SNAPSHOT.jar`，运行时通过环境变量注入生产配置：
 
 ```bash
+export DB_PASSWORD="生产环境密码"
+export JWT_SECRET="生产环境密钥"
 java -jar target/dlyk-server-0.0.1-SNAPSHOT.jar
 ```
 
@@ -166,16 +181,17 @@ server {
 
 ## 配置说明
 
-[application.yml](dlyk-server/src/main/resources/application.yml) 中的关键配置项：
+[application.yml](dlyk-server/src/main/resources/application.yml) 中的关键配置项均支持环境变量覆盖，格式为 `${环境变量名:默认值}`。
 
-| 配置属性                        | 默认值                 | 说明         |
-| ------------------------------- | ---------------------- | ------------ |
-| `server.port`                   | 8089                   | 后端端口     |
-| `spring.datasource.url`         | `jdbc:mysql://...`     | MySQL 连接   |
-| `spring.datasource.username`    | root                   | 数据库用户名 |
-| `spring.datasource.password`    | root                   | 数据库密码   |
-| `spring.data.redis.host`        | 127.0.0.1              | Redis 主机   |
-| `spring.data.redis.port`        | 6379                   | Redis 端口   |
+| 配置属性                        | 环境变量        | 默认值             | 说明         |
+| ------------------------------- | --------------- | ------------------ | ------------ |
+| `server.port`                   | —               | 8089               | 后端端口     |
+| `spring.datasource.url`         | —               | `jdbc:mysql://...` | MySQL 连接   |
+| `spring.datasource.username`    | `DB_USERNAME`   | root               | 数据库用户名 |
+| `spring.datasource.password`    | `DB_PASSWORD`   | root               | 数据库密码   |
+| `spring.data.redis.host`        | `REDIS_HOST`    | 127.0.0.1          | Redis 主机   |
+| `spring.data.redis.port`        | `REDIS_PORT`    | 6379               | Redis 端口   |
+| `jwt.secret`                    | `JWT_SECRET`    | (内置默认值)       | JWT 签名密钥 |
 
 ## 许可证
 

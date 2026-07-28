@@ -18,7 +18,24 @@ import java.util.Map;
  */
 public class JWTUtils {
 
-    public static final String SECRET = "dY8300olWQ3345;1d<3w48";
+    private static String SECRET = null;
+
+    /**
+     * 由 JwtConfig 在应用启动时注入，不允许直接赋值
+     */
+    public static void setSecret(String secret) {
+        if (SECRET != null) {
+            throw new IllegalStateException("JWT secret 只能设置一次");
+        }
+        SECRET = secret;
+    }
+
+    private static String getSecret() {
+        if (SECRET == null) {
+            throw new IllegalStateException("JWT secret 未初始化，请检查 jwt.secret 配置");
+        }
+        return SECRET;
+    }
 
     /**
      * 生成JWT （token）
@@ -38,7 +55,7 @@ public class JWTUtils {
                 .withClaim("user", userJSON)
 
                 //签名
-                .sign(Algorithm.HMAC256(SECRET));
+                .sign(Algorithm.HMAC256(getSecret()));
     }
 
     /**
@@ -49,7 +66,7 @@ public class JWTUtils {
     public static Boolean verifyJWT(String jwt) {
         try {
             // 使用秘钥创建一个JWT验证器对象
-            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(getSecret())).build();
 
             //验证JWT，如果没有抛出异常，说明验证通过，否则验证不通过
             jwtVerifier.verify(jwt);
@@ -68,7 +85,7 @@ public class JWTUtils {
     public static void parseJWT(String jwt) {
         try {
             // 使用秘钥创建一个验证器对象
-            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(getSecret())).build();
 
             //验证JWT，得到一个解码后的jwt对象
             DecodedJWT decodedJWT = jwtVerifier.verify(jwt);
@@ -95,7 +112,7 @@ public class JWTUtils {
     public static TUser parseUserFromJWT(String jwt) {
         try {
             // 使用秘钥创建一个验证器对象
-            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(getSecret())).build();
 
             //验证JWT，得到一个解码后的jwt对象
             DecodedJWT decodedJWT = jwtVerifier.verify(jwt);
