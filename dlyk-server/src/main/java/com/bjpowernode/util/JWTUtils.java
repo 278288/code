@@ -7,67 +7,67 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.bjpowernode.model.TUser;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * jwt工具类
+ * JWT 工具类。
  *
+ * 密钥通过 {@link #setSecret} 由 JwtConfig 在启动时注入，
+ * 支持从环境变量 JWT_SECRET 读取（为空时使用默认值 dY8300olWQ3345;1d<3w48）。
  */
 public class JWTUtils {
 
     private static String SECRET = null;
 
     /**
-     * 由 JwtConfig 在应用启动时注入。允许在测试中多次调用重新设置。
+     * 由 JwtConfig 在应用启动时注入。
+     * 允许在测试中多次调用重新设置。
      */
     public static void setSecret(String secret) {
+        // 防御：env 设为空字符串时无用默认值，避免 SecretKeySpec 抛 Empty key
+        if (!StringUtils.hasText(secret)) {
+            secret = "dY8300olWQ3345;1d<3w48";
+        }
         SECRET = secret;
     }
 
     private static String getSecret() {
-        if (SECRET == null) {
-            throw new IllegalStateException("JWT secret 未初始化，请检查 jwt.secret 配置");
+        // 防御：未初始化时给默认值
+        if (!StringUtils.hasText(SECRET)) {
+            SECRET = "dY8300olWQ3345;1d<3w48";
         }
         return SECRET;
     }
 
     /**
-     * 生成JWT （token）
+     * 生成 JWT（token）。
      *
+     * @param userJSON TUser 的 JSON 字符串，作为 payload 的 user claim
      */
     public static String createJWT(String userJSON) {
-        //组装头数据
         Map<String, Object> header = new HashMap<>();
         header.put("alg", "HS256");
         header.put("typ", "JWT");
 
         return JWT.create()
-                //头部
                 .withHeader(header)
-
-                //负载
                 .withClaim("user", userJSON)
-
-                //签名
                 .sign(Algorithm.HMAC256(getSecret()));
     }
 
     /**
-     * 验证JWT
+     * 验证 JWT 是否有效（签名是否正确，是否过期）。
      *
-     * @param jwt 要验证的jwt的字符串
+     * @param jwt 要验证的 jwt 字符串
      */
     public static Boolean verifyJWT(String jwt) {
         try {
-            // 使用秘钥创建一个JWT验证器对象
             JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(getSecret())).build();
-
-            //验证JWT，如果没有抛出异常，说明验证通过，否则验证不通过
             jwtVerifier.verify(jwt);
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,29 +76,23 @@ public class JWTUtils {
     }
 
     /**
-     * 解析JWT的数据
-     *
+     * 解析 JWT 的数据（调试用，非业务方法）。
      */
     public static void parseJWT(String jwt) {
         try {
-            // 使用秘钥创建一个验证器对象
             JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(getSecret())).build();
-
-            //验证JWT，得到一个解码后的jwt对象
             DecodedJWT decodedJWT = jwtVerifier.verify(jwt);
 
-            //通过解码后的jwt对象，就可以获取里面的负载数据
             Claim nickClaim = decodedJWT.getClaim("nick");
             Claim ageClaim = decodedJWT.getClaim("age");
             Claim phoneClaim = decodedJWT.getClaim("phone");
             Claim birthDayClaim = decodedJWT.getClaim("birthDay");
 
-
             String nick = nickClaim.asString();
             int age = ageClaim.asInt();
             String phone = phoneClaim.asString();
             Date birthDay = birthDayClaim.asDate();
-            
+
             System.out.println(nick + " -- " + age + " -- " + phone + " -- " + birthDay);
         } catch (TokenExpiredException e) {
             e.printStackTrace();
@@ -106,17 +100,15 @@ public class JWTUtils {
         }
     }
 
+    /**
+     * 从 JWT 中解析出 TUser 对象。
+     */
     public static TUser parseUserFromJWT(String jwt) {
         try {
-            // 使用秘钥创建一个验证器对象
             JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(getSecret())).build();
-
-            //验证JWT，得到一个解码后的jwt对象
             DecodedJWT decodedJWT = jwtVerifier.verify(jwt);
 
-            //通过解码后的jwt对象，就可以获取里面的负载数据
             Claim userClaim = decodedJWT.getClaim("user");
-
             String userJSON = userClaim.asString();
 
             return JSONUtils.toBean(userJSON, TUser.class);

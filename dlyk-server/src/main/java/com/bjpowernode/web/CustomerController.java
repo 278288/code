@@ -21,14 +21,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 客户管理 Controller。
+ *
+ * 接口列表：
+ *   POST /api/clue/customer    线索转化为客户
+ *   GET  /api/customers        分页查询客户列表
+ *   GET  /api/customer/{id}    客户详情
+ *   GET  /api/exportExcel      导出客户 Excel（ids 可选，不传导出全部）
+ */
 @RestController
 public class CustomerController {
 
     @Resource
     private CustomerService customerService;
 
+    /** 线索 → 客户转化（关联市场活动、创建人、数据权限检查） */
     @PostMapping(value = "/api/clue/customer")
-    public R convertCustomer(@Valid @RequestBody CustomerQuery customerQuery, @RequestHeader(value = "Authorization") String token) {
+    public R convertCustomer(@Valid @RequestBody CustomerQuery customerQuery,
+                              @RequestHeader(value = "Authorization") String token) {
         customerQuery.setToken(token);
         Boolean convert = customerService.convertCustomer(customerQuery);
         return convert ? R.OK() : R.FAIL();
@@ -39,7 +50,6 @@ public class CustomerController {
         if (current == null) {
             current = 1;
         }
-
         PageInfo<TCustomer> pageInfo = customerService.getCustomerByPage(current);
         return R.OK(pageInfo);
     }
@@ -50,14 +60,25 @@ public class CustomerController {
         return R.OK(tCustomer);
     }
 
+    /**
+     * 导出客户 Excel。
+     * 设置响应头为文件下载，用 EasyExcel 写入输出流。
+     * 传入 ids 只导出指定客户，不传则导出全部。
+     */
     @GetMapping(value = "/api/exportExcel")
-    public void exportExcel(HttpServletResponse response, @RequestParam(value = "ids", required = false) String ids) throws IOException {
+    public void exportExcel(HttpServletResponse response,
+                             @RequestParam(value = "ids", required = false) String ids) throws IOException {
 
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(Constants.EXCEL_FILE_NAME+System.currentTimeMillis(), StandardCharsets.UTF_8) + ".xlsx");
+        response.setHeader("Content-disposition",
+                "attachment;filename="
+                + URLEncoder.encode(Constants.EXCEL_FILE_NAME + System.currentTimeMillis(), StandardCharsets.UTF_8)
+                + ".xlsx");
 
-        List<String> idList = StringUtils.hasText(ids) ? Arrays.asList(ids.split(",")) : new ArrayList<>();
+        List<String> idList = StringUtils.hasText(ids)
+                ? Arrays.asList(ids.split(","))
+                : new ArrayList<>();
         List<CustomerExcel> dataList = customerService.getCustomerByExcel(idList);
 
         EasyExcel.write(response.getOutputStream(), CustomerExcel.class)

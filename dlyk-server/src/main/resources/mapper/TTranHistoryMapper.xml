@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 交易历史 Mapper，对应 t_tran_history 表。按交易ID查询阶段变更记录 -->
 <mapper namespace="com.bjpowernode.mapper.TTranHistoryMapper">
   <resultMap id="BaseResultMap" type="com.bjpowernode.model.TTranHistory">
     <id column="id" jdbcType="INTEGER" property="id" />

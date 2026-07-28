@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 客户备注 Mapper，对应 t_customer_remark 表 -->
 <mapper namespace="com.bjpowernode.mapper.TCustomerRemarkMapper">
   <resultMap id="BaseResultMap" type="com.bjpowernode.model.TCustomerRemark">
     <id column="id" jdbcType="INTEGER" property="id" />

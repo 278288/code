@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 用户-角色关联 Mapper，对应 t_user_role 中间表 -->
 <mapper namespace="com.bjpowernode.mapper.TUserRoleMapper">
   <resultMap id="BaseResultMap" type="com.bjpowernode.model.TUserRole">
     <id column="id" jdbcType="INTEGER" property="id" />

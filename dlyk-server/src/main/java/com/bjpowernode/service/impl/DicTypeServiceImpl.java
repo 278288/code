@@ -13,12 +13,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * 字典类型管理服务实现。
+ * loadAllDicData 用于系统启动时加载全部字典数据到缓存。
+ */
 @Service
 public class DicTypeServiceImpl implements DicTypeService {
 
     @Resource
     private TDicTypeMapper tDicTypeMapper;
 
+    /**
+     * 加载全部字典类型及其字典值（含关联查询），供系统启动时预热缓存使用。
+     */
     @Override
     public List<TDicType> loadAllDicData() {
         return tDicTypeMapper.selectByAll();

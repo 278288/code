@@ -16,6 +16,12 @@ import org.springframework.util.ObjectUtils;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 客户管理服务实现。
+ *
+ * 客户由线索转化而来，核心转换逻辑委托给 CustomerManager（含 @DataScope 权限过滤）。
+ * 导出 Excel 时需要将关联对象（负责人、创建人、称呼等）的名称拼接到 CustomerExcel 中。
+ */
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
@@ -25,41 +31,47 @@ public class CustomerServiceImpl implements CustomerService {
     @Resource
     private TCustomerMapper tCustomerMapper;
 
+    /**
+     * 线索转化为客户。委托 CustomerManager 处理转换逻辑（含数据权限检查）。
+     */
     @Override
     public Boolean convertCustomer(CustomerQuery customerQuery) {
         return customerManager.convertCustomer(customerQuery);
     }
 
+    /**
+     * 分页查询客户列表。
+     */
     @Override
     public PageInfo<TCustomer> getCustomerByPage(Integer current) {
-        //1.设置PageHelper
         PageHelper.startPage(current, Constants.PAGE_SIZE);
-        //2.查询
         List<TCustomer> list = tCustomerMapper.selectCustomerPage();
-        //3.封装分页数据到PageInfo
         PageInfo<TCustomer> info = new PageInfo<>(list);
-
         return info;
     }
 
+    /**
+     * 查询客户详情（复用 Excel 导出查询，传入单个 id 获取带所有关联对象的完整信息）。
+     */
     @Override
     public TCustomer getCustomerById(Integer id) {
-        //重用 selectCustomerByExcel，传单个id进去即可获取带所有关联对象的完整客户信息
         List<TCustomer> list = tCustomerMapper.selectCustomerByExcel(Arrays.asList(String.valueOf(id)));
         return list.isEmpty() ? null : list.get(0);
     }
 
+    /**
+     * 根据 ID 列表导出客户 Excel 数据。
+     * 将 TCustomer 关联对象转换为 CustomerExcel 扁平结构，便于 EasyExcel 导出。
+     */
     @Override
     public List<CustomerExcel> getCustomerByExcel(List<String> idList) {
         List<CustomerExcel> customerExcelList = new java.util.ArrayList<>();
 
         List<TCustomer> tCustomerList = tCustomerMapper.selectCustomerByExcel(idList);
 
-        //把从数据库查询出来的List<TCustomer>数据，转换为 List<CustomerExcel>数据
         tCustomerList.forEach(tCustomer -> {
             CustomerExcel customerExcel = new CustomerExcel();
-
-            //需要一个一个设置，没有办法，因为没法使用BeanUtils复制
+            // 逐一设置字段（无法使用 BeanUtils，因为字段名和嵌套路径不同）
             customerExcel.setOwnerName(ObjectUtils.isEmpty(tCustomer.getOwnerDO()) ? Constants.EMPTY : tCustomer.getOwnerDO().getName());
             customerExcel.setActivityName(ObjectUtils.isEmpty(tCustomer.getActivityDO()) ? Constants.EMPTY : tCustomer.getActivityDO().getName());
             customerExcel.setFullName(tCustomer.getClueDO().getFullName());

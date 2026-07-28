@@ -9,6 +9,15 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 市场活动 Controller。
+ *
+ * 接口列表：
+ *   GET  /api/activitys       分页查询（支持条件筛选）
+ *   POST /api/activity        新增活动
+ *   GET  /api/activity/{id}   活动详情
+ *   PUT  /api/activity        编辑活动
+ */
 @RestController
 public class ActivityController {
 
@@ -16,8 +25,8 @@ public class ActivityController {
     private ActivityService activityService;
 
     @GetMapping(value = "/api/activitys")
-    public R activityPage(@RequestParam(value = "current", required = false) Integer current, ActivityQuery activityQuery) {
-
+    public R activityPage(@RequestParam(value = "current", required = false) Integer current,
+                           ActivityQuery activityQuery) {
         if (current == null) {
             current = 1;
         }
@@ -26,7 +35,8 @@ public class ActivityController {
     }
 
     @PostMapping(value = "/api/activity")
-    public R addActivity(@Valid ActivityQuery activityQuery, @RequestHeader(value = "Authorization") String token) {
+    public R addActivity(@Valid ActivityQuery activityQuery,
+                          @RequestHeader(value = "Authorization") String token) {
         activityQuery.setToken(token);
         int save = activityService.saveActivity(activityQuery);
         return save >= 1 ? R.OK() : R.FAIL();
@@ -39,7 +49,8 @@ public class ActivityController {
     }
 
     @PutMapping(value = "/api/activity")
-    public R editActivity(@Valid ActivityQuery activityQuery, @RequestHeader(value = "Authorization") String token) {
+    public R editActivity(@Valid ActivityQuery activityQuery,
+                           @RequestHeader(value = "Authorization") String token) {
         activityQuery.setToken(token);
         int update = activityService.updateActivity(activityQuery);
         return update >= 1 ? R.OK() : R.FAIL();

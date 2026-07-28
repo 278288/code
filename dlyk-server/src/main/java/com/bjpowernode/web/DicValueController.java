@@ -12,12 +12,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 字典值 Controller。
+ * 增删改操作后自动刷新内存缓存（DlykServerApplication.cacheMap）。
+ */
 @RestController
 public class DicValueController {
 
     @Resource
     private DicValueService dicValueService;
 
+    /** 分页查询，传入 typeCode 按类型筛选 */
     @GetMapping(value = "/api/dicvalues")
     public R dicValuePage(@RequestParam(value = "current", required = false) Integer current,
                           @RequestParam(value = "typeCode", required = false) String typeCode) {

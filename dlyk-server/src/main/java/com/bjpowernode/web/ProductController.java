@@ -12,6 +12,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 产品管理 Controller。
+ *
+ * 接口列表：
+ *   GET    /api/products       分页查询
+ *   GET    /api/product/{id}   产品详情
+ *   POST   /api/product        新增产品
+ *   PUT    /api/product        编辑产品
+ *   DELETE /api/product/{id}   删除产品
+ *   DELETE /api/product        批量删除
+ */
 @RestController
 public class ProductController {
 

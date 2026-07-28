@@ -14,6 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 系统信息管理服务实现。
+ * 管理网站 SEO 元信息（标题、描述、关键词）、Logo、联系方式等全局配置。
+ */
 @Service
 public class SystemInfoServiceImpl implements SystemInfoService {
 

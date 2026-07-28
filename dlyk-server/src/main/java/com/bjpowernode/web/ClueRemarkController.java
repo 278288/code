@@ -9,6 +9,9 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 线索跟踪记录 Controller。
+ */
 @RestController
 public class ClueRemarkController {
 
@@ -16,17 +19,17 @@ public class ClueRemarkController {
     private ClueRemarkService clueRemarkService;
 
     @PostMapping(value = "/api/clue/remark")
-    public R addActivityRemark(@Valid @RequestBody ClueRemarkQuery clueRemarkQuery,
-            @RequestHeader(value = "Authorization") String token) {
+    public R addClueRemark(@Valid @RequestBody ClueRemarkQuery clueRemarkQuery,
+                           @RequestHeader(value = "Authorization") String token) {
         clueRemarkQuery.setToken(token);
         int save = clueRemarkService.saveClueRemark(clueRemarkQuery);
         return save >= 1 ? R.OK() : R.FAIL();
     }
 
+    /** 分页查询某个线索的所有跟踪记录，clueId 必传 */
     @GetMapping(value = "/api/clue/remark")
     public R clueRemarkPage(@RequestParam(value = "current", required = false) Integer current,
-            @RequestParam(value = "clueId") Integer clueId) {
-
+                            @RequestParam(value = "clueId") Integer clueId) {
         ClueRemarkQuery clueRemarkQuery = new ClueRemarkQuery();
         clueRemarkQuery.setClueId(clueId);
 

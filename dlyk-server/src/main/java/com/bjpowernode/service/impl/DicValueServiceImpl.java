@@ -15,12 +15,21 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
+/**
+ * 字典值管理服务实现。
+ *
+ * 字典值缓存在 DlykServerApplication.cacheMap 中（按 typeCode 分组），
+ * 增、删、改操作后需调用 refreshCache 刷新内存缓存，保证数据和缓存一致。
+ */
 @Service
 public class DicValueServiceImpl implements DicValueService {
 
     @Resource
     private TDicValueMapper tDicValueMapper;
 
+    /**
+     * 分页查询字典值。传入 typeCode 按类型筛选，否则查全部。
+     */
     @Override
     public PageInfo<TDicValue> getDicValueByPage(Integer current, String typeCode) {
         PageHelper.startPage(current, Constants.PAGE_SIZE);
@@ -46,7 +55,6 @@ public class DicValueServiceImpl implements DicValueService {
         tDicValue.setOrder(dicValueQuery.getOrder());
         tDicValue.setRemark(dicValueQuery.getRemark());
         int result = tDicValueMapper.insertSelective(tDicValue);
-        // 刷新缓存
         refreshCache(dicValueQuery.getTypeCode());
         return result;
     }
@@ -89,6 +97,9 @@ public class DicValueServiceImpl implements DicValueService {
         return count;
     }
 
+    /**
+     * 刷新指定 typeCode 的字典值缓存。从数据库重新查询后放回 cacheMap。
+     */
     private void refreshCache(String typeCode) {
         if (StringUtils.hasText(typeCode)) {
             List<TDicValue> list = tDicValueMapper.selectByTypeCode(typeCode);

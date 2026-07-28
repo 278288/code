@@ -5,42 +5,27 @@ import com.alibaba.excel.metadata.GlobalConfiguration;
 import com.alibaba.excel.metadata.data.ReadCellData;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
 import com.bjpowernode.DlykServerApplication;
-import com.bjpowernode.model.TDicValue;
 import com.bjpowernode.model.TProduct;
 import com.bjpowernode.result.DicEnum;
 
 import java.util.List;
 
 /**
- * 意向产品的转换器
- *
- * Excel中的比亚迪e2   -->  java中的 2
- * 秦PLUS EV  -->  7
+ * Excel 意向产品名 → Java 产品 ID 转换器。
+ * 从产品缓存中查询对应 ID，匹配不到返回 -1。
  */
 public class IntentionProductConverter implements Converter<Integer> {
 
-    /**
-     * 把Excel中的数据转换为Java中的数据
-     * 也就是Excel中的 “比亚迪e2”  ----> Java类中是 2
-     *
-     * @param cellData
-     * @param contentProperty
-     * @param globalConfiguration
-     * @return
-     * @throws Exception
-     */
     @Override
-    public Integer convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
-        //cellData是Excel中读取到的数据，是“比亚迪e2”、“秦PLUS EV”
+    public Integer convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty,
+                                     GlobalConfiguration globalConfiguration) throws Exception {
         String cellIntentionProductName = cellData.getStringValue();
 
-        List<TProduct> tDicValueList = (List<TProduct>) DlykServerApplication.cacheMap.get(DicEnum.PRODUCT.getCode());
+        List<TProduct> tDicValueList =
+                (List<TProduct>) DlykServerApplication.cacheMap.get(DicEnum.PRODUCT.getCode());
         for (TProduct tProduct : tDicValueList) {
-            Integer id  = tProduct.getId();
-            String name = tProduct.getName();
-
-            if (cellIntentionProductName.equals(name)) {
-                return id;
+            if (cellIntentionProductName.equals(tProduct.getName())) {
+                return tProduct.getId();
             }
         }
         return -1;

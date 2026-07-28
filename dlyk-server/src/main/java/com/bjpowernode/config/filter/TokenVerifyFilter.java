@@ -14,6 +14,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,112 +26,95 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 
+/**
+ * JWT Token 验证过滤器。
+ *
+ * 验证流程：
+ *   1. 登录请求（/api/login）直接放行，因为此时还没有 token
+ *   2. Excel 导出请求从 URL 参数中取 token，其他请求从 Authorization 请求头取
+ *   3. 校验 token 是否存在 → 是否被篡改 → Redis 中是否存在 → 是否匹配
+ *   4. 全部通过后，将用户信息写入 SecurityContext，标记为已登录
+ *   5. 异步刷新 Redis 中 token 的过期时间（线程池执行，不阻塞主请求）
+ */
+@Slf4j
 @Component
 public class TokenVerifyFilter extends OncePerRequestFilter {
 
     @Resource
     private RedisService redisService;
 
-    //spring boot框架的ioc容器中已经创建好了该线程池，可以注入直接使用
+    /** 框架预置的线程池，用于异步刷新 token 过期时间 */
     @Resource
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getRequestURI().equals(Constants.LOGIN_URI)) { //如果是登录请求，此时还没有生成jwt，那不需要对登录请求进行jwt验证
-            //验证jwt通过了 ，让Filter链继续执行，也就是继续执行下一个Filter
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
+        if (request.getRequestURI().equals(Constants.LOGIN_URI)) {
             filterChain.doFilter(request, response);
-
-        } else {
-            String token = null;
-            if (request.getRequestURI().equals(Constants.EXPORT_EXCEL_URI)) {
-                //从请求路径的参数中获取token
-                token = request.getParameter("Authorization");
-            } else {
-                //其他请求都是从请求头中获取token
-                token = request.getHeader("Authorization");
-            }
-
-            if (!StringUtils.hasText(token)) {
-                //token验证未通过的统一结果
-                R result = R.FAIL(CodeEnum.TOKEN_IS_EMPTY);
-                //把R对象转成json
-                String resultJSON = JSONUtils.toJSON(result);
-                //把R以json返回给前端
-                ResponseUtils.write(response, resultJSON);
-                return;
-            }
-
-            //验证token有没有被篡改过
-            if (!JWTUtils.verifyJWT(token)) {
-                //token验证未通过统一结果
-                R result = R.FAIL(CodeEnum.TOKEN_IS_ERROR);
-
-                //把R对象转成json
-                String resultJSON = JSONUtils.toJSON(result);
-
-                //把R以json返回给前端
-                ResponseUtils.write(response, resultJSON);
-
-                return;
-            }
-
-            TUser tUser = JWTUtils.parseUserFromJWT(token);
-            String redisToken = (String) redisService.getValue(Constants.REDIS_JWT_KEY + tUser.getId());
-
-            if (!StringUtils.hasText(redisToken)) {
-                //token验证未通过统一结果
-                R result = R.FAIL(CodeEnum.TOKEN_IS_EXPIRED);
-
-                //把R对象转成json
-                String resultJSON = JSONUtils.toJSON(result);
-
-                //把R以json返回给前端
-                ResponseUtils.write(response, resultJSON);
-
-                return;
-            }
-
-            if (!token.equals(redisToken)) {
-                //token验证未通过的统一结果
-                R result = R.FAIL(CodeEnum.TOKEN_IS_NONE_MATCH);
-
-                //把R对象转成json
-                String resultJSON = JSONUtils.toJSON(result);
-
-                //把R以json返回给前端
-                ResponseUtils.write(response, resultJSON);
-                return;
-            }
-
-            //jwt验证通过了，那么在spring security的上下文环境中要设置一下，设置当前这个人是登录过的，你后续不要再拦截他了
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(tUser, tUser.getLoginPwd(), tUser.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
-            //刷新一下token（异步处理，new一个线程去执行）
-            /*new Thread(() -> {
-                //刷新token
-                String rememberMe = request.getHeader("rememberMe");
-                if (Boolean.parseBoolean(rememberMe)) {
-                    redisService.expire(Constants.REDIS_JWT_KEY + tUser.getId(), Constants.EXPIRE_TIME, TimeUnit.SECONDS);
-                } else {
-                    redisService.expire(Constants.REDIS_JWT_KEY + tUser.getId(), Constants.DEFAULT_EXPIRE_TIME, TimeUnit.SECONDS);
-                }
-            }).start();*/
-
-            //异步处理（更好的方式，使用线程池去执行）
-            threadPoolTaskExecutor.execute(() -> {
-                //刷新token
-                String rememberMe = request.getHeader("rememberMe");
-                if (Boolean.parseBoolean(rememberMe)) {
-                    redisService.expire(Constants.REDIS_JWT_KEY + tUser.getId(), Constants.EXPIRE_TIME, TimeUnit.SECONDS);
-                } else {
-                    redisService.expire(Constants.REDIS_JWT_KEY + tUser.getId(), Constants.DEFAULT_EXPIRE_TIME, TimeUnit.SECONDS);
-                }
-            });
-
-            //验证jwt通过了 ，让Filter链继续执行，也就是继续执行下一个Filter
-            filterChain.doFilter(request, response);
+            return;
         }
+
+        // 获取 token：导出请求从参数取，其他请求从请求头取
+        String token = null;
+        if (request.getRequestURI().equals(Constants.EXPORT_EXCEL_URI)) {
+            token = request.getParameter("Authorization");
+        } else {
+            token = request.getHeader("Authorization");
+        }
+
+        if (!StringUtils.hasText(token)) {
+            R result = R.FAIL(CodeEnum.TOKEN_IS_EMPTY);
+            ResponseUtils.write(response, JSONUtils.toJSON(result));
+            return;
+        }
+
+        if (!JWTUtils.verifyJWT(token)) {
+            R result = R.FAIL(CodeEnum.TOKEN_IS_ERROR);
+            ResponseUtils.write(response, JSONUtils.toJSON(result));
+            return;
+        }
+
+        TUser tUser = JWTUtils.parseUserFromJWT(token);
+
+        // 防御：用户 ID 为空（JWT 解析异常或数据损坏）
+        if (tUser == null || tUser.getId() == null) {
+            log.warn("JWT 解析失败：用户信息为空 or ID 为 null，uri={}", request.getRequestURI());
+            R result = R.FAIL(CodeEnum.TOKEN_IS_ERROR);
+            ResponseUtils.write(response, JSONUtils.toJSON(result));
+            return;
+        }
+
+        String redisKey = Constants.REDIS_JWT_KEY + tUser.getId();
+        String redisToken = (String) redisService.getValue(redisKey);
+
+        if (!StringUtils.hasText(redisToken)) {
+            R result = R.FAIL(CodeEnum.TOKEN_IS_EXPIRED);
+            ResponseUtils.write(response, JSONUtils.toJSON(result));
+            return;
+        }
+
+        if (!token.equals(redisToken)) {
+            R result = R.FAIL(CodeEnum.TOKEN_IS_NONE_MATCH);
+            ResponseUtils.write(response, JSONUtils.toJSON(result));
+            return;
+        }
+
+        // 写入 SecurityContext
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(tUser, tUser.getLoginPwd(), tUser.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+        // 异步刷新 token 过期时间
+        threadPoolTaskExecutor.execute(() -> {
+            String rememberMe = request.getHeader("rememberMe");
+            if (Boolean.parseBoolean(rememberMe)) {
+                redisService.expire(redisKey, Constants.EXPIRE_TIME, TimeUnit.SECONDS);
+            } else {
+                redisService.expire(redisKey, Constants.DEFAULT_EXPIRE_TIME, TimeUnit.SECONDS);
+            }
+        });
+
+        filterChain.doFilter(request, response);
     }
 }

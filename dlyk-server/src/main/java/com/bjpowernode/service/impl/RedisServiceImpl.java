@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Redis 操作服务实现，封装 RedisTemplate 的常用操作。
+ * 提供 set、get、remove、expire 四个基础方法，供 Token 校验、缓存等场景调用。
+ */
 @Service
 public class RedisServiceImpl implements RedisService {
 

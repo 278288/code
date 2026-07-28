@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 系统信息 Mapper，对应 t_system_info 表。管理网站 SEO 配置 -->
 <mapper namespace="com.bjpowernode.mapper.TSystemInfoMapper">
   <resultMap id="BaseResultMap" type="com.bjpowernode.model.TSystemInfo">
     <id column="id" jdbcType="INTEGER" property="id" />

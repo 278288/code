@@ -5,7 +5,6 @@ import com.bjpowernode.config.listener.UploadDataListener;
 import com.bjpowernode.constant.Constants;
 import com.bjpowernode.mapper.TClueMapper;
 import com.bjpowernode.model.TClue;
-import com.bjpowernode.model.TUser;
 import com.bjpowernode.query.BaseQuery;
 import com.bjpowernode.query.ClueQuery;
 import com.bjpowernode.service.ClueService;
@@ -21,6 +20,11 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 线索管理服务实现。
+ * 支持分页查询、Excel 批量导入、手机号查重、新增、编辑、详情查询。
+ * 新增线索前校验手机号唯一性。
+ */
 @Service
 public class ClueServiceImpl implements ClueService {
 
@@ -29,46 +33,44 @@ public class ClueServiceImpl implements ClueService {
 
     @Override
     public PageInfo<TClue> getClueByPage(Integer current) {
-        // 1.设置PageHelper
         PageHelper.startPage(current, Constants.PAGE_SIZE);
-        // 2.查询
         List<TClue> list = tClueMapper.selectClueByPage(BaseQuery.builder().build());
-        // 3.封装分页数据到PageInfo
         PageInfo<TClue> info = new PageInfo<>(list);
         return info;
     }
 
+    /**
+     * Excel 批量导入线索。使用 EasyExcel 读取流，UploadDataListener 逐批写入数据库。
+     */
     @Override
     public void importExcel(InputStream inputStream, String token) {
-        //链式编程，3个参数, 第一个参数是要读取的Excel文件，第二个参数是Excel模板类，第三个参数是文件读取的监听器
         EasyExcel.read(inputStream, TClue.class, new UploadDataListener(tClueMapper, token))
                 .sheet()
                 .doRead();
     }
 
+    /**
+     * 校验手机号是否已存在。返回 true 表示可用（未录入过）。
+     */
     @Override
     public Boolean checkPhone(String phone) {
         int count = tClueMapper.selectByCount(phone);
-        return count <= 0; //没有查到手机号是true
+        return count <= 0;
     }
 
+    /**
+     * 新增线索。先查重手机号，已存在则抛异常，否则写入。
+     */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public int saveClue(ClueQuery clueQuery) {
         int count = tClueMapper.selectByCount(clueQuery.getPhone());
         if (count <= 0) {
             TClue tClue = new TClue();
-
-            //把前端提交过来的参数数据对象ClueQuery复制到TClue对象中
-            //Spring框架有个工具类BeanUtils可以进行对象的复制,复制的条件要求是：两个对象的字段名要相同，字段的类型也相同，这样才可以复制
             BeanUtils.copyProperties(clueQuery, tClue);
-
-            //解析jwt得到userId
             Integer loginUserId = JWTUtils.parseUserFromJWT(clueQuery.getToken()).getId();
-
-            tClue.setCreateTime(new Date()); //创建时间
-            tClue.setCreateBy(loginUserId); //创建人id
-
+            tClue.setCreateTime(new Date());
+            tClue.setCreateBy(loginUserId);
             return tClueMapper.insertSelective(tClue);
         } else {
             throw new RuntimeException("该手机号已经录入过了，不能再录入");
@@ -84,17 +86,10 @@ public class ClueServiceImpl implements ClueService {
     @Override
     public int updateClue(ClueQuery clueQuery) {
         TClue tClue = new TClue();
-
-        //把前端提交过来的参数数据对象ClueQuery复制到TClue对象中
-        //Spring框架有个工具类BeanUtils可以进行对象的复制,复制的条件要求是：两个对象的字段名要相同，字段的类型也相同，这样才可以复制
         BeanUtils.copyProperties(clueQuery, tClue);
-
-        //解析jwt得到userId
         Integer loginUserId = JWTUtils.parseUserFromJWT(clueQuery.getToken()).getId();
-
-        tClue.setEditTime(new Date()); //编辑时间
-        tClue.setEditBy(loginUserId); //编辑人id
-
+        tClue.setEditTime(new Date());
+        tClue.setEditBy(loginUserId);
         return tClueMapper.updateByPrimaryKeySelective(tClue);
     }
 }

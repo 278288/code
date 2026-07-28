@@ -13,22 +13,16 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * 登录失败的处理器
- *
+ * 登录失败处理器。
+ * 用户名不存在、密码错误等情况触发，直接返回 JSON 错误信息。
  */
 @Component
 public class MyAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        //登录失败，执行该方法，在该方法中返回json给前端，就行了
-        //登录失败的统一结果
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                                        AuthenticationException exception) throws IOException, ServletException {
         R result = R.FAIL(exception.getMessage());
-
-        //把R对象转成json
-        String resultJSON = JSONUtils.toJSON(result);
-
-        //把R以json返回给前端
-        ResponseUtils.write(response, resultJSON);
+        ResponseUtils.write(response, JSONUtils.toJSON(result));
     }
 }

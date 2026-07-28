@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 交易 Mapper，对应 t_tran 表。关联 t_customer、t_clue 查询客户名和手机号 -->
 <mapper namespace="com.bjpowernode.mapper.TTranMapper">
 
   <resultMap id="BaseResultMap" type="com.bjpowernode.model.TTran">
@@ -17,6 +19,7 @@
     <result column="edit_by" jdbcType="INTEGER" property="editBy" />
   </resultMap>
 
+  <!-- 交易详情 ResultMap：关联客户(customerDO) -> 线索(clueDO)，查询客户全名和手机号 -->
   <resultMap id="TranDetailResultMap" type="com.bjpowernode.model.TTran">
     <id column="tranId" jdbcType="INTEGER" property="id" />
     <result column="tran_no" jdbcType="VARCHAR" property="tranNo" />
@@ -46,6 +49,7 @@
     create_time, create_by, edit_time, edit_by
   </sql>
 
+  <!-- 分页查询交易列表，LEFT JOIN t_customer 和 t_clue 获取客户名和手机号，按创建时间倒序 -->
   <select id="selectTranPage" resultMap="TranDetailResultMap">
     select
       t.id as tranId, t.tran_no, t.customer_id, t.money, t.expected_date, t.stage,
@@ -58,6 +62,7 @@
     order by t.create_time desc
   </select>
 
+  <!-- 交易详情查询，带客户和线索关联 -->
   <select id="selectTranDetail" parameterType="java.lang.Integer" resultMap="TranDetailResultMap">
     select
       t.id as tranId, t.tran_no, t.customer_id, t.money, t.expected_date, t.stage,
@@ -70,18 +75,22 @@
     where t.id = #{id,jdbcType=INTEGER}
   </select>
 
+  <!-- 统计成交总金额（stage=42 表示付款成交） -->
   <select id="selectBySuccessTranAmount" resultType="java.math.BigDecimal">
     select sum(money) from t_tran where stage = 42
   </select>
 
+  <!-- 统计全部交易总金额 -->
   <select id="selectByTotalTranAmount" resultType="java.math.BigDecimal">
     select sum(money) from t_tran
   </select>
 
+  <!-- 统计参与交易的客户总数（去重） -->
   <select id="selectByTotalTranCount" resultType="java.lang.Integer">
     SELECT count( 0 ) FROM ( SELECT DISTINCT customer_id FROM t_tran ) t
   </select>
 
+  <!-- 统计成交客户数（去重） -->
   <select id="selectBySuccessTranCount" resultType="java.lang.Integer">
     SELECT count( 0 ) FROM ( SELECT DISTINCT customer_id FROM t_tran where stage = 42 ) t
   </select>

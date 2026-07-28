@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 数据统计Controller
+ * 仪表盘统计 Controller。
+ * 提供首页仪表盘所需的汇总数据、销售漏斗、线索来源饼图三个接口。
  */
 @RestController
 public class StatisticController {
@@ -19,39 +20,23 @@ public class StatisticController {
     @Resource
     private StatisticService statisticService;
 
+    /** 仪表盘汇总数据（线索数、客户数、交易数、总金额） */
     @GetMapping(value = "/api/summary/data")
     public R summaryData() {
         SummaryData summaryData = statisticService.loadSummaryData();
         return R.OK(summaryData);
     }
 
+    /** 销售漏斗数据（线索 → 客户 → 交易 → 成交各阶段数量） */
     @GetMapping(value = "/api/saleFunnel/data")
     public R saleFunnelData() {
-        /**
-         * [
-         *    { value: 20, name: '成交' },
-         *    { value: 60, name: '交易' },
-         *    { value: 80, name: '客户' },
-         *    { value: 100, name: '线索' }
-         * ]
-         *
-         */
         List<NameValue> nameValueList = statisticService.loadSaleFunnelData();
         return R.OK(nameValueList);
     }
 
+    /** 线索来源饼图数据（各来源的线索数量占比） */
     @GetMapping(value = "/api/sourcePie/data")
     public R sourcePieData() {
-        /**
-         *   [
-         *       { value: 1048, name: 'Search Engine' },
-         *       { value: 735, name: 'Direct' },
-         *       { value: 580, name: 'Email' },
-         *       { value: 484, name: 'Union Ads' },
-         *       { value: 300, name: 'Video Ads' }
-         *   ]
-         *
-         */
         List<NameValue> nameValueList = statisticService.loadSourcePieData();
         return R.OK(nameValueList);
     }

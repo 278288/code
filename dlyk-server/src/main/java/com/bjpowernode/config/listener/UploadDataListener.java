@@ -14,30 +14,33 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 每读一行Excel的数据，就会触发该监听器中的invoke()方法，Excel读完之后会触发该监听器中的doAfterAllAnalysed()方法
+ * EasyExcel 读取监听器，用于批量导入线索。
+ *
+ * invoke() 每读取一行 Excel 数据触发一次，攒够 BATCH_COUNT(100) 条批量写入数据库。
+ * doAfterAllAnalysed() 在所有行读取完毕后触发，将最后不足 100 条的剩余数据写入。
+ *
+ * 注意：此监听器不能被 Spring 管理，需要通过构造方法手动传入 Mapper 和 token。
  */
 @Slf4j
 public class UploadDataListener implements ReadListener<TClue> {
 
-    /**
-     * 每隔100条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
-     */
+    /** 批量提交阈值：每 100 条写一次数据库，防止几万条数据撑爆内存 */
     private static final int BATCH_COUNT = 100;
 
-    //缓存List
+    /** 缓存列表，攒够 BATCH_COUNT 后批量写入并清空 */
     private List<TClue> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
 
-    /**
-     * 假设这个是一个DAO，当然有业务逻辑这个也可以是一个service。当然如果不用存储这个对象没用。
-     */
+    /** 线索 Mapper，通过构造方法传入（不能 @Autowired，因为此 Listener 不由 Spring 管理） */
     private TClueMapper tClueMapper;
 
+    /** 当前登录用户的 JWT，用于获取创建人 ID */
     private String token;
 
     /**
-     * 如果使用了spring,请使用这个构造方法。每次创建Listener的时候需要把spring管理的类传进来
+     * 构造方法：每次创建 Listener 时传入 Mapper 和 token。
      *
-     * @param tClueMapper
+     * @param tClueMapper 线索 Mapper，用于批量写入数据库
+     * @param token       当前用户 JWT，用于提取创建人 ID
      */
     public UploadDataListener(TClueMapper tClueMapper, String token) {
         this.tClueMapper = tClueMapper;
@@ -45,51 +48,39 @@ public class UploadDataListener implements ReadListener<TClue> {
     }
 
     /**
-     * 这个每一条数据解析都会来调用
-     *
-     * @param tClue    one row value. It is same as {@link AnalysisContext#readRowHolder()}
-     * @param context
+     * 每解析一行 Excel 数据触发一次。
+     * 设置创建人、创建时间后加入缓存列表，达到 BATCH_COUNT 时批量写入数据库。
      */
     @Override
     public void invoke(TClue tClue, AnalysisContext context) {
-        log.info("读取到的每一条数据:{}", JSONUtils.toJSON(tClue));
+        log.info("读取到线索数据: {}", JSONUtils.toJSON(tClue));
 
-        //给读到的clue对象设置创建时间(导入时间)和创建人（导入人）
         tClue.setCreateTime(new Date());
-
         TUser tUser = JWTUtils.parseUserFromJWT(token);
         tClue.setCreateBy(tUser.getId());
 
-        //每读取一行，就把该数据放入到一个缓存List中
         cachedDataList.add(tClue);
 
-        // 达到BATCH_COUNT了，需要去存储一次数据库，防止数据几万条数据在内存，容易OOM
         if (cachedDataList.size() >= BATCH_COUNT) {
-            //把缓存list中的数据写入到数据库
             saveData();
-
-            //存储完成清空list
             cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
         }
     }
 
     /**
-     * 所有数据解析完成了 都会来调用
-     *
-     * @param context
+     * 所有数据解析完成后的回调。将最后不足 BATCH_COUNT 的剩余数据写入数据库。
      */
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        // 这里也要保存数据，确保最后遗留的数据也存储到数据库
         saveData();
         log.info("所有数据解析完成！");
     }
 
     /**
-     * 加上存储数据库
+     * 将缓存列表中的数据批量写入数据库。
      */
     private void saveData() {
-        log.info("{}条数据，开始存储数据库！", cachedDataList.size());
+        log.info("{}条数据，开始存储数据库", cachedDataList.size());
         tClueMapper.saveClue(cachedDataList);
         log.info("存储数据库成功！");
     }

@@ -14,12 +14,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 产品管理服务实现。
+ */
 @Service
 public class ProductServiceImpl implements ProductService {
 
     @Resource
     private TProductMapper tProductMapper;
 
+    /**
+     * 获取所有在售产品（线索录入时下拉选择意向产品用）。
+     */
     @Override
     public List<TProduct> getAllOnSaleProduct() {
         return tProductMapper.selectAllOnSaleProduct();

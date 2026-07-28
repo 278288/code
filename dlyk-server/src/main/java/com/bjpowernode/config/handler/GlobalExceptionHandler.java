@@ -11,61 +11,53 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * 统一异常处理类，controller发生了异常，统一用该类进行处理
+ * 全局异常处理器（AOP 切面）。
+ * 拦截所有标注 @RestController 的 Controller 中抛出的异常，统一返回 JSON 格式的错误信息。
  *
+ * 异常匹配顺序：子类优先精确匹配 → 匹配不到则走父类 Exception.class。
  */
-@RestControllerAdvice //aop。拦截标注了@RestController的controller中的所有方法
-//@ControllerAdvice //aop。拦截标注了@Controller的controller中的所有方法
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     /**
-     * 异常处理的方法（controller方法发生了异常，那么就使用该方法来处理）
-     *
-     * @return
+     * 通用异常兜底，捕获所有未精确匹配的异常。
+     * Controller 方法抛出任何未处理的异常，都会走这里，避免直接暴露 500 堆栈给前端。
      */
     @ExceptionHandler(value = Exception.class)
     public R handException(Exception e) {
-        e.printStackTrace(); //在控制台打印异常信息
+        e.printStackTrace();
         return R.FAIL(e.getMessage());
     }
 
     /**
-     * 异常的精确匹配，先精确匹配，匹配不到了，就找父类的异常处理
-     *
-     * @param e
-     * @return
+     * 数据库访问异常（DataAccessException 及其子类，如 SQL 错误、连接失败等）。
      */
     @ExceptionHandler(value = DataAccessException.class)
-    public R handException3(DataAccessException e) {
-        e.printStackTrace(); //在控制台打印异常信息
+    public R handException(DataAccessException e) {
+        e.printStackTrace();
         return R.FAIL(CodeEnum.DATA_ACCESS_EXCEPTION);
     }
 
     /**
-     * 权限不足的异常处理
-     *
-     * @param e
-     * @return
+     * 权限不足异常（方法级 @PreAuthorize 校验失败时触发）。
      */
     @ExceptionHandler(value = AccessDeniedException.class)
     public R handException(AccessDeniedException e) {
-        e.printStackTrace(); //在控制台打印异常信息
+        e.printStackTrace();
         return R.FAIL(CodeEnum.ACCESS_DENIED);
     }
 
     /**
-     * 参数校验未通过异常处理，HTTP 400 + 中文错误提示
-     *
-     * @param e
-     * @return
+     * JSR-303 参数校验异常（@Valid 校验失败）。
+     * 返回 HTTP 400 + 中文错误提示（多个字段错误用顿号拼接）。
      */
-    @ResponseStatus(HttpStatus.BAD_REQUEST) // 400 Bad Request
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public R handException(MethodArgumentNotValidException e) {
         StringBuilder sb = new StringBuilder();
         e.getBindingResult().getFieldErrors().forEach(fieldError -> {
             if (sb.length() > 0) {
-                sb.append("；");
+                sb.append(",");
             }
             sb.append(fieldError.getDefaultMessage());
         });

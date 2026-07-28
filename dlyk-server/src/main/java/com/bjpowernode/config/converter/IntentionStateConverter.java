@@ -11,32 +11,21 @@ import com.bjpowernode.result.DicEnum;
 import java.util.List;
 
 /**
- * 意向状态转换器
+ * Excel 意向状态名 → Java 状态 ID 转换器。
+ * 例如："意向不明" → 48，"有意向" → 对应字典值 ID。
  */
 public class IntentionStateConverter implements Converter<Integer> {
 
-    /**
-     * 把Excel中的数据转换为Java中的数据
-     * 也就是Excel中的 “意向不明”  ----> Java类中是 48
-     *
-     * @param cellData
-     * @param contentProperty
-     * @param globalConfiguration
-     * @return
-     * @throws Exception
-     */
     @Override
-    public Integer convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
-        //cellData是Excel中读取到的数据，是“意向不明”、“有意向”
+    public Integer convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty,
+                                     GlobalConfiguration globalConfiguration) throws Exception {
         String cellIntentionStateName = cellData.getStringValue();
 
-        List<TDicValue> tDicValueList = (List<TDicValue>) DlykServerApplication.cacheMap.get(DicEnum.INTENTIONSTATE.getCode());
+        List<TDicValue> tDicValueList =
+                (List<TDicValue>) DlykServerApplication.cacheMap.get(DicEnum.INTENTIONSTATE.getCode());
         for (TDicValue tDicValue : tDicValueList) {
-            Integer id  = tDicValue.getId();
-            String name = tDicValue.getTypeValue();
-
-            if (cellIntentionStateName.equals(name)) {
-                return id;
+            if (cellIntentionStateName.equals(tDicValue.getTypeValue())) {
+                return tDicValue.getId();
             }
         }
         return -1;
