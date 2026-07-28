@@ -6,6 +6,7 @@ import com.bjpowernode.result.R;
 import com.bjpowernode.service.TranService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -33,14 +34,14 @@ public class TranController {
     }
 
     @PostMapping(value = "/api/tran")
-    public R addTran(TranQuery tranQuery, @RequestHeader(value = "Authorization") String token) {
+    public R addTran(@Valid TranQuery tranQuery, @RequestHeader(value = "Authorization") String token) {
         tranQuery.setToken(token);
         int save = tranService.saveTran(tranQuery);
         return save >= 1 ? R.OK() : R.FAIL();
     }
 
     @PutMapping(value = "/api/tran")
-    public R editTran(TranQuery tranQuery, @RequestHeader(value = "Authorization") String token) {
+    public R editTran(@Valid TranQuery tranQuery, @RequestHeader(value = "Authorization") String token) {
         tranQuery.setToken(token);
         int update = tranService.updateTran(tranQuery);
         return update >= 1 ? R.OK() : R.FAIL();

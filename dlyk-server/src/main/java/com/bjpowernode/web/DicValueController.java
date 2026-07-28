@@ -6,6 +6,7 @@ import com.bjpowernode.result.R;
 import com.bjpowernode.service.DicValueService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -32,13 +33,13 @@ public class DicValueController {
     }
 
     @PostMapping(value = "/api/dicvalue")
-    public R addDicValue(DicValueQuery dicValueQuery) {
+    public R addDicValue(@Valid DicValueQuery dicValueQuery) {
         int save = dicValueService.saveDicValue(dicValueQuery);
         return save >= 1 ? R.OK() : R.FAIL();
     }
 
     @PutMapping(value = "/api/dicvalue")
-    public R editDicValue(DicValueQuery dicValueQuery) {
+    public R editDicValue(@Valid DicValueQuery dicValueQuery) {
         int update = dicValueService.updateDicValue(dicValueQuery);
         return update >= 1 ? R.OK() : R.FAIL();
     }

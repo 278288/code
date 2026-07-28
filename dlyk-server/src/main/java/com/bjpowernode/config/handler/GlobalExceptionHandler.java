@@ -5,6 +5,7 @@ import com.bjpowernode.result.R;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -52,5 +53,23 @@ public class GlobalExceptionHandler {
     public R handException(AccessDeniedException e) {
         e.printStackTrace(); //在控制台打印异常信息
         return R.FAIL(CodeEnum.ACCESS_DENIED);
+    }
+
+    /**
+     * 参数校验未通过异常处理
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public R handException(MethodArgumentNotValidException e) {
+        StringBuilder sb = new StringBuilder();
+        e.getBindingResult().getFieldErrors().forEach(fieldError -> {
+            if (sb.length() > 0) {
+                sb.append("；");
+            }
+            sb.append(fieldError.getDefaultMessage());
+        });
+        return R.FAIL(sb.toString());
     }
 }

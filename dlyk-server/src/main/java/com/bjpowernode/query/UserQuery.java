@@ -1,5 +1,6 @@
 package com.bjpowernode.query;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
@@ -13,16 +14,18 @@ public class UserQuery extends BaseQuery {
     /**
      * 登录账号
      */
+    @NotBlank(message = "登录账号不能为空")
     private String loginAct;
 
     /**
-     * 登录密码
+     * 登录密码（创建用户时必填，编辑时可不填）
      */
     private String loginPwd;
 
     /**
      * 用户姓名
      */
+    @NotBlank(message = "用户姓名不能为空")
     private String name;
 
     /**

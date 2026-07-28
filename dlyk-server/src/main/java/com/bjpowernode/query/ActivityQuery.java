@@ -1,7 +1,8 @@
 package com.bjpowernode.query;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
@@ -12,27 +13,23 @@ public class ActivityQuery extends BaseQuery {
 
     private Integer id;
 
+    @NotNull(message = "负责人不能为空")
     private Integer ownerId;
 
+    @NotBlank(message = "活动名称不能为空")
     private String name;
 
-    /**
-     * 前端传过来的是一个格式为：YYYY-MM-DD HH:mm:ss 的字符串日期，后台接收要把字符串的日期转成java.util.Date日期，需要使用@DateTimeFormat注解
-     */
+    @NotNull(message = "开始时间不能为空")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
-    /**
-     * 前端传过来的是一个格式为：YYYY-MM-DD HH:mm:ss 的字符串日期，后台接收要把字符串的日期转成java.util.Date日期，需要使用@DateTimeFormat注解
-     */
+    @NotNull(message = "结束时间不能为空")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 
+    @NotNull(message = "活动成本不能为空")
     private BigDecimal cost;
 
-    /**
-     * 前端传过来的是一个格式为：YYYY-MM-DD HH:mm:ss 的字符串日期，后台接收要把字符串的日期转成java.util.Date日期，需要使用@DateTimeFormat注解
-     */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 

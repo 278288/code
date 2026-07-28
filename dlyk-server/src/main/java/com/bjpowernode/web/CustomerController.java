@@ -10,6 +10,7 @@ import com.bjpowernode.service.CustomerService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     @PostMapping(value = "/api/clue/customer")
-    public R convertCustomer(@RequestBody CustomerQuery customerQuery, @RequestHeader(value = "Authorization") String token) {
+    public R convertCustomer(@Valid @RequestBody CustomerQuery customerQuery, @RequestHeader(value = "Authorization") String token) {
         customerQuery.setToken(token);
         Boolean convert = customerService.convertCustomer(customerQuery);
         return convert ? R.OK() : R.FAIL();
@@ -43,33 +44,18 @@ public class CustomerController {
         return R.OK(pageInfo);
     }
 
-    /**
-     * 客户详情
-     *
-     * @param id
-     * @return
-     */
     @GetMapping(value = "/api/customer/{id}")
     public R customerDetail(@PathVariable(value = "id") Integer id) {
         TCustomer tCustomer = customerService.getCustomerById(id);
         return R.OK(tCustomer);
     }
 
-    /**
-     * 导出Excel
-     *
-     * @param response
-     * @throws IOException
-     */
     @GetMapping(value = "/api/exportExcel")
     public void exportExcel(HttpServletResponse response, @RequestParam(value = "ids", required = false) String ids) throws IOException {
 
-        //要想让浏览器弹出下载框，你后端要设置一下响应头信息
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(Constants.EXCEL_FILE_NAME+System.currentTimeMillis(), StandardCharsets.UTF_8) + ".xlsx");
-
-        //2、后端查询数据库的数据，把数据写入excel，然后把Excel以IO流的方式输出到前端浏览器（我们来实现）
 
         List<String> idList = StringUtils.hasText(ids) ? Arrays.asList(ids.split(",")) : new ArrayList<>();
         List<CustomerExcel> dataList = customerService.getCustomerByExcel(idList);

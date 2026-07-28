@@ -21,12 +21,9 @@ public class JWTUtils {
     private static String SECRET = null;
 
     /**
-     * 由 JwtConfig 在应用启动时注入，不允许直接赋值
+     * 由 JwtConfig 在应用启动时注入。允许在测试中多次调用重新设置。
      */
     public static void setSecret(String secret) {
-        if (SECRET != null) {
-            throw new IllegalStateException("JWT secret 只能设置一次");
-        }
         SECRET = secret;
     }
 

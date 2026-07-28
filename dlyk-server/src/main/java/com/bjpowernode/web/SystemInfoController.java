@@ -6,6 +6,7 @@ import com.bjpowernode.result.R;
 import com.bjpowernode.service.SystemInfoService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -31,13 +32,13 @@ public class SystemInfoController {
     }
 
     @PostMapping(value = "/api/system")
-    public R addSystem(SystemInfoQuery query) {
+    public R addSystem(@Valid SystemInfoQuery query) {
         int save = systemInfoService.saveSystemInfo(query);
         return save >= 1 ? R.OK() : R.FAIL();
     }
 
     @PutMapping(value = "/api/system")
-    public R editSystem(SystemInfoQuery query) {
+    public R editSystem(@Valid SystemInfoQuery query) {
         int update = systemInfoService.updateSystemInfo(query);
         return update >= 1 ? R.OK() : R.FAIL();
     }

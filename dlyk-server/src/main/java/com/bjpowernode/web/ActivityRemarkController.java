@@ -1,12 +1,12 @@
 package com.bjpowernode.web;
 
 import com.bjpowernode.model.TActivityRemark;
-import com.bjpowernode.model.TUser;
 import com.bjpowernode.query.ActivityRemarkQuery;
 import com.bjpowernode.result.R;
 import com.bjpowernode.service.ActivityRemarkService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,8 +16,7 @@ public class ActivityRemarkController {
     private ActivityRemarkService activityRemarkService;
 
     @PostMapping(value = "/api/activity/remark")
-    public R addActivityRemark(@RequestBody ActivityRemarkQuery activityRemarkQuery, @RequestHeader(value = "Authorization") String token) {
-        //axios提交post请求，提交过来的是json数据，使用@RequestBody注解接收
+    public R addActivityRemark(@Valid @RequestBody ActivityRemarkQuery activityRemarkQuery, @RequestHeader(value = "Authorization") String token) {
         activityRemarkQuery.setToken(token);
         int save = activityRemarkService.saveActivityRemark(activityRemarkQuery);
         return save >= 1 ? R.OK( ) : R.FAIL();
@@ -45,8 +44,7 @@ public class ActivityRemarkController {
     }
 
     @PutMapping(value = "/api/activity/remark")
-    public R editActivityRemark(@RequestBody ActivityRemarkQuery activityRemarkQuery, @RequestHeader(value = "Authorization") String token) {
-        //axios提交post请求，提交过来的是json数据，使用@RequestBody注解接收
+    public R editActivityRemark(@Valid @RequestBody ActivityRemarkQuery activityRemarkQuery, @RequestHeader(value = "Authorization") String token) {
         activityRemarkQuery.setToken(token);
         int update = activityRemarkService.updateActivityRemark(activityRemarkQuery);
         return update >= 1 ? R.OK( ) : R.FAIL();

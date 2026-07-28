@@ -8,6 +8,7 @@ import com.bjpowernode.result.R;
 import com.bjpowernode.service.ClueService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +33,7 @@ public class ClueController {
 
     @PreAuthorize(value = "hasAuthority('clue:import')")
     @PostMapping(value = "/api/importExcel")
-    public R importExcel(MultipartFile file, @RequestHeader(value = "Authorization") String token) throws IOException { //filex的名字要和前端formData里面的名字相同，否则接收不到
+    public R importExcel(MultipartFile file, @RequestHeader(value = "Authorization") String token) throws IOException {
 
         clueService.importExcel(file.getInputStream(), token);
 
@@ -47,7 +48,7 @@ public class ClueController {
 
     @PreAuthorize(value = "hasAuthority('clue:add')")
     @PostMapping(value = "/api/clue")
-    public R addClue(ClueQuery clueQuery, @RequestHeader(value = "Authorization") String token) {
+    public R addClue(@Valid ClueQuery clueQuery, @RequestHeader(value = "Authorization") String token) {
         clueQuery.setToken(token);
         int save = clueService.saveClue(clueQuery);
 
@@ -63,7 +64,7 @@ public class ClueController {
 
     @PreAuthorize(value = "hasAuthority('clue:edit')")
     @PutMapping(value = "/api/clue")
-    public R editClue(ClueQuery clueQuery, @RequestHeader(value = "Authorization") String token) {
+    public R editClue(@Valid ClueQuery clueQuery, @RequestHeader(value = "Authorization") String token) {
         clueQuery.setToken(token);
         int update = clueService.updateClue(clueQuery);
 

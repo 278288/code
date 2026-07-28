@@ -6,6 +6,7 @@ import com.bjpowernode.result.R;
 import com.bjpowernode.service.UserService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +50,7 @@ public class UserController {
 
     @PreAuthorize(value = "hasAuthority('user:add')")
     @PostMapping(value = "/api/user")
-    public R addUser(UserQuery userQuery, @RequestHeader(value = "Authorization") String token) {
+    public R addUser(@Valid UserQuery userQuery, @RequestHeader(value = "Authorization") String token) {
         userQuery.setToken(token);
         int save = userService.saveUser(userQuery);
         return save >= 1 ? R.OK() : R.FAIL();
@@ -57,7 +58,7 @@ public class UserController {
 
     @PreAuthorize(value = "hasAuthority('user:edit')")
     @PutMapping(value = "/api/user")
-    public R editUser(UserQuery userQuery, @RequestHeader(value = "Authorization") String token) {
+    public R editUser(@Valid UserQuery userQuery, @RequestHeader(value = "Authorization") String token) {
         userQuery.setToken(token);
         int update = userService.updateUser(userQuery);
         return update >= 1 ? R.OK() : R.FAIL();
@@ -85,7 +86,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/api/user/profile")
-    public R updateProfile(UserQuery userQuery) {
+    public R updateProfile(@Valid UserQuery userQuery) {
         int update = userService.updateProfile(userQuery);
         return update >= 1 ? R.OK() : R.FAIL();
     }
@@ -96,6 +97,6 @@ public class UserController {
                              Authentication authentication) {
         TUser currentUser = (TUser) authentication.getPrincipal();
         boolean result = userService.changePassword(currentUser.getId(), oldPwd, newPwd);
-        return result ? R.OK() : R.FAIL("YYYYYYYYYY");
+        return result ? R.OK() : R.FAIL("原密码错误");
     }
 }
