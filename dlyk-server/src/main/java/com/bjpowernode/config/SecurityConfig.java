@@ -20,10 +20,11 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
+import com.bjpowernode.config.filter.LoginValidationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import java.util.Arrays;
 
-@EnableMethodSecurity //开启方法级别的权限检查
+@EnableMethodSecurity // 开启方法级别的权限检查
 @Configuration
 public class SecurityConfig {
 
@@ -42,50 +43,55 @@ public class SecurityConfig {
     @Resource
     private TokenVerifyFilter tokenVerifyFilter;
 
-    @Bean //There is no PasswordEncoder mapped for the id "null"
+    @Resource
+    private LoginValidationFilter loginValidationFilter;
+
+    @Bean // There is no PasswordEncoder mapped for the id "null"
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, CorsConfigurationSource configurationSource) throws Exception {
-        //禁用跨站请求伪造
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
+            CorsConfigurationSource configurationSource) throws Exception {
+        // 禁用跨站请求伪造
         return httpSecurity
-                .formLogin( (formLogin) -> {
-                    formLogin.loginProcessingUrl(Constants.LOGIN_URI) //登录处理地址，不需要写Controller
+                .formLogin((formLogin) -> {
+                    formLogin.loginProcessingUrl(Constants.LOGIN_URI) // 登录处理地址，不需要写Controller
                             .usernameParameter("loginAct")
                             .passwordParameter("loginPwd")
                             .successHandler(myAuthenticationSuccessHandler)
                             .failureHandler(myAuthenticationFailureHandler);
                 })
 
-                .authorizeHttpRequests( (authorize) -> {
+                .authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers("/api/login").permitAll()
-                            .anyRequest().authenticated(); //其它任何请求都需要登录后才能访问
+                            .anyRequest().authenticated(); // 其它任何请求都需要登录后才能访问
                 })
 
-                .csrf(AbstractHttpConfigurer :: disable) //方法引用，禁用跨站请求伪造
+                .csrf(AbstractHttpConfigurer::disable) // 方法引用，禁用跨站请求伪造
 
-                //支持跨域请求
-                .cors( (cors) -> {
+                // 支持跨域请求
+                .cors((cors) -> {
                     cors.configurationSource(configurationSource);
                 })
 
-                .sessionManagement( (session) -> {
-                    //session创建策略
+                .sessionManagement((session) -> {
+                    // session创建策略
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 无session状态，也就是禁用session
                 })
 
-                //添加自定义的Filter
+                // 添加自定义的Filter
+                .addFilterBefore(loginValidationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(tokenVerifyFilter, LogoutFilter.class)
 
-                //退出登录
+                // 退出登录
                 .logout((logout) -> {
-                    logout.logoutUrl("/api/logout") //退出提交到该地址，该地址不需要我们写controller的，是框架处理
+                    logout.logoutUrl("/api/logout") // 退出提交到该地址，该地址不需要我们写controller的，是框架处理
                             .logoutSuccessHandler(myLogoutSuccessHandler);
                 })
 
-                //这个是没有权限访问时触发
+                // 这个是没有权限访问时触发
                 .exceptionHandling((exceptionHandling) -> {
                     exceptionHandling.accessDeniedHandler(myAccessDeniedHandler);
                 })
@@ -96,9 +102,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource configurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*")); //允许任何来源，http://localhost:8081
-        configuration.setAllowedMethods(Arrays.asList("*")); //允许任何请求方法，post、get、put、delete
-        configuration.setAllowedHeaders(Arrays.asList("*")); //允许任何的请求头
+        configuration.setAllowedOrigins(Arrays.asList("*")); // 允许任何来源，http://localhost:8081
+        configuration.setAllowedMethods(Arrays.asList("*")); // 允许任何请求方法，post、get、put、delete
+        configuration.setAllowedHeaders(Arrays.asList("*")); // 允许任何的请求头
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
