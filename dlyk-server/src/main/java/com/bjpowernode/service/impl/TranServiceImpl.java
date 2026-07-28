@@ -123,7 +123,10 @@ public class TranServiceImpl implements TranService {
         tTranHistoryMapper.deleteByTranId(id);
         tTranRemarkMapper.deleteByTranId(id);
         // 再删除交易本身
-        return tTranMapper.deleteByPrimaryKey(id);
+        int result = tTranMapper.deleteByPrimaryKey(id);
+        if (result < 1)
+            throw new RuntimeException("删除交易失败：交易记录不存在，id=" + id);
+        return result;
     }
 
     @Override

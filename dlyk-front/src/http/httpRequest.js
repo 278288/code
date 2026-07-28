@@ -84,6 +84,13 @@ axios.interceptors.response.use( (response) => {
     return response;
 }, function (error) {
     // 超出 2xx 范围的状态码都会触发该函数。
-    // 对响应错误做点什么
+    // 处理后端返回的 400 等客户端错误（如参数校验失败），提取中文错误提示展示给用户
+    if (error.response && error.response.data) {
+        const data = error.response.data;
+        const msg = data.msg || data.message || "请求失败";
+        ElMessage.error(msg);
+    } else if (error.message) {
+        ElMessage.error(error.message);
+    }
     return Promise.reject(error);
 });

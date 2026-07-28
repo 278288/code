@@ -3,14 +3,12 @@ package com.bjpowernode.config.handler;
 import com.bjpowernode.result.CodeEnum;
 import com.bjpowernode.result.R;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 /**
  * 统一异常处理类，controller发生了异常，统一用该类进行处理
@@ -56,11 +54,12 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 参数校验未通过异常处理
+     * 参数校验未通过异常处理，HTTP 400 + 中文错误提示
      *
      * @param e
      * @return
      */
+    @ResponseStatus(HttpStatus.BAD_REQUEST) // 400 Bad Request
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public R handException(MethodArgumentNotValidException e) {
         StringBuilder sb = new StringBuilder();
