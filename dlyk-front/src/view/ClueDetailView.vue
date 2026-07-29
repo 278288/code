@@ -273,7 +273,7 @@ export default defineComponent({
 
     //加载字典数据
     loadDicValue(typeCode) {
-      doGet("/api/dicvalue/" + typeCode, {}).then( resp => {
+      doGet("/api/dic/" + typeCode, {}).then( resp => {
         if (resp.data.code === 200) {
           if (typeCode === 'noteWay') {
             this.noteWayOptions = resp.data.data;

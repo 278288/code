@@ -15,11 +15,13 @@ import java.util.List;
 /**
  * 字典数据查询 Controller。
  * 从应用缓存（cacheMap）中按 typeCode 取字典值或产品/活动列表，供前端下拉选择器使用。
+ *
+ * 注意：路由使用 /api/dic/{typeCode}，避免与 DicValueController 的 /api/dicvalue/{id} 冲突。
  */
 @RestController
 public class DicController {
 
-    @GetMapping(value = "/api/dicvalue/{typeCode}")
+    @GetMapping(value = "/api/dic/{typeCode}")
     public R dicData(@PathVariable(value = "typeCode") String typeCode) {
         if (typeCode.equals(DicEnum.ACTIVITY.getCode())) {
             List<TActivity> tActivityList = (List<TActivity>) DlykServerApplication.cacheMap.get(typeCode);

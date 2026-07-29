@@ -4,7 +4,7 @@ import {getTokenName, messageConfirm, messageTip, removeToken} from "../util/uti
 import {ElMessage, ElMessageBox} from "element-plus";
 
 //定义后端接口地址的前缀
-axios.defaults.baseURL = "http://localhost:8089";
+axios.defaults.baseURL = "http://127.0.0.1:8089";
 
 //axios.defaults.baseURL = "http://192.168.253.131:8089";
 

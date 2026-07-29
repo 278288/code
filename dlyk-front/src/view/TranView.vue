@@ -1,9 +1,7 @@
 <template>
   <el-button type="primary" class="btn" @click="$router.push('/dashboard/tran/add')">新增交易</el-button>
-  <el-radio-group v-model="viewMode" size="small" style="margin-bottom:10px">
-    <el-radio-button label="list">列表</el-radio-button>
-    <el-radio-button label="kanban">看板</el-radio-button>
-  </el-radio-group>
+  <el-button :type="viewMode === 'list' ? 'primary' : ''" @click="viewMode = 'list'">列表</el-button>
+  <el-button :type="viewMode === 'kanban' ? 'primary' : ''" @click="viewMode = 'kanban'">看板</el-button>
   <el-button type="danger" class="btn" @click="batchDel">批量删除</el-button>
   <div v-if="viewMode === 'list'">
     <!-- 原来的 el-table 和 el-pagination -->
@@ -129,4 +127,10 @@
   .el-table {
     margin-top: 10px;
   }
+  .el-button {margin-left: 5px;}
+  .el-radio-button {
+    margin-left: 5px;
+    //width: 10px;
+  }
+
 </style>

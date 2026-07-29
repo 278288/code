@@ -111,7 +111,7 @@ export default defineComponent({
     },
 
     loadStage() {
-      doGet("/api/dicvalue/stage", {}).then(resp => {
+      doGet("/api/dic/stage", {}).then(resp => {
         if (resp.data.code === 200) {
           this.stageList = resp.data.data;
         }

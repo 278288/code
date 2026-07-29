@@ -35,12 +35,12 @@
                 tranList: [],
                 dragTran: null,
                 columns: [
-                    { label: '创建', value: 1, color: '#6c757d' },
-                    { label: '确认清单', value: 2, color: '#0d6efd' },
-                    { label: '交付定金', value: 3, color: '#6f42c1' },
-                    { label: '产品检验', value: 4, color: '#fd7e14' },
+                    { label: '创建', value: 12, color: '#6c757d' },
+                    { label: '确认清单', value: 37, color: '#0d6efd' },
+                    { label: '交付定金', value: 40, color: '#6f42c1' },
+                    { label: '产品检验', value: 35, color: '#fd7e14' },
                     { label: '付款成交', value: 42, color: '#198754' },
-                    { label: '丢失关闭', value: 0, color: '#dc3545' }
+                    { label: '丢失关闭', value: 21, color: '#dc3545' }
                 ]
             }
         },
@@ -65,7 +65,7 @@
             loadData() {
                 doGet("/api/trans", { current: 1 }).then(resp => {
                     if (resp.data.code === 200) {
-                        this.tranList = resp.data.data.list || [];
+                        const data = resp.data.data; this.tranList = Array.isArray(data) ? data : (data.list || []);
                     }
                 })
             },
