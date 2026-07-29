@@ -19,4 +19,6 @@ public interface ClueService {
     TClue getClueById(Integer id);
 
     int updateClue(ClueQuery clueQuery);
+
+    int deleteClue(Integer id);
 }

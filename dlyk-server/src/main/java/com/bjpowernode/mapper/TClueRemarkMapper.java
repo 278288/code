@@ -22,4 +22,6 @@ public interface TClueRemarkMapper {
 
     @DataScope(tableAlias = "tcr", tableField = "create_by")
     List<TClueRemark> selectClueRemarkByPage(ClueRemarkQuery clueRemarkQuery);
+
+    int deleteByClueId(Integer clueId);
 }

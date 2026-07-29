@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <el-form :inline="true" :model="activityQuery" :rules="activityRules">
     <el-form-item label="负责人">
       <el-select
@@ -82,7 +82,8 @@
 
 <script>
 import {defineComponent} from 'vue'
-import {doGet} from "../http/httpRequest.js";
+import {doGet, doDelete} from "../http/httpRequest.js";
+import {messageTip, messageConfirm} from "../util/util.js";
 
 export default defineComponent({
   name: "ActivityView",
@@ -101,6 +102,8 @@ export default defineComponent({
       total : 0,
       //负责人的下拉列表数据
       ownerOptions : [{}],
+      //批量删除时选中的ID列表
+      selectedIds : [],
       //定义市场活动搜索表单验证规则
       activityRules : {
         cost : [
@@ -185,6 +188,47 @@ export default defineComponent({
     //查看详情
     view(id) {
       this.$router.push("/dashboard/activity/" + id);
+    },
+
+    //表格多选变化时触发
+    handleSelectionChange(selection) {
+      this.selectedIds = selection.map(item => item.id);
+    },
+
+    //单条删除
+    del(id) {
+      messageConfirm("确认删除该市场活动吗？").then(() => {
+        doDelete('/api/activity/' + id, {}).then(resp => {
+          if (resp.data.code === 200) {
+            messageTip("删除成功", "success");
+            this.getData(1);
+          } else {
+            messageTip("删除失败", "error");
+          }
+        })
+      }).catch(() => {
+        messageTip("取消删除", "warning");
+      });
+    },
+
+    //批量删除
+    batchDel() {
+      if (this.selectedIds.length === 0) {
+        messageTip("请至少选择一条记录", "warning");
+        return;
+      }
+      messageConfirm("确认删除选中的 " + this.selectedIds.length + " 条市场活动吗？").then(() => {
+        doDelete('/api/activity', { ids: this.selectedIds.join(',') }).then(resp => {
+          if (resp.data.code === 200) {
+            messageTip("批量删除成功", "success");
+            this.getData(1);
+          } else {
+            messageTip("批量删除失败", "error");
+          }
+        })
+      }).catch(() => {
+        messageTip("取消删除", "warning");
+      });
     }
   }
 })

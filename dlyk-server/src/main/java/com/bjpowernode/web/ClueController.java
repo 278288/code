@@ -82,7 +82,11 @@ public class ClueController {
     @PreAuthorize(value = "hasAuthority('clue:delete')")
     @DeleteMapping(value = "/api/clue/{id}")
     public R delClue(@PathVariable(value = "id") Integer id) {
-        int del = 1; // 物理删除暂未启用
-        return del >= 1 ? R.OK() : R.FAIL();
+        try {
+            int del = clueService.deleteClue(id);
+            return del >= 1 ? R.OK() : R.FAIL();
+        } catch (RuntimeException e) {
+            return R.FAIL(e.getMessage());
+        }
     }
 }

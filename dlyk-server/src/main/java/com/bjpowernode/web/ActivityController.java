@@ -8,6 +8,8 @@ import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 市场活动 Controller。
@@ -54,5 +56,18 @@ public class ActivityController {
         activityQuery.setToken(token);
         int update = activityService.updateActivity(activityQuery);
         return update >= 1 ? R.OK() : R.FAIL();
+    }
+
+    @DeleteMapping(value = "/api/activity/{id}")
+    public R delActivity(@PathVariable(value = "id") Integer id) {
+        int del = activityService.delActivityById(id);
+        return del >= 1 ? R.OK() : R.FAIL();
+    }
+
+    @DeleteMapping(value = "/api/activity")
+    public R batchDelActivity(@RequestParam(value = "ids") String ids) {
+        List<String> idList = Arrays.asList(ids.split(","));
+        int batchDel = activityService.batchDelActivityByIds(idList);
+        return batchDel >= idList.size() ? R.OK() : R.FAIL();
     }
 }
