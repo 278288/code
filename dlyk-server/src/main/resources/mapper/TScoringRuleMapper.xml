@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.mapper.TScoringRuleMapper">
+
+    <resultMap id="BaseResultMap" type="com.bjpowernode.model.TScoringRule">
+        <id column="id" property="id"/>
+        <result column="rule_name" property="ruleName"/>
+        <result column="rule_type" property="ruleType"/>
+        <result column="description" property="description"/>
+        <result column="weight" property="weight"/>
+        <result column="enabled" property="enabled"/>
+        <result column="sort_order" property="sortOrder"/>
+        <result column="config_json" property="configJson"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <resultMap id="LogResultMap" type="com.bjpowernode.model.TScoringLog">
+        <id column="id" property="id"/>
+        <result column="clue_id" property="clueId"/>
+        <result column="rule_id" property="ruleId"/>
+        <result column="rule_type" property="ruleType"/>
+        <result column="rule_name" property="ruleName"/>
+        <result column="score" property="score"/>
+        <result column="weight" property="weight"/>
+        <result column="weighted_score" property="weightedScore"/>
+        <result column="detail" property="detail"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <select id="selectEnabledRules" resultMap="BaseResultMap">
+        SELECT * FROM t_scoring_rule 
+        WHERE enabled = 1 
+        ORDER BY sort_order ASC
+    </select>
+
+    <select id="selectByRuleType" resultMap="BaseResultMap">
+        SELECT * FROM t_scoring_rule 
+        WHERE rule_type = #{ruleType} AND enabled = 1
+        LIMIT 1
+    </select>
+
+    <update id="updateWeight">
+        UPDATE t_scoring_rule 
+        SET weight = #{weight}, update_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <insert id="insertLog" parameterType="com.bjpowernode.model.TScoringLog">
+        INSERT INTO t_scoring_log (
+            clue_id, rule_id, rule_type, rule_name, 
+            score, weight, weighted_score, detail, create_time
+        ) VALUES (
+            #{clueId}, #{ruleId}, #{ruleType}, #{ruleName},
+            #{score}, #{weight}, #{weightedScore}, #{detail}, NOW()
+        )
+    </insert>
+
+    <select id="selectLogsByClueId" resultMap="LogResultMap">
+        SELECT * FROM t_scoring_log 
+        WHERE clue_id = #{clueId}
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>

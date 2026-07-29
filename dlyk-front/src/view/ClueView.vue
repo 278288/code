@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <el-button type="primary" class="btn" @click="addClue" v-hasPermission="'clue:add'">录入线索</el-button>
   <el-button type="success" class="btn" @click="importExcel" v-hasPermission="'clue:import'">导入线索(Excel)</el-button>
   <el-button type="danger" class="btn" @click="batchDelClue" v-hasPermission="'clue:delete'">批量删除</el-button>
@@ -30,7 +30,21 @@
     </el-table-column>
     <el-table-column property="sourceDO.typeValue" label="线索来源"/>
     <el-table-column property="nextContactTime" label="下次联系时间" width="165"/>
-    <el-table-column label="操作" width="230">
+    <el-table-column label="评分" width="140">
+      <template #default="scope">
+        <div style="cursor: pointer; display: inline-flex; align-items: center; gap: 4px;"
+             @click="scoreClue(scope.row.id)"
+             :title="scope.row.score != null ? '点击重新评分' : '点击进行评分'">
+          <el-icon v-if="scope.row.score == null" color="#E6A23C"><Star /></el-icon>
+          <el-icon v-else color="#67C23A"><Refresh /></el-icon>
+          <el-tag v-if="scope.row.score != null" :type="getScoreTagType(scope.row.scoreLevel)" effect="dark" size="small">
+            {{ scope.row.score.toFixed(1) }} ({{ scope.row.scoreLevel }}级)
+          </el-tag>
+          <span v-else style="color: #E6A23C; font-size: 13px;">未评分</span>
+        </div>
+      </template>
+    </el-table-column>
+    <el-table-column label="操作" width="240">
       <template #default="scope">
         <el-button type="primary" @click="view(scope.row.id)" v-hasPermission="'clue:view'">详情</el-button>
         <el-button type="success" @click="edit(scope.row.id)" v-hasPermission="'clue:edit'">编辑</el-button>
@@ -84,6 +98,40 @@
     </template>
   </el-dialog>
 
+  <!-- 评分详情弹窗 -->
+  <el-dialog v-model="scoringDialogVisible" title="线索评分详情" width="60%">
+    <div v-if="scoringReport">
+      <el-descriptions :column="2" border>
+        <el-descriptions-item label="总分">
+          <el-tag :type="getScoreTagType(scoringReport.scoreLevel)" size="large" effect="dark">
+            {{ scoringReport.totalScore.toFixed(1) }}分 ({{ scoringReport.scoreLevel }}级)
+          </el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="线索ID">{{ scoringReport.clueId }}</el-descriptions-item>
+      </el-descriptions>
+      <h4 style="margin: 16px 0 8px;">各维度评分明细</h4>
+      <el-table :data="scoringReport.ruleResults" border size="small">
+        <el-table-column prop="ruleName" label="评分维度" width="150"/>
+        <el-table-column label="原始分" width="80">
+          <template #default="scope">{{ scope.row.rawScore.toFixed(1) }}</template>
+        </el-table-column>
+        <el-table-column label="权重" width="80">
+          <template #default="scope">{{ (scope.row.weight * 100).toFixed(0) }}%</template>
+        </el-table-column>
+        <el-table-column label="加权分" width="80">
+          <template #default="scope">{{ scope.row.weightedScore.toFixed(1) }}</template>
+        </el-table-column>
+        <el-table-column label="评分依据">
+          <template #default="scope">
+            <div v-if="scope.row.details" style="font-size: 12px; line-height: 1.8;">
+              <div v-for="(value, key) in scope.row.details" :key="key">{{ key }}: {{ value }}</div>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+  </el-dialog>
+
 </template>
 
 <script>
@@ -115,7 +163,9 @@ export default defineComponent({
       //分页总共查询出多少条数据
       total : 0,
       //导入线索Excel的弹窗，true弹，false不弹
-      importExcelDialogVisible : false
+      importExcelDialogVisible : false,
+      scoringDialogVisible : false,
+      scoringReport : null
     }
   },
 
@@ -124,6 +174,25 @@ export default defineComponent({
   },
 
   methods : {
+    getScoreTagType(level) {
+      const map = { 'A': 'success', 'B': 'warning', 'C': 'info', 'D': 'danger' };
+      return map[level] || 'info';
+    },
+
+    scoreClue(clueId) {
+      doPost('/api/clue/scoring/' + clueId, {}).then(resp => {
+        if (resp.data.code === 200) {
+          this.scoringReport = resp.data.data;
+          this.scoringDialogVisible = true;
+          this.getData(1);
+        } else {
+          messageTip(resp.data.msg || '评分失败', 'error');
+        }
+      }).catch(() => {
+        messageTip('评分请求失败', 'error');
+      });
+    },
+
     handleSelectionChange() {
     },
 
@@ -222,3 +291,4 @@ export default defineComponent({
   padding-top: 15px;
 }
 </style>
+

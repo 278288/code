@@ -9,6 +9,7 @@ import com.bjpowernode.mapper.TCustomerMapper;
 import com.bjpowernode.model.TClue;
 import com.bjpowernode.query.BaseQuery;
 import com.bjpowernode.query.ClueQuery;
+import com.bjpowernode.service.ClueScoringService;
 import com.bjpowernode.service.ClueService;
 import com.bjpowernode.util.JWTUtils;
 import com.github.pagehelper.PageHelper;
@@ -38,6 +39,9 @@ public class ClueServiceImpl implements ClueService {
 
     @Resource
     private TCustomerMapper tCustomerMapper;
+
+    @Resource
+    private ClueScoringService clueScoringService;
 
     @Override
     public PageInfo<TClue> getClueByPage(Integer current) {
@@ -79,7 +83,19 @@ public class ClueServiceImpl implements ClueService {
             Integer loginUserId = JWTUtils.parseUserFromJWT(clueQuery.getToken()).getId();
             tClue.setCreateTime(new Date());
             tClue.setCreateBy(loginUserId);
-            return tClueMapper.insertSelective(tClue);
+            int result = tClueMapper.insertSelective(tClue);
+            
+            // 新增成功后触发评分
+            if (result > 0 && tClue.getId() != null) {
+                try {
+                    clueScoringService.scoreClue(tClue.getId());
+                } catch (Exception e) {
+                    // 评分失败不影响主流程
+                    System.err.println("线索评分失败，线索ID：" + tClue.getId() + "，错误：" + e.getMessage());
+                }
+            }
+            
+            return result;
         } else {
             throw new RuntimeException("该手机号已经录入过了，不能再录入");
         }
@@ -98,7 +114,19 @@ public class ClueServiceImpl implements ClueService {
         Integer loginUserId = JWTUtils.parseUserFromJWT(clueQuery.getToken()).getId();
         tClue.setEditTime(new Date());
         tClue.setEditBy(loginUserId);
-        return tClueMapper.updateByPrimaryKeySelective(tClue);
+        int result = tClueMapper.updateByPrimaryKeySelective(tClue);
+        
+        // 更新成功后触发重新评分
+        if (result > 0 && tClue.getId() != null) {
+            try {
+                clueScoringService.scoreClue(tClue.getId());
+            } catch (Exception e) {
+                // 评分失败不影响主流程
+                System.err.println("线索重新评分失败，线索ID：" + tClue.getId() + "，错误：" + e.getMessage());
+            }
+        }
+        
+        return result;
     }
 
     /**

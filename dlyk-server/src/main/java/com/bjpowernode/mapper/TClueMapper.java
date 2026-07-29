@@ -31,4 +31,8 @@ public interface TClueMapper {
     TClue selectDetailById(Integer id);
 
     List<NameValue> selectBySource();
+
+    int updateScoreByPrimaryKey(TClue clue);
+
+    java.util.List<Integer> selectAllIds();
 }

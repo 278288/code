@@ -9,6 +9,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
@@ -23,6 +24,7 @@ import java.util.concurrent.Executor;
 
 @MapperScan(basePackages = {"com.bjpowernode.mapper"})
 @SpringBootApplication
+@EnableScheduling
 public class DlykServerApplication implements CommandLineRunner {
 
     public static final Map<String, Object> cacheMap = new HashMap<>();

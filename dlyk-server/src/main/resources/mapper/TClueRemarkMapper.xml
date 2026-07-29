@@ -185,4 +185,17 @@
     delete from t_clue_remark
     where clue_id = #{clueId,jdbcType=INTEGER}
   </delete>
+  <select id="countByClueId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(1) from t_clue_remark
+    where clue_id = #{clueId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectLatestByClueId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_clue_remark
+    where clue_id = #{clueId,jdbcType=INTEGER}
+    order by create_time desc
+    limit 1
+  </select>
 </mapper>

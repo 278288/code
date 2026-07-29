@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bjpowernode.mapper.TClueMapper">
   <resultMap id="BaseResultMap" type="com.bjpowernode.model.TClue">
@@ -26,6 +26,9 @@
     <result column="create_by" jdbcType="INTEGER" property="createBy" />
     <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
     <result column="edit_by" jdbcType="INTEGER" property="editBy" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="score_level" jdbcType="VARCHAR" property="scoreLevel" />
+    <result column="score_time" jdbcType="TIMESTAMP" property="scoreTime" />
   </resultMap>
 
   <resultMap id="ClueResultMap" type="com.bjpowernode.model.TClue">
@@ -53,6 +56,9 @@
     <result column="create_by" jdbcType="INTEGER" property="createBy" />
     <result column="edit_time" jdbcType="TIMESTAMP" property="editTime" />
     <result column="edit_by" jdbcType="INTEGER" property="editBy" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="score_level" jdbcType="VARCHAR" property="scoreLevel" />
+    <result column="score_time" jdbcType="TIMESTAMP" property="scoreTime" />
     <!--一对一关联查询的映射-->
     <association property="ownerDO" javaType="com.bjpowernode.model.TUser">
       <id column="ownerId" jdbcType="INTEGER" property="id" />
@@ -98,7 +104,7 @@
   <sql id="Base_Column_List">
     id, owner_id, activity_id, full_name, appellation, phone, weixin, qq, email, age, 
     job, year_income, address, need_loan, intention_state, intention_product, `state`, 
-    `source`, description, next_contact_time, create_time, create_by, edit_time, edit_by
+    `source`, description, next_contact_time, create_time, create_by, edit_time, edit_by, score, score_level, score_time
   </sql>
 
   <select id="selectClueByPage" parameterType="java.lang.Integer" resultMap="ClueResultMap">
@@ -477,4 +483,17 @@
       edit_by = #{editBy,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="updateScoreByPrimaryKey" parameterType="com.bjpowernode.model.TClue">
+    update t_clue
+    set score = #{score,jdbcType=DECIMAL},
+        score_level = #{scoreLevel,jdbcType=VARCHAR},
+        score_time = #{scoreTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllIds" resultType="java.lang.Integer">
+    select id from t_clue
+  </select>
 </mapper>
+
+

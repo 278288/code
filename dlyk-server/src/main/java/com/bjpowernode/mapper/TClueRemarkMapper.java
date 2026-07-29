@@ -24,4 +24,8 @@ public interface TClueRemarkMapper {
     List<TClueRemark> selectClueRemarkByPage(ClueRemarkQuery clueRemarkQuery);
 
     int deleteByClueId(Integer clueId);
+
+    int countByClueId(Integer clueId);
+
+    TClueRemark selectLatestByClueId(Integer clueId);
 }

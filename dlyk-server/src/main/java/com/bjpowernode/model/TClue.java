@@ -168,5 +168,10 @@ public class TClue implements Serializable {
     private TDicValue stateDO = new TDicValue();
     private TDicValue sourceDO = new TDicValue();
 
+    // 评分相关字段
+    private Double score;
+    private String scoreLevel;
+    private java.util.Date scoreTime;
+
     private static final long serialVersionUID = 1L;
 }

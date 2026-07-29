@@ -1,4 +1,4 @@
-server:
+﻿server:
   port: 8089
   servlet:
     context-path: /
@@ -51,3 +51,13 @@ project:
   task:
     cron: '* */5 * * * *'
     delay: 180000
+# AI 评分引擎配置
+ai:
+  scoring:
+    enabled: true
+    deepseek:
+      base-url: https://api.deepseek.com
+      api-key:  ${DEEPSEEK_API_KEY}
+      model-name: deepseek-v4-flash
+      temperature: 0.7
+      timeout: 30000
