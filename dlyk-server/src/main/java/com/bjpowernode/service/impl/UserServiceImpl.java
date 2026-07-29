@@ -2,6 +2,7 @@ package com.bjpowernode.service.impl;
 
 import com.bjpowernode.constant.Constants;
 import com.bjpowernode.manager.RedisManager;
+import com.bjpowernode.mapper.TUserPermissionMapper;
 import com.bjpowernode.mapper.TPermissionMapper;
 import com.bjpowernode.mapper.TRoleMapper;
 import com.bjpowernode.mapper.TUserMapper;
@@ -52,6 +53,9 @@ public class UserServiceImpl implements UserService {
     @Resource
     private TPermissionMapper tPermissionMapper;
 
+    @Resource
+    private TUserPermissionMapper tUserPermissionMapper;
+
     /**
      * Spring Security 认证入口。
      * 登录时被框架调用，根据 loginAct 查询用户，并加载其角色和权限列表。
@@ -78,14 +82,56 @@ public class UserServiceImpl implements UserService {
 
         // 加载菜单权限（前端菜单渲染用）
         List<TPermission> menuPermissionList = tPermissionMapper.selectMenuPermissionByUserId(tUser.getId());
+        // 管理员自动注入"权限管理"菜单（不可被授权，仅管理员可见）
+        if (stringRoleList.contains("admin")) {
+            TPermission permManageMenu = new TPermission();
+            permManageMenu.setId(67);
+            permManageMenu.setName("权限管理");
+            permManageMenu.setType("menu");
+            permManageMenu.setIcon("Lock");
+            permManageMenu.setOrderNo(8);
+
+            TPermission permManageChild = new TPermission();
+            permManageChild.setId(68);
+            permManageChild.setName("权限管理");
+            permManageChild.setUrl("/dashboard/perm");
+            permManageChild.setType("menu");
+            permManageChild.setIcon("Key");
+
+            List<TPermission> children = new ArrayList<>();
+            children.add(permManageChild);
+            permManageMenu.setSubPermissionList(children);
+
+            menuPermissionList.add(permManageMenu);
+        }
+        // 按orderNo排序，确保权限管理模块显示在正确位置
+        menuPermissionList.sort((a, b) -> {
+            int orderA = a.getOrderNo() != null ? a.getOrderNo() : 0;
+            int orderB = b.getOrderNo() != null ? b.getOrderNo() : 0;
+            return Integer.compare(orderA, orderB);
+        });
         tUser.setMenuPermissionList(menuPermissionList);
 
         // 加载按钮权限（前端按钮显隐用）
         List<TPermission> buttonPermissionList = tPermissionMapper.selectButtonPermissionByUserId(tUser.getId());
         List<String> stringPermissionList = new ArrayList<>();
         buttonPermissionList.forEach(tPermission -> {
-            stringPermissionList.add(tPermission.getCode());
+            if (tPermission.getCode() != null && !tPermission.getCode().isEmpty()) {
+                stringPermissionList.add(tPermission.getCode());
+            }
         });
+        // 加载用户个人权限（补充角色权限），合并到 permissionList
+        List<Integer> userPermIds = tUserPermissionMapper.selectPermissionIdsByUserId(tUser.getId());
+        if (userPermIds != null && !userPermIds.isEmpty()) {
+            List<TPermission> userPerms = tPermissionMapper.selectByIds(userPermIds);
+            if (userPerms != null) {
+                userPerms.forEach(perm -> {
+                    if (perm.getCode() != null && !perm.getCode().isEmpty() && !stringPermissionList.contains(perm.getCode())) {
+                        stringPermissionList.add(perm.getCode());
+                    }
+                });
+            }
+        }
         tUser.setPermissionList(stringPermissionList);
 
         return tUser;
@@ -122,7 +168,10 @@ public class UserServiceImpl implements UserService {
         tUser.setCreateTime(new Date());
         Integer loginUserId = JWTUtils.parseUserFromJWT(userQuery.getToken()).getId();
         tUser.setCreateBy(loginUserId);
-        return tUserMapper.insertSelective(tUser);
+        int result = tUserMapper.insertSelective(tUser);
+        // 新增用户后清除负责人缓存
+        redisManager.delete(Constants.REDIS_OWNER_KEY);
+        return result;
     }
 
     /**
@@ -145,7 +194,10 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public int delUserById(Integer id) {
-        return tUserMapper.deleteByPrimaryKey(id);
+        int result = tUserMapper.deleteByPrimaryKey(id);
+        // 删除用户后清除负责人缓存
+        redisManager.delete(Constants.REDIS_OWNER_KEY);
+        return result;
     }
 
     @Transactional(rollbackFor = Exception.class)

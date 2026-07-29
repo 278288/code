@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bjpowernode.mapper.TPermissionMapper">
   <resultMap id="BaseResultMap" type="com.bjpowernode.model.TPermission">
@@ -25,6 +25,7 @@
     <collection property="subPermissionList" ofType="com.bjpowernode.model.TPermission">
       <id column="cid" jdbcType="INTEGER" property="id" />
       <result column="cname" jdbcType="VARCHAR" property="name" />
+      <result column="ccode" jdbcType="VARCHAR" property="code" />
       <result column="curl" jdbcType="VARCHAR" property="url" />
       <result column="cicon" jdbcType="VARCHAR" property="icon" />
     </collection>
@@ -34,20 +35,34 @@
     id, `name`, code, url, `type`, parent_id, order_no, icon
   </sql>
 
-  <select id="selectMenuPermissionByUserId" parameterType="java.lang.Integer" resultMap="PermissionResultMap">
-    SELECT
-      tp.*,
-      childTp.id cid, childTp.name cname, childTp.url curl, childTp.icon cicon
-    FROM
-      t_permission tp
+    <select id="selectMenuPermissionByUserId" parameterType="java.lang.Integer" resultMap="PermissionResultMap">
+    SELECT * FROM (
+      SELECT
+        tp.id, tp.name, tp.code, tp.url, tp.type, tp.parent_id, tp.order_no, tp.icon,
+        childTp.id cid, childTp.name cname, childTp.url curl, childTp.icon cicon
+      FROM
+        t_permission tp
         LEFT JOIN t_permission childTp ON tp.id = childTp.parent_id
         LEFT JOIN t_role_permission trp ON tp.id = trp.permission_id
         LEFT JOIN t_role tr ON trp.role_id = tr.id
         LEFT JOIN t_user_role tur ON tr.id = tur.role_id
-    WHERE
-      tur.user_id = #{userId, jdbcType=INTEGER}
-      AND tp.type = 'menu'
-      and childTp.type = 'menu'
+      WHERE
+        tur.user_id = #{userId, jdbcType=INTEGER}
+        AND tp.type = 'menu'
+        AND childTp.type = 'menu'
+      UNION
+      SELECT
+        tp2.id, tp2.name, tp2.code, tp2.url, tp2.type, tp2.parent_id, tp2.order_no, tp2.icon,
+        childTp2.id cid, childTp2.name cname, childTp2.url curl, childTp2.icon cicon
+      FROM
+        t_permission tp2
+        LEFT JOIN t_permission childTp2 ON tp2.id = childTp2.parent_id
+        INNER JOIN t_user_permission tup ON tp2.id = tup.permission_id
+      WHERE
+        tup.user_id = #{userId, jdbcType=INTEGER}
+        AND tp2.type = 'menu'
+        AND childTp2.type = 'menu'
+    ) combined ORDER BY order_no
   </select>
 
 
@@ -170,4 +185,27 @@
       icon = #{icon,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByIds" parameterType="java.util.List" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from t_permission
+    where id in
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from t_permission order by id
+  </select>
+
+  <!-- 查询可授权模块（排除权限管理 id=67），每个模块包含其按钮子权限 -->
+  <select id="selectAssignableModules" resultMap="PermissionResultMap">
+    SELECT
+      p.id, p.name, p.code, p.url, p.type, p.parent_id, p.order_no, p.icon,
+      b.id as cid, b.name as cname, b.code as ccode, b.url as curl, b.type as ctype,
+      b.parent_id as cparent_id, b.order_no as corder_no, b.icon as cicon
+    FROM t_permission p
+    LEFT JOIN t_permission b ON p.id = b.parent_id AND b.type = 'button'
+    WHERE p.type = 'menu' AND p.parent_id = 0 AND p.id != 67
+    ORDER BY p.order_no, b.id
+  </select>
 </mapper>

@@ -1,6 +1,10 @@
 package com.bjpowernode.web;
 
+import com.bjpowernode.mapper.TUserRoleMapper;
+import com.bjpowernode.model.TRole;
 import com.bjpowernode.model.TUser;
+import com.bjpowernode.model.TUserRole;
+import com.bjpowernode.mapper.TRoleMapper;
 import com.bjpowernode.query.UserQuery;
 import com.bjpowernode.result.R;
 import com.bjpowernode.service.UserService;
@@ -36,6 +40,12 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private TUserRoleMapper tUserRoleMapper;
+
+    @Resource
+    private TRoleMapper tRoleMapper;
+
     /** 获取当前登录用户信息（前端 header 展示用） */
     @GetMapping(value = "/api/login/info")
     public R loginInfo(Authentication authentication) {
@@ -44,6 +54,12 @@ public class UserController {
     }
 
     /** 免登录测试接口 */
+    /** 获取所有角色列表（下拉选择用） */
+    @GetMapping(value = "/api/roles")
+    public R roleList() {
+        return R.OK(tRoleMapper.selectAll());
+    }
+
     @GetMapping(value = "/api/login/free")
     public R freeLogin() {
         return R.OK();
@@ -112,6 +128,31 @@ public class UserController {
     }
 
     /** 修改密码：先验证旧密码，通过后再更新 */
+    /** 查询用户当前角色列表 */
+    @GetMapping(value = "/api/user/{id}/roles")
+    public R userRoles(@PathVariable(value = "id") Integer id) {
+        List<TRole> roles = tUserRoleMapper.selectRolesByUserId(id);
+        return R.OK(roles);
+    }
+
+    /** 保存用户角色（先删后插） */
+    @PreAuthorize(value = "hasAuthority('user:edit')")
+    @PutMapping(value = "/api/user/{id}/roles")
+    public R saveUserRoles(@PathVariable(value = "id") Integer id, @RequestBody List<Integer> roleIds) {
+        tUserRoleMapper.deleteByUserId(id);
+        if (roleIds != null && !roleIds.isEmpty()) {
+            List<TUserRole> list = new java.util.ArrayList<>();
+            for (Integer roleId : roleIds) {
+                TUserRole ur = new TUserRole();
+                ur.setUserId(id);
+                ur.setRoleId(roleId);
+                list.add(ur);
+            }
+            tUserRoleMapper.insertBatch(list);
+        }
+        return R.OK();
+    }
+
     @PutMapping(value = "/api/user/password")
     public R changePassword(@RequestParam("oldPwd") String oldPwd,
                              @RequestParam("newPwd") String newPwd,

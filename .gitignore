@@ -23,3 +23,5 @@ Thumbs.db
 # Env
 .env
 .env.local
+CHANGELOG-2026-07-28.md
+CHANGELOG-*.md

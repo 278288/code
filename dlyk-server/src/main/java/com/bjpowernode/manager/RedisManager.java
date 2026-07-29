@@ -33,4 +33,11 @@ public class RedisManager {
         data.toArray(t);
         return redisTemplate.opsForList().leftPushAll(key, t);
     }
+
+    /**
+     * 删除指定的 Redis 缓存 key
+     */
+    public Boolean delete(String key) {
+        return redisTemplate.delete(key);
+    }
 }

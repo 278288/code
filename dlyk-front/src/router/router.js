@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+﻿import { createRouter, createWebHistory } from "vue-router";
 
 let router = createRouter({
     history: createWebHistory(),
@@ -9,6 +9,7 @@ let router = createRouter({
                 { path: '', component : () => import('../view/StatisticView.vue') },
                 { path: 'user', component : () => import('../view/UserView.vue') },
                 { path: 'user/:id', component : () => import('../view/UserDetailView.vue') },
+                { path: 'user/perm/:id', component : () => import('../view/UserPermissionView.vue') },
                 { path: 'activity', component : () => import('../view/ActivityView.vue') },
                 { path: 'activity/add', component : () => import('../view/ActivityRecordView.vue') },
                 { path: 'activity/edit/:id', component : () => import('../view/ActivityRecordView.vue') },
@@ -35,6 +36,7 @@ let router = createRouter({
                 { path: 'system', component : () => import('../view/SystemView.vue') },
                 { path: 'system/add', component : () => import('../view/SystemRecordView.vue') },
                 { path: 'system/edit/:id', component : () => import('../view/SystemRecordView.vue') },
+                { path: 'perm', component : () => import('../view/PermissionManageView.vue') },
             ]
         },
         { path: '/hello', component : () => import('../components/HelloWorld.vue') }

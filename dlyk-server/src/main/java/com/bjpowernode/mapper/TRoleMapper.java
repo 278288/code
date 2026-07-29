@@ -19,4 +19,6 @@ public interface TRoleMapper {
     int updateByPrimaryKey(TRole record);
 
     List<TRole> selectByUserId(Integer userId);
+
+    List<TRole> selectAll();
 }

@@ -1,13 +1,19 @@
-<template>
+﻿<template>
   <el-form ref="activityRefForm" :model="activityQuery" label-width="110px" :rules="activityRules">
     <el-form-item label="负责人" prop="ownerId">
-      <el-select v-model="activityQuery.ownerId" placeholder="请选择" class="width">
+      <el-select
+          v-if="isAdmin || isEditMode"
+          v-model="activityQuery.ownerId"
+          placeholder="请选择"
+          class="width">
         <el-option
             v-for="item in ownerOptions"
             :key="item.id"
             :label="item.name"
             :value="item.id"/>
       </el-select>
+      <!-- 普通用户录入时：负责人锁定为当前用户，不可修改 -->
+      <el-input v-else :model-value="currentUserName" disabled class="width" />
     </el-form-item>
 
     <el-form-item label="活动名称" prop="name">
@@ -58,14 +64,11 @@ import {messageTip} from "../util/util.js";
 export default defineComponent({
   name: "ActivityRecordView",
 
-  //注入
   inject : ['reload'],
 
   data() {
     return {
-      //市场活动表单对象，初始值是空
       activityQuery : {},
-      //市场活动表单验证规则
       activityRules : {
         ownerId : [
           { required: true, message: '请选择负责人', trigger: 'blur' }
@@ -81,7 +84,6 @@ export default defineComponent({
         ],
         cost : [
           { required: true, message: '请输入活动预算', trigger: 'blur' },
-          //正则表达式，从网上找，或者AI工具找，找到后需要测试一下，因为有可能找到的正则有问题
           { pattern : /^[0-9]+(\.[0-9]{2})?$/, message: '活动预算必须是整数或者两位小数', trigger: 'blur'}
         ],
         description : [
@@ -89,19 +91,41 @@ export default defineComponent({
           { min: 5, max: 255, message: '活动描述长度为5-255个字符', trigger: 'blur' }
         ]
       },
-      //负责人的下拉选项，初始值是空
-      ownerOptions : [{}]
+      ownerOptions : [{}],
+      isAdmin: false,
+      isEditMode: false,
+      currentUserId: null,
+      currentUserName: ''
     }
   },
 
   mounted() {
-    this.loadOwner();
-    //加载要编辑的数据（由于录入和编辑共用一个页面，所以要判断是 编辑还是录入）
+    // 先加载当前登录用户信息，再加载负责人列表
+    this.loadLoginUser();
     this.loadActivity();
   },
 
   methods : {
-    //加载负责人
+    // 加载当前登录用户，判断是否管理员
+    loadLoginUser() {
+      doGet("/api/login/info", {}).then(resp => {
+        if (resp.data.code === 200) {
+          const user = resp.data.data;
+          this.currentUserId = user.id;
+          this.currentUserName = user.name;
+          // 判断是否管理员
+          this.isAdmin = user.roleList && user.roleList.includes('admin');
+          // 加载负责人列表
+          this.loadOwner();
+          // 普通用户录入时，默认负责人为当前用户
+          if (!this.isAdmin && !this.isEditMode) {
+            this.$set(this.activityQuery, 'ownerId', this.currentUserId);
+          }
+        }
+      })
+    },
+
+    // 加载负责人
     loadOwner() {
       doGet("/api/owner", {}).then(resp => {
         if (resp.data.code === 200)  {
@@ -110,19 +134,21 @@ export default defineComponent({
       })
     },
 
-    //返回
     goBack() {
       this.$router.go(-1);
     },
 
-    //市场活动提交
     activitySubmit()  {
       let formData = new FormData();
       for (let field in this.activityQuery) {
         console.log(field  + " -- " + this.activityQuery[field])
-        if (this.activityQuery[field])  { //this.activityQuery[field]有值，this.activityQuery[field]不是空，this.activityQuery[field]存在
+        if (this.activityQuery[field])  {
           formData.append(field, this.activityQuery[field]);
         }
+      }
+      // 普通用户录入时，确保负责人为当前用户
+      if (!this.isAdmin && !this.isEditMode) {
+        formData.set('ownerId', this.currentUserId);
       }
       this.$refs.activityRefForm.validate( (isValid) => {
         if (isValid) {
@@ -130,7 +156,6 @@ export default defineComponent({
             doPut("/api/activity", formData).then(resp => {
               if (resp.data.code === 200) {
                 messageTip("编辑成功", "success");
-                //跳转到市场活动列表页
                 this.$router.push("/dashboard/activity");
               } else {
                 messageTip("编辑失败", "error");
@@ -140,7 +165,6 @@ export default defineComponent({
             doPost("/api/activity", formData).then(resp => {/*新增*/
               if (resp.data.code === 200) {
                 messageTip("提交成功", "success");
-                //跳转到市场活动列表页
                 this.$router.push("/dashboard/activity");
               } else {
                 messageTip("提交失败", "error");
@@ -151,10 +175,10 @@ export default defineComponent({
       })
     },
 
-    //加载要编辑的市场活动数据
     loadActivity() {
       let id =  this.$route.params.id;
-      if (id) { //id存在，id有值，id不为空，说明的编辑
+      if (id) {
+        this.isEditMode = true;
         doGet("/api/activity/" + id, {}).then(resp => {
           if (resp.data.code === 200) {
             this.activityQuery = resp.data.data;

@@ -1,4 +1,4 @@
-/*
+﻿/*
  Navicat Premium Dump SQL
 
  Source Server         : localhost
@@ -549,7 +549,7 @@ INSERT INTO `t_permission` VALUES (51, '用户管理-录入', 'user:add', NULL, 
 INSERT INTO `t_permission` VALUES (52, '用户管理-编辑', 'user:edit', NULL, 'button', 49, NULL, NULL);
 INSERT INTO `t_permission` VALUES (53, '用户管理-查看', 'user:view', NULL, 'button', 49, NULL, NULL);
 INSERT INTO `t_permission` VALUES (54, '用户管理-删除', 'user:delete', NULL, 'button', 49, NULL, NULL);
-INSERT INTO `t_permission` VALUES (55, '系统管理', NULL, NULL, 'menu', 0, 8, 'Setting');
+INSERT INTO `t_permission` VALUES (55, '系统管理', NULL, NULL, 'menu', 0, 9, 'Setting');
 INSERT INTO `t_permission` VALUES (56, '系统管理', NULL, '/dashboard/system', 'menu', 55, 1, 'Tools');
 INSERT INTO `t_permission` VALUES (57, '系统管理-列表', 'system:list', NULL, 'button', 56, NULL, NULL);
 INSERT INTO `t_permission` VALUES (58, '系统管理-录入', 'system:add', NULL, 'button', 56, NULL, NULL);
@@ -561,6 +561,8 @@ INSERT INTO `t_permission` VALUES (63, '客户管理-删除', 'customer:delete',
 INSERT INTO `t_permission` VALUES (64, '交易管理-录入', 'tran:add', NULL, 'button', 25, NULL, NULL);
 INSERT INTO `t_permission` VALUES (65, '交易管理-编辑', 'tran:edit', NULL, 'button', 25, NULL, NULL);
 INSERT INTO `t_permission` VALUES (66, '交易管理-删除', 'tran:delete', NULL, 'button', 25, NULL, NULL);
+INSERT INTO `t_permission` VALUES (67, '权限管理', NULL, NULL, 'menu', 0, 8, 'Lock');
+INSERT INTO `t_permission` VALUES (68, '权限管理', NULL, '/dashboard/perm', 'menu', 67, 1, 'Key');
 
 -- ----------------------------
 -- Table structure for t_product
@@ -716,6 +718,7 @@ INSERT INTO `t_role_permission` VALUES (78, 1, 63);
 INSERT INTO `t_role_permission` VALUES (79, 1, 64);
 INSERT INTO `t_role_permission` VALUES (80, 1, 65);
 INSERT INTO `t_role_permission` VALUES (81, 1, 66);
+
 
 -- ----------------------------
 -- Table structure for t_system_info

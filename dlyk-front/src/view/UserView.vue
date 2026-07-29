@@ -98,6 +98,12 @@
               :value="item.value"/>
         </el-select>
       </el-form-item>
+
+      <el-form-item label="分配角色">
+        <el-select v-model="userQuery.roleIds" multiple placeholder="请选择角色" style="width:100%">
+          <el-option v-for="role in roleList" :key="role.id" :label="role.roleName" :value="role.id"/>
+        </el-select>
+      </el-form-item>
     </el-form>
 
     <template #footer>
@@ -173,7 +179,9 @@ export default defineComponent({
         {label : '否', value : 0}
       ],
       //用户id的数组
-      userIdArray : []
+      userIdArray : [],
+      //角色列表
+      roleList : []
     }
   },
 
@@ -218,11 +226,7 @@ export default defineComponent({
       this.$router.push("/dashboard/user/" + id);
     },
 
-    //新增用户
-    add() {
-      this.userQuery = {};
-      this.userDialogVisible = true;
-    },
+
 
     //新增用户提交保存
     userSubmit() {
@@ -235,6 +239,10 @@ export default defineComponent({
 
           if (this.userQuery.id > 0) { /*编辑*/
             doPut("/api/user", formData).then(resp => {
+              // 保存角色
+              if (this.userQuery.roleIds) {
+                doPut("/api/user/" + this.userQuery.id + "/roles", this.userQuery.roleIds);
+              }
               if (resp.data.code === 200) {
                 messageTip("编辑成功", "success");
                 //页面刷新
@@ -244,7 +252,11 @@ export default defineComponent({
               }
             })
           } else {
-            doPost("/api/user", formData).then(resp => {/*新增*/
+            doPost("/api/user", formData).then(resp => {
+              // 保存角色（新建用户后）
+              if (this.userQuery.roleIds && resp.data.code === 200) {
+                doPut("/api/user/" + resp.data.data + "/roles", this.userQuery.roleIds);
+              }/*新增*/
               if (resp.data.code === 200) {
                 messageTip("提交成功", "success");
                 //页面刷新
@@ -265,7 +277,23 @@ export default defineComponent({
     //编辑用户
     edit(id) {
       this.userDialogVisible = true;
+      this.loadRoles();
       this.loadUser(id);
+    },
+    //新增用户（也需要加载角色列表）
+    add() {
+      this.userQuery = {};
+      this.loadRoles();
+      this.userDialogVisible = true;
+    },
+
+    //加载角色列表
+    loadRoles() {
+      doGet("/api/roles", {}).then(resp => {
+        if (resp.data.code === 200) {
+          this.roleList = resp.data.data;
+        }
+      })
     },
 
     //加载用户信息
@@ -274,6 +302,12 @@ export default defineComponent({
         if (resp.data.code === 200) {
           this.userQuery = resp.data.data;
           this.userQuery.loginPwd = "";
+          // 加载当前角色
+          doGet("/api/user/" + id + "/roles", {}).then(r => {
+            if (r.data.code === 200) {
+              this.userQuery.roleIds = (r.data.data || []).map(role => role.id);
+            }
+          });
         }
       })
     },
@@ -294,6 +328,11 @@ export default defineComponent({
       }).catch(() => { //用户点击“取消”按钮就会触发catch函数
         messageTip("取消删除", "warning");
       })
+    },
+
+    //权限管理
+    managePerm(id) {
+      this.$router.push("/dashboard/user/perm/" + id);
     },
 
     //批量删除

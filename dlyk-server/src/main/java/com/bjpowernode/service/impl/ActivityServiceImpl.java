@@ -38,7 +38,7 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     /**
-     * 新增市场活动。创建人从 JWT 中解析。
+     * 新增市场活动。创建人从 JWT 中解析，负责人由用户从下拉列表选择。
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -48,6 +48,7 @@ public class ActivityServiceImpl implements ActivityService {
         tActivity.setCreateTime(new Date());
         Integer loginUserId = JWTUtils.parseUserFromJWT(activityQuery.getToken()).getId();
         tActivity.setCreateBy(loginUserId);
+        // ownerId 由 BeanUtils.copyProperties 从表单中复制，不需要手动设置
         return tActivityMapper.insertSelective(tActivity);
     }
 
