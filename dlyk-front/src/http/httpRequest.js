@@ -1,4 +1,4 @@
-//从axios框架导入axios组件
+﻿//从axios框架导入axios组件
 import axios from "axios";
 import {getTokenName, messageConfirm, messageTip, removeToken} from "../util/util.js";
 import {ElMessage, ElMessageBox} from "element-plus";
@@ -17,13 +17,17 @@ export function doGet(url, params) {
     })
 }
 
-export function doPost(url, data) {
-    return axios({
+export function doPost(url, data, signal = null) {
+    const config = {
         method: "post",
         url: url,
         data: data, //{name: "好的呢", age: 22},
         dataType: "json"
-    })
+    };
+    if (signal) {
+        config.signal = signal;
+    }
+    return axios(config);
 }
 
 export function doPut(url, data) {

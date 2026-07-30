@@ -132,6 +132,15 @@
     </div>
   </el-dialog>
 
+  <!-- 评分加载遮罩 -->
+  <div v-if="scoringLoading" class="scoring-overlay">
+    <div class="scoring-overlay-content">
+      <el-icon class="is-loading" :size="40" color="#409EFF"><Loading /></el-icon>
+      <p class="scoring-overlay-text">AI 评分分析中...</p>
+      <el-button type="danger" size="small" @click="cancelScoring">停止评分</el-button>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -165,7 +174,9 @@ export default defineComponent({
       //导入线索Excel的弹窗，true弹，false不弹
       importExcelDialogVisible : false,
       scoringDialogVisible : false,
-      scoringReport : null
+      scoringReport : null,
+      scoringLoading : false,
+      scoringAbortController : null
     }
   },
 
@@ -180,7 +191,10 @@ export default defineComponent({
     },
 
     scoreClue(clueId) {
-      doPost('/api/clue/scoring/' + clueId, {}).then(resp => {
+      if (this.scoringLoading) return;
+      this.scoringLoading = true;
+      this.scoringAbortController = new AbortController();
+      doPost('/api/clue/scoring/' + clueId, {}, this.scoringAbortController.signal).then(resp => {
         if (resp.data.code === 200) {
           this.scoringReport = resp.data.data;
           this.scoringDialogVisible = true;
@@ -188,9 +202,23 @@ export default defineComponent({
         } else {
           messageTip(resp.data.msg || '评分失败', 'error');
         }
-      }).catch(() => {
-        messageTip('评分请求失败', 'error');
+      }).catch((err) => {
+        if (err.name === 'CanceledError' || err.code === 'ERR_CANCELED') {
+          messageTip('评分已取消', 'warning');
+        } else {
+          messageTip('评分请求失败', 'error');
+        }
+      }).finally(() => {
+        this.scoringLoading = false;
+        this.scoringAbortController = null;
       });
+    },
+
+    cancelScoring() {
+      if (this.scoringAbortController) {
+        this.scoringAbortController.abort();
+      }
+      this.scoringLoading = false;
     },
 
     handleSelectionChange() {
@@ -290,5 +318,35 @@ export default defineComponent({
 .fileTip {
   padding-top: 15px;
 }
+
+.scoring-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.scoring-overlay-content {
+  background: white;
+  border-radius: 12px;
+  padding: 40px 60px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.scoring-overlay-text {
+  margin: 16px 0;
+  font-size: 16px;
+  color: #303133;
+  font-weight: 500;
+}
 </style>
+
+
 
