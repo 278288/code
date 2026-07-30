@@ -157,7 +157,7 @@ export DEEPSEEK_API_KEY="你的DeepSeek API Key"
 cd dlyk-server
 
 # Windows
-mvnw spring-boot:run
+直接运行main方法(DlykServerApplication.java文件)
 
 # Linux / macOS
 ./mvnw spring-boot:run
