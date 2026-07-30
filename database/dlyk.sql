@@ -1,4 +1,4 @@
-﻿/*
+/*
  Navicat Premium Dump SQL
 
  Source Server         : localhost
@@ -11,7 +11,7 @@
  Target Server Version : 90701 (9.7.1)
  File Encoding         : 65001
 
- Date: 25/07/2026 16:00:44
+ Date: 30/07/2026 11:10:46
 */
 
 SET NAMES utf8mb4;
@@ -40,44 +40,25 @@ CREATE TABLE `t_activity`  (
   CONSTRAINT `t_activity_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_activity_ibfk_2` FOREIGN KEY (`create_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_activity_ibfk_3` FOREIGN KEY (`edit_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '市场活动表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '市场活动表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_activity
 -- ----------------------------
-INSERT INTO `t_activity` VALUES (1, 4, '百度推广', '2023-04-02 19:18:20', '2023-06-30 00:00:00', 1200000.00, '百度排名推广,活动非常非常贵,大家好好的做推广.由于推广活动的效果非常好,决定延期一个月.11111', NULL, NULL, '2023-05-15 00:10:49', NULL);
-INSERT INTO `t_activity` VALUES (2, 2, '充话费-送手机', '2023-03-28 17:48:49', '2023-04-30 17:48:54', 9000.00, '充话费,送手机,充满送Iphone14', '2023-03-28 17:49:28', 1, '2023-05-15 00:10:52', 1);
-INSERT INTO `t_activity` VALUES (7, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-30 12:03:09', 15800.00, '抖音直播推广活动1', NULL, 6, NULL, NULL);
-INSERT INTO `t_activity` VALUES (8, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-30 12:03:09', 15800.00, '抖音直播推广活动2', NULL, 7, '2023-04-28 14:28:53', NULL);
+INSERT INTO `t_activity` VALUES (1, 4, '百度推广', '2026-04-17 19:18:20', '2026-10-24 00:00:00', 1200000.00, '百度排名推广,活动非常非常贵,大家好好的做推广.由于推广活动的效果非常好,决定延期一个月.11111', NULL, NULL, '2026-07-30 00:15:55', 1);
+INSERT INTO `t_activity` VALUES (2, 2, '充话费-送手机', '2026-03-01 17:48:49', '2026-09-01 17:48:54', 9000.00, '充话费,送手机,充满送Iphone14', '2023-03-28 17:49:28', 1, '2026-07-30 00:16:14', 1);
+INSERT INTO `t_activity` VALUES (7, 1, '抖音推广', '2026-04-11 12:03:09', '2027-04-01 12:03:09', 15800.00, '抖音直播推广活动1', NULL, 6, '2026-07-30 00:16:42', 1);
+INSERT INTO `t_activity` VALUES (8, 1, '抖音推广', '2026-04-23 12:03:09', '2026-09-18 12:03:09', 15800.00, '抖音直播推广活动2', NULL, 7, '2026-07-30 00:15:33', 1);
 INSERT INTO `t_activity` VALUES (10, 2, '11', '2023-04-11 00:30:58', '2023-04-30 00:31:00', 131.00, '12312312', NULL, NULL, '2023-04-28 13:33:56', NULL);
-INSERT INTO `t_activity` VALUES (11, 3, '1213', '2023-04-01 00:00:00', '2023-04-30 00:31:13', 123123.00, '23123123', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (12, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动1', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (13, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动2', NULL, NULL, '2023-04-28 13:27:43', NULL);
-INSERT INTO `t_activity` VALUES (14, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动1', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (15, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动11111', NULL, NULL, '2023-04-26 17:09:49', NULL);
-INSERT INTO `t_activity` VALUES (16, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动1', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (17, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动2', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (18, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动1', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (19, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动2', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (20, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动1', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (21, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动2', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (22, 1, '抖音推广', '2023-04-01 10:03:09', '2023-04-09 12:03:09', 15800.00, '抖音直播推广活动1', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (23, 1, '抖音推广', '2023-04-01 10:03:09', '2023-04-11 12:03:09', 15800.00, '抖音直播推广活动2', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (24, 1, '抖音推广', '2023-04-01 10:03:09', '2023-04-12 12:03:09', 15800.00, '抖音直播推广活动1', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (25, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动2', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (26, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动1', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (27, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动2', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (28, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动1', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (29, 1, '抖音推广', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动2', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (40, 1, '抖音推广11', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动1', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (41, 1, '抖音推广11', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动2', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (42, 1, '抖音推广11', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动1', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (43, 1, '抖音推广11', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动2', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (44, 1, '抖音推广11', '2023-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动1', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (45, 1, '抖音推广11', '2022-04-01 12:03:09', '2023-04-01 12:03:09', 15800.00, '抖音直播推广活动2', NULL, NULL, NULL, NULL);
 INSERT INTO `t_activity` VALUES (46, 3, '抖音短视频广告', '2023-11-14 00:00:00', '2023-11-30 00:00:00', 5000.00, '抖音短视频广告，宣传产品', NULL, NULL, NULL, NULL);
 INSERT INTO `t_activity` VALUES (47, 3, '我去恶趣味', '2023-11-15 16:51:40', '2023-11-30 16:51:42', 231231.00, '色达所大所大所多', NULL, NULL, NULL, NULL);
-INSERT INTO `t_activity` VALUES (48, NULL, NULL, '2023-06-30 00:44:19', NULL, NULL, NULL, '2023-06-27 22:27:15', NULL, NULL, NULL);
+INSERT INTO `t_activity` VALUES (48, 22, '12313', '2023-06-30 00:44:19', '2024-11-06 00:00:00', 2500.00, '111111', '2023-06-27 22:27:15', NULL, '2024-11-17 16:56:44', 1);
+INSERT INTO `t_activity` VALUES (51, 23, '测试1222', '2024-11-01 00:00:00', '2024-11-08 00:00:00', 120000.00, '11111111111', '2024-11-21 01:54:22', 1, '2024-11-21 01:54:53', 1);
+INSERT INTO `t_activity` VALUES (52, 23, '测试333', '2024-11-01 00:00:00', '2024-11-08 00:00:00', 1000000.00, '1234555', '2024-11-21 02:01:42', 1, NULL, NULL);
+INSERT INTO `t_activity` VALUES (53, 22, '抖音抽奖活动', '2026-07-02 00:00:00', '2026-07-29 17:03:43', 5000.00, '回馈活动，好好干\r\n', '2026-07-29 17:04:13', 30, NULL, NULL);
+INSERT INTO `t_activity` VALUES (54, 22, '录入市场', '2026-07-01 00:00:00', '2026-07-30 00:00:00', 20000.00, '炉石十四行诗', '2026-07-29 17:15:52', 30, NULL, NULL);
+INSERT INTO `t_activity` VALUES (55, 30, '抖音抽奖活动', '2026-07-08 00:00:00', '2026-07-24 00:00:00', 20000.00, '通过抽奖来宣传，吸引用户', '2026-07-29 17:39:23', 30, NULL, NULL);
+INSERT INTO `t_activity` VALUES (56, 31, '亚马逊新能源汽车推广', '2026-07-17 00:00:00', '2026-08-31 00:00:00', 50000.00, '进行海外推广，投入预算需要增加', '2026-07-30 00:20:44', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_activity_remark
@@ -99,17 +80,27 @@ CREATE TABLE `t_activity_remark`  (
   CONSTRAINT `t_activity_remark_ibfk_1` FOREIGN KEY (`activity_id`) REFERENCES `t_activity` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_activity_remark_ibfk_2` FOREIGN KEY (`create_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_activity_remark_ibfk_3` FOREIGN KEY (`edit_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '市场活动备注表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '市场活动备注表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_activity_remark
 -- ----------------------------
 INSERT INTO `t_activity_remark` VALUES (1, 46, '1111111111111', '2023-05-17 14:07:48', 1, NULL, NULL, NULL);
-INSERT INTO `t_activity_remark` VALUES (2, 1, '2312323123123', '2023-05-17 14:25:30', 1, '2023-11-08 14:21:42', 1, NULL);
+INSERT INTO `t_activity_remark` VALUES (2, 1, 'd阿松大阿松大', '2023-05-17 14:25:30', 1, '2024-11-18 20:27:40', 1, NULL);
 INSERT INTO `t_activity_remark` VALUES (3, 2, '1231231', '2023-06-07 23:08:32', 1, NULL, NULL, NULL);
 INSERT INTO `t_activity_remark` VALUES (4, 2, '23123', '2023-06-07 23:08:57', 1, NULL, NULL, NULL);
-INSERT INTO `t_activity_remark` VALUES (5, 10, '恶趣味群二无群二群无', '2023-06-07 23:10:20', 1, NULL, NULL, NULL);
+INSERT INTO `t_activity_remark` VALUES (5, 10, '恶趣味群二无群二群无', '2023-06-07 23:10:20', 1, NULL, NULL, 1);
 INSERT INTO `t_activity_remark` VALUES (6, 1, '12而且我撒', '2023-08-04 22:30:47', 1, NULL, NULL, NULL);
+INSERT INTO `t_activity_remark` VALUES (7, 1, '啊实打实大大', NULL, 1, NULL, NULL, NULL);
+INSERT INTO `t_activity_remark` VALUES (8, 2, '阿萨的驱动器', NULL, 1, NULL, NULL, NULL);
+INSERT INTO `t_activity_remark` VALUES (9, 2, NULL, NULL, 1, NULL, NULL, NULL);
+INSERT INTO `t_activity_remark` VALUES (10, 1, '12345', NULL, 1, NULL, NULL, 1);
+INSERT INTO `t_activity_remark` VALUES (11, 1, '阿松大大赛', NULL, 1, NULL, NULL, 1);
+INSERT INTO `t_activity_remark` VALUES (12, 1, '阿三大啊大大', '2024-11-18 13:56:09', 1, NULL, NULL, NULL);
+INSERT INTO `t_activity_remark` VALUES (13, 1, '二位热舞人', '2024-11-20 17:19:31', 1, NULL, NULL, NULL);
+INSERT INTO `t_activity_remark` VALUES (14, 51, '测试222111', '2024-11-21 01:54:34', 1, '2024-11-21 01:54:38', 1, 1);
+INSERT INTO `t_activity_remark` VALUES (15, 52, '123144442222', '2024-11-21 02:01:54', 1, '2024-11-21 02:01:59', 1, 1);
+INSERT INTO `t_activity_remark` VALUES (16, 8, '11111', '2026-07-29 20:47:10', 1, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_clue
@@ -140,6 +131,9 @@ CREATE TABLE `t_clue`  (
   `create_by` int NULL DEFAULT NULL COMMENT '创建人',
   `edit_time` datetime NULL DEFAULT NULL COMMENT '编辑时间',
   `edit_by` int NULL DEFAULT NULL COMMENT '编辑人',
+  `score` decimal(8, 2) NULL DEFAULT NULL COMMENT '综合评分（0-100）',
+  `score_level` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '评分等级：A/B/C/D',
+  `score_time` datetime NULL DEFAULT NULL COMMENT '最后评分时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `appellation`(`appellation` ASC) USING BTREE,
   INDEX `state`(`state` ASC) USING BTREE,
@@ -151,8 +145,10 @@ CREATE TABLE `t_clue`  (
   INDEX `t_clue_ibfk_8`(`need_loan` ASC) USING BTREE,
   INDEX `t_clue_ibfk_9`(`intention_state` ASC) USING BTREE,
   INDEX `t_clue_ibfk_10`(`intention_product` ASC) USING BTREE,
+  INDEX `idx_score`(`score` ASC) USING BTREE,
+  INDEX `idx_score_level`(`score_level` ASC) USING BTREE,
   CONSTRAINT `t_clue_ibfk_1` FOREIGN KEY (`appellation`) REFERENCES `t_dic_value` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `t_clue_ibfk_10` FOREIGN KEY (`intention_product`) REFERENCES `t_dic_value` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `t_clue_ibfk_10` FOREIGN KEY (`intention_product`) REFERENCES `t_product` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_clue_ibfk_2` FOREIGN KEY (`state`) REFERENCES `t_dic_value` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_clue_ibfk_3` FOREIGN KEY (`source`) REFERENCES `t_dic_value` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_clue_ibfk_4` FOREIGN KEY (`owner_id`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -161,76 +157,20 @@ CREATE TABLE `t_clue`  (
   CONSTRAINT `t_clue_ibfk_7` FOREIGN KEY (`activity_id`) REFERENCES `t_activity` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_clue_ibfk_8` FOREIGN KEY (`need_loan`) REFERENCES `t_dic_value` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_clue_ibfk_9` FOREIGN KEY (`intention_state`) REFERENCES `t_dic_value` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1144 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '线索表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1187 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '线索表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_clue
 -- ----------------------------
-INSERT INTO `t_clue` VALUES (1, 1, 46, '王杰', 18, '13700000000', '13700000000', '13700000000', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 50, 46, 5, 24, 3, '近期在看车', '2023-04-27 10:33:47', '2023-07-17 15:17:52', NULL, '2023-11-29 20:10:28', 2);
-INSERT INTO `t_clue` VALUES (2, 1, 47, '张峰', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 50, 47, 8, -1, 33, '通过打电话获取的线索', '2023-04-30 10:33:51', '2023-06-10 01:01:13', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (3, 2, 7, '张翔', 18, '13876903226', '13876903226', '123456', NULL, 26, NULL, 9.00, '天津和平', 50, 48, 10, 30, 44, '有购车意向，需要跟踪', '2023-04-15 00:00:00', '2023-06-10 01:01:17', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (4, 1, 46, '王杰', 18, '13700000000', '13700000000', '13700000000', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 50, 46, 5, 24, 3, '近期在看车', '2023-04-27 10:33:47', '2023-04-12 15:17:52', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (5, 1, 47, '张峰', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 50, 47, 8, -1, 33, '通过打电话获取的线索', '2023-04-30 10:33:51', '2023-06-10 01:01:19', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (6, 2, 7, '张翔', 18, '13876903226', '13876903226', NULL, NULL, 26, NULL, 9.00, '天津和平', 49, 48, 10, 30, 44, '有购车意向，需要跟踪', '2023-04-15 00:00:00', '2023-06-10 01:01:23', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (7, 1, 46, '王杰', 18, '13700000000', '13700000000', '13700000000', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 49, 46, 5, 24, 3, '近期在看车', '2023-04-27 10:33:47', '2023-04-12 15:17:52', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (8, 1, 47, '张峰', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 49, 47, 8, 24, 33, '通过打电话获取的线索', '2023-04-30 10:33:51', '2023-06-10 01:01:25', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (9, 2, 7, '张翔', 18, '13876903226', '13876903226', NULL, NULL, 26, NULL, 9.00, '天津和平', 49, 48, 10, 30, 44, '有购车意向，需要跟踪', '2023-04-28 13:24:10', '2023-06-10 01:01:28', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (10, 1, 46, '王杰89890890', 18, '13700000000', '13700000000', '13700000000', 'wangjie@163.com', 32, '', 10.00, '北京亦庄', 49, 46, 5, -1, 3, '近期在看车', '2023-04-27 10:33:47', '2023-04-12 15:17:52', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (11, 1, 47, '张峰', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 49, 47, 8, 24, 33, '通过打电话获取的线索', '2023-04-30 10:33:51', '2023-06-10 01:01:30', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (12, 2, 7, '张翔', 18, '13876903226', '13876903226', NULL, NULL, 26, NULL, 9.00, '天津和平', 49, 48, 10, 30, 44, '有购车意向，需要跟踪', '2023-04-15 00:00:00', '2023-06-10 01:01:33', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (13, 1, 46, '王杰', 18, '13700000000', '13700000000', '13700000000', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 49, 46, 5, -1, 3, '近期在看车', '2023-04-27 10:33:47', '2023-04-12 15:17:52', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (14, 1, 47, '张峰', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 49, 47, 8, -1, 33, '通过打电话获取的线索', '2023-04-30 10:33:51', '2023-06-10 01:01:36', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (15, 2, 7, '张翔', 18, '13876903226', '13876903226', NULL, NULL, 26, NULL, 9.00, '天津和平', 49, 48, 10, 30, 44, '有购车意向，需要跟踪', '2023-04-15 00:00:00', '2023-06-10 01:01:38', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (16, 1, 46, '王杰', 18, '13700000000', '13700000000', '13700000000', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 49, 46, 5, 24, 3, '近期在看车', '2023-04-27 10:33:47', '2023-04-12 15:17:52', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (17, 1, 47, '张峰', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 49, 47, 8, -1, 33, '通过打电话获取的线索', '2023-04-30 10:33:51', '2023-06-10 01:01:41', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (18, 2, 7, '张翔', 18, '13876903226', '13876903226', NULL, NULL, 26, NULL, 9.00, '天津和平', 49, 48, 10, 30, 44, '有购车意向，需要跟踪', '2023-04-15 00:00:00', '2023-06-10 01:01:44', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (19, 1, 46, '王杰', 18, '13700000000', '13700000000', '13700000000', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 49, 46, 5, -1, 3, '近期在看车', '2023-04-27 10:33:47', '2023-06-12 15:17:52', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (20, 1, 47, '张峰', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 49, 47, 8, 24, 33, '通过打电话获取的线索', '2023-04-30 10:33:51', '2023-06-10 01:01:46', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (21, 2, 7, '张翔', 18, '13876903226', '13876903226', NULL, NULL, 26, NULL, 9.00, '天津和平', 49, 48, 10, 30, 44, '有购车意向，需要跟踪', '2023-04-15 00:00:00', '2023-06-10 01:01:46', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (22, 1, 46, '王杰', 18, '13700000000', '13700000000', '13700000000', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 49, 46, 5, 24, 3, '近期在看车', '2023-04-27 10:33:47', '2023-04-12 15:17:52', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (23, 1, 47, '张峰', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 49, 47, 8, -1, 33, '通过打电话获取的线索', '2023-04-30 10:33:51', '2023-06-10 01:01:46', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (24, 2, 7, '张翔', 18, '13876903226', '13876903226', NULL, NULL, 26, NULL, 9.00, '天津和平', 49, 48, 10, 30, 44, '有购车意向，需要跟踪', '2023-04-15 00:00:00', '2023-06-10 01:01:46', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (25, 1, 46, '王杰', 18, '13700000000', '13700000000', '13700000000', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 49, 46, 5, 24, 3, '近期在看车', '2023-04-27 10:33:47', '2023-04-12 15:17:52', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (26, 1, 47, '张峰', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 49, 47, 8, 24, 33, '通过打电话获取的线索', '2023-04-30 10:33:51', '2023-06-10 01:01:46', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (27, 2, 7, '张翔', 18, '13876903226', '13876903226', NULL, NULL, 26, NULL, 9.00, '天津和平', 49, 48, 10, 30, 44, '有购车意向，需要跟踪', '2023-04-15 00:00:00', '2023-06-10 01:01:46', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (28, 1, 46, '王杰', 18, '13700000000', '13700000000', '13700000000', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 49, 46, 5, 24, 3, '近期在看车', '2023-04-27 10:33:47', '2023-06-12 15:17:52', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (29, 1, 47, '张峰', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 49, 47, 8, 24, 33, '通过打电话获取的线索', '2023-04-30 10:33:51', '2023-06-10 01:01:46', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (31, 3, 2, '213213', 20, '12312312', '12312312', '2312312', '12312312', 12, '341231', 2131231.00, '12312312', 50, 46, 7, 24, 44, 'asfeefsdewrewr', '2023-04-27 16:48:30', '2023-06-10 01:01:46', NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1109, 1, 46, '王杰', 18, '13700000000', '13700000000', '230989432', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-11-27 20:33:25', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1110, 1, 47, '张怡然', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 10:33:51', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1111, 2, 7, '张翔宇', 18, '13876903226', '13876903226', '1298094321', NULL, 26, NULL, 9.00, '天津和平', NULL, NULL, NULL, NULL, NULL, '有购车意向，需要跟踪', '2023-11-15 10:30:00', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1112, 1, 46, '王世坤', 18, '13700000000', '13700000000', '209836613', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-12-27 09:20:21', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1113, 1, 47, '张珊珊', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 13:33:51', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1114, 1, 46, '王杰', 18, '13700000000', '13700000000', '230989432', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-11-27 20:33:25', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1115, 1, 47, '张怡然', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 10:33:51', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1116, 2, 7, '张翔宇', 18, '13876903226', '13876903226', '1298094321', NULL, 26, NULL, 9.00, '天津和平', NULL, NULL, NULL, NULL, NULL, '有购车意向，需要跟踪', '2023-11-15 10:30:00', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1117, 1, 46, '王世坤', 18, '13700000000', '13700000000', '209836613', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-12-27 09:20:21', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1118, 1, 47, '张珊珊', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 13:33:51', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1119, 1, 46, '王杰', 18, '13700000000', '13700000000', '230989432', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-11-27 20:33:25', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1120, 1, 47, '张怡然', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 10:33:51', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1121, 2, 7, '张翔宇', 18, '13876903226', '13876903226', '1298094321', NULL, 26, NULL, 9.00, '天津和平', NULL, NULL, NULL, NULL, NULL, '有购车意向，需要跟踪', '2023-11-15 10:30:00', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1122, 1, 46, '王世坤', 18, '13700000000', '13700000000', '209836613', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-12-27 09:20:21', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1123, 1, 47, '张珊珊', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 13:33:51', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1124, 1, 46, '王杰', 18, '13700000000', '13700000000', '230989432', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-11-27 20:33:25', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1125, 1, 47, '张怡然', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 10:33:51', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1126, 2, 7, '张翔宇', 18, '13876903226', '13876903226', '1298094321', NULL, 26, NULL, 9.00, '天津和平', NULL, NULL, NULL, NULL, NULL, '有购车意向，需要跟踪', '2023-11-15 10:30:00', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1127, 1, 46, '王世坤', 18, '13700000000', '13700000000', '209836613', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-12-27 09:20:21', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1128, 1, 47, '张珊珊', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 13:33:51', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1129, 1, 46, '王杰', 18, '13700000000', '13700000000', '230989432', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-11-27 20:33:25', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1130, 1, 47, '张怡然', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 10:33:51', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1131, 2, 7, '张翔宇', 18, '13876903226', '13876903226', '1298094321', NULL, 26, NULL, 9.00, '天津和平', NULL, NULL, NULL, NULL, NULL, '有购车意向，需要跟踪', '2023-11-15 10:30:00', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1132, 1, 46, '王世坤', 18, '13700000000', '13700000000', '209836613', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-12-27 09:20:21', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1133, 1, 47, '张珊珊', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 13:33:51', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1134, 1, 46, '王杰', 18, '13700000000', '13700000000', '230989432', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-11-27 20:33:25', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1135, 1, 47, '张怡然', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 10:33:51', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1136, 2, 7, '张翔宇', 18, '13876903226', '13876903226', '1298094321', NULL, 26, NULL, 9.00, '天津和平', NULL, NULL, NULL, NULL, NULL, '有购车意向，需要跟踪', '2023-11-15 10:30:00', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1137, 1, 46, '王世坤', 18, '13700000000', '13700000000', '209836613', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-12-27 09:20:21', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1138, 1, 47, '张珊珊', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 13:33:51', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1139, 1, 46, '王杰', 18, '13700000000', '13700000000', '230989432', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-11-27 20:33:25', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1140, 1, 47, '张怡然', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 10:33:51', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1141, 2, 7, '张翔宇', 18, '13876903226', '13876903226', '1298094321', NULL, 26, NULL, 9.00, '天津和平', NULL, NULL, NULL, NULL, NULL, '有购车意向，需要跟踪', '2023-11-15 10:30:00', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1142, 1, 46, '王世坤', 18, '13700000000', '13700000000', '209836613', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', NULL, NULL, NULL, NULL, NULL, '近期在看车', '2023-12-27 09:20:21', NULL, NULL, NULL, NULL);
-INSERT INTO `t_clue` VALUES (1143, 1, 47, '张珊珊', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', NULL, NULL, NULL, NULL, NULL, '通过打电话获取的线索', '2023-11-30 13:33:51', NULL, NULL, NULL, NULL);
+INSERT INTO `t_clue` VALUES (1, 1, 46, '王杰', 18, '13700000000', '13700000000', '13700000000', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 50, 46, 5, 24, 3, '近期在看车', '2023-04-27 10:33:47', '2023-07-17 15:17:52', NULL, '2023-11-29 20:10:28', 2, 23.84, 'D', '2026-07-29 23:51:02');
+INSERT INTO `t_clue` VALUES (2, 1, 47, '张峰', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 50, 47, 8, -1, 33, '通过打电话获取的线索', '2023-04-30 10:33:51', '2023-06-10 01:01:13', NULL, NULL, NULL, 12.11, 'D', '2026-07-29 23:46:38');
+INSERT INTO `t_clue` VALUES (3, 2, 7, '张翔', 18, '13876903226', '13876903226', '123456', NULL, 26, NULL, 9.00, '天津和平', 50, 48, 10, 30, 44, '有购车意向，需要跟踪', '2023-04-15 00:00:00', '2023-06-10 01:01:17', NULL, NULL, NULL, 12.11, 'D', '2026-07-30 10:52:10');
+INSERT INTO `t_clue` VALUES (1166, 7, 47, '张怡然', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 50, 46, 4, 6, 16, '通过打电话获取的线索', '2023-11-30 10:33:51', '2024-11-21 01:41:10', 1, NULL, NULL, 12.11, 'D', '2026-07-30 10:52:14');
+INSERT INTO `t_clue` VALUES (1167, 12, 7, '张翔宇', 18, '13876903226', '13876903226', '1298094321', NULL, 26, NULL, 9.00, '天津和平', 49, 48, 7, 30, 17, '有购车意向，需要跟踪', '2023-11-15 10:30:00', '2024-11-21 01:41:10', 1, NULL, NULL, 13.61, 'D', '2026-07-29 22:46:15');
+INSERT INTO `t_clue` VALUES (1168, 19, 46, '王世坤', 18, '13700000000', '13700000000', '209836613', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 50, 48, 6, 24, 17, '近期在看车', '2023-12-27 09:20:21', '2024-11-21 01:41:10', 1, NULL, NULL, 15.74, 'D', '2026-07-30 10:52:18');
+INSERT INTO `t_clue` VALUES (1169, 21, 47, '张珊珊', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 49, 47, 9, -1, 17, '通过打电话获取的线索', '2023-11-30 13:33:51', '2024-11-21 01:41:10', 1, NULL, NULL, 12.11, 'D', '2026-07-29 23:46:25');
+INSERT INTO `t_clue` VALUES (1185, 1, 54, '张杰', 18, '13456789101', '13456789101', '13456789101', 'zhangjie@email.com', 35, '程序员', 150000.00, '广州天河', 50, 46, 2, -1, 45, '真实有意向，可以争取', '2026-07-30 00:00:00', '2026-07-29 20:51:10', 1, '2026-07-29 20:58:54', 1, 49.73, 'C', '2026-07-30 10:52:23');
+INSERT INTO `t_clue` VALUES (1186, 1, 54, '宋小宝', 18, '15875351885', NULL, NULL, NULL, NULL, NULL, 50000.00, NULL, 49, 46, 1, 10, 16, NULL, '2026-07-31 00:00:00', '2026-07-29 20:58:40', 1, '2026-07-29 22:32:08', 1, 31.55, 'D', '2026-07-30 10:52:32');
 
 -- ----------------------------
 -- Table structure for t_clue_remark
@@ -255,23 +195,16 @@ CREATE TABLE `t_clue_remark`  (
   CONSTRAINT `t_clue_remark_ibfk_2` FOREIGN KEY (`edit_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_clue_remark_ibfk_3` FOREIGN KEY (`clue_id`) REFERENCES `t_clue` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_clue_remark_ibfk_4` FOREIGN KEY (`note_way`) REFERENCES `t_dic_value` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '线索跟踪记录表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '线索跟踪记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_clue_remark
 -- ----------------------------
-INSERT INTO `t_clue_remark` VALUES (5, 8, 65, '2143242354', '2023-04-28 14:24:27', 1, NULL, NULL, NULL);
-INSERT INTO `t_clue_remark` VALUES (6, 10, 64, '123412312312', '2023-04-28 14:29:41', 1, NULL, NULL, NULL);
-INSERT INTO `t_clue_remark` VALUES (7, 10, 63, '二位绕弯儿翁人', '2023-04-28 14:30:16', 1, NULL, NULL, NULL);
-INSERT INTO `t_clue_remark` VALUES (8, 21, 61, '12213123123', '2023-05-21 23:43:48', 1, NULL, NULL, NULL);
-INSERT INTO `t_clue_remark` VALUES (9, 21, 62, '3ewrwerewr', '2023-05-21 23:43:52', 1, NULL, NULL, NULL);
-INSERT INTO `t_clue_remark` VALUES (10, 21, 65, 'ewrwerewrewr', '2023-05-21 23:43:55', 1, NULL, NULL, NULL);
-INSERT INTO `t_clue_remark` VALUES (11, 16, 64, '123213123', '2023-05-21 23:54:57', 1, NULL, NULL, NULL);
-INSERT INTO `t_clue_remark` VALUES (12, 16, 63, '23123123', '2023-05-21 23:54:59', 1, NULL, NULL, NULL);
-INSERT INTO `t_clue_remark` VALUES (13, 16, 61, '2312313', '2023-05-21 23:55:02', 1, NULL, NULL, NULL);
 INSERT INTO `t_clue_remark` VALUES (14, 1, 62, NULL, '2023-06-27 22:47:49', 1, NULL, NULL, NULL);
 INSERT INTO `t_clue_remark` VALUES (15, 1, 65, '111111111111111', '2023-06-27 22:47:56', 1, NULL, NULL, NULL);
 INSERT INTO `t_clue_remark` VALUES (16, 1, 64, '1111111111111111111111222222222222222222222222', '2023-06-27 22:48:01', 1, NULL, NULL, NULL);
+INSERT INTO `t_clue_remark` VALUES (17, 1185, 61, '可以通过电话询问客户', '2026-07-29 20:56:39', 1, NULL, NULL, NULL);
+INSERT INTO `t_clue_remark` VALUES (18, 1186, NULL, '用户的意向很大，但是经济不是很高', '2026-07-29 22:47:51', 1, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_customer
@@ -296,22 +229,16 @@ CREATE TABLE `t_customer`  (
   CONSTRAINT `t_customer_ibfk_2` FOREIGN KEY (`product`) REFERENCES `t_product` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_customer_ibfk_3` FOREIGN KEY (`create_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_customer_ibfk_4` FOREIGN KEY (`edit_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '客户表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '客户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_customer
 -- ----------------------------
-INSERT INTO `t_customer` VALUES (1, 10, 3, '2131231', '2023-05-06 15:36:59', NULL, NULL, NULL, NULL);
-INSERT INTO `t_customer` VALUES (2, 8, 6, '124气味儿群', '2023-05-05 00:00:00', NULL, NULL, NULL, NULL);
-INSERT INTO `t_customer` VALUES (3, 6, 6, '1232强21312', '2023-05-06 00:00:00', '2023-04-28 15:42:15', 1, NULL, NULL);
-INSERT INTO `t_customer` VALUES (4, 2, 3, '阿萨的人', '2023-05-05 00:00:00', '2023-04-28 15:54:04', 1, NULL, NULL);
-INSERT INTO `t_customer` VALUES (5, 10, 1, '234234', '2023-05-05 00:00:00', '2023-04-28 15:56:44', 1, NULL, NULL);
-INSERT INTO `t_customer` VALUES (6, 17, 2, '是的啊所大', '2023-05-05 00:00:00', '2023-04-28 15:59:33', 1, NULL, NULL);
-INSERT INTO `t_customer` VALUES (7, 5, 2, '12312312', '2023-05-12 00:00:00', '2023-05-04 10:03:05', 1, NULL, NULL);
-INSERT INTO `t_customer` VALUES (8, 19, 2, '气味儿群翁', '2023-05-04 10:03:18', '2023-05-04 10:03:20', 1, NULL, NULL);
-INSERT INTO `t_customer` VALUES (9, 14, 4, '沃尔沃二', '2023-06-09 00:00:00', '2023-05-04 10:03:39', 1, NULL, NULL);
-INSERT INTO `t_customer` VALUES (10, 23, 4, '沃尔沃二翁', '2023-05-23 00:00:00', '2023-05-04 10:03:53', 1, NULL, NULL);
-INSERT INTO `t_customer` VALUES (11, 13, 2, '沃尔沃二', '2023-05-13 00:00:00', '2023-05-04 10:04:03', 1, NULL, NULL);
+INSERT INTO `t_customer` VALUES (2, 2, 6, '124气味儿群', '2023-05-05 00:00:00', NULL, NULL, NULL, NULL);
+INSERT INTO `t_customer` VALUES (3, 3, 6, '1232强21312', '2023-05-06 00:00:00', '2023-04-28 15:42:15', 1, NULL, NULL);
+INSERT INTO `t_customer` VALUES (6, 2, 2, '是的啊所大', '2023-05-05 00:00:00', '2023-04-28 15:59:33', 1, NULL, NULL);
+INSERT INTO `t_customer` VALUES (12, 1169, 2, '有意向客户，意向很大', '2026-07-30 00:00:00', '2026-07-29 20:57:29', 1, NULL, NULL);
+INSERT INTO `t_customer` VALUES (13, 1185, 2, '在周二询问客户是否全款买下', '2027-08-02 00:00:00', '2026-07-29 20:59:31', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_customer_remark
@@ -346,17 +273,7 @@ INSERT INTO `t_customer_remark` VALUES (2, 10, 64, '2222222222222', 1, '2023-05-
 INSERT INTO `t_customer_remark` VALUES (3, 10, 63, 'EREWREWRWRWR', 1, '2023-05-04 16:21:03', NULL, NULL, NULL);
 INSERT INTO `t_customer_remark` VALUES (4, 7, 61, '13213123', 1, '2023-05-17 17:36:16', NULL, NULL, NULL);
 INSERT INTO `t_customer_remark` VALUES (5, 10, 62, '2342423423423', 1, '2023-05-17 17:36:33', NULL, NULL, NULL);
-INSERT INTO `t_customer_remark` VALUES (6, 1, 65, '3212321321', 1, '2023-05-21 23:50:42', NULL, NULL, NULL);
-INSERT INTO `t_customer_remark` VALUES (7, 1, 64, 'eqwewqeqwe', 1, '2023-05-21 23:50:46', NULL, NULL, NULL);
-INSERT INTO `t_customer_remark` VALUES (8, 1, 63, 'wqeqwewqeqw', 1, '2023-05-21 23:50:48', NULL, NULL, NULL);
 INSERT INTO `t_customer_remark` VALUES (9, 8, 61, 'ewqeqweq', 1, '2023-05-21 23:50:59', NULL, NULL, NULL);
-INSERT INTO `t_customer_remark` VALUES (10, 5, 62, 'weqweqweqweq', 1, '2023-05-21 23:51:05', NULL, NULL, NULL);
-INSERT INTO `t_customer_remark` VALUES (11, 5, 65, 'weqwewqeqw', 1, '2023-05-21 23:51:08', NULL, NULL, NULL);
-INSERT INTO `t_customer_remark` VALUES (12, 5, 64, '23213213123', 1, '2023-05-21 23:51:13', NULL, NULL, NULL);
-INSERT INTO `t_customer_remark` VALUES (13, 5, 65, '23123213213', 1, '2023-05-21 23:51:16', NULL, NULL, NULL);
-INSERT INTO `t_customer_remark` VALUES (14, 5, 64, '23123213213', 1, '2023-05-21 23:51:19', NULL, NULL, NULL);
-INSERT INTO `t_customer_remark` VALUES (15, 5, 63, '3232323123', 1, '2023-05-21 23:51:23', NULL, NULL, NULL);
-INSERT INTO `t_customer_remark` VALUES (16, 1, 61, '12312321321', 1, '2023-05-21 23:56:55', NULL, NULL, NULL);
 INSERT INTO `t_customer_remark` VALUES (17, 2, 62, '1232131231', 1, '2023-05-21 23:57:03', NULL, NULL, NULL);
 INSERT INTO `t_customer_remark` VALUES (18, 10, 65, NULL, 1, '2023-05-22 22:12:52', NULL, NULL, NULL);
 INSERT INTO `t_customer_remark` VALUES (19, 10, 64, '123213214124', 1, '2023-05-22 22:12:58', NULL, NULL, NULL);
@@ -374,8 +291,7 @@ CREATE TABLE `t_dic_type`  (
   `type_name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '字典类型名称',
   `remark` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `type_code`(`type_code` ASC) USING BTREE,
-  INDEX `code`(`type_code` ASC) USING BTREE
+  UNIQUE INDEX `code`(`type_code` ASC) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '字典类型表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -408,7 +324,7 @@ CREATE TABLE `t_dic_value`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `t_dic_value_ibfk_1`(`type_code` ASC) USING BTREE,
   CONSTRAINT `t_dic_value_ibfk_1` FOREIGN KEY (`type_code`) REFERENCES `t_dic_type` (`type_code`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 67 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '字典值表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 69 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '字典值表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_dic_value
@@ -476,7 +392,7 @@ INSERT INTO `t_dic_value` VALUES (62, 'noteWay', '微信', 2, NULL);
 INSERT INTO `t_dic_value` VALUES (63, 'noteWay', 'QQ', 3, NULL);
 INSERT INTO `t_dic_value` VALUES (64, 'noteWay', '面聊', 4, NULL);
 INSERT INTO `t_dic_value` VALUES (65, 'noteWay', '其他', 5, NULL);
-INSERT INTO `t_dic_value` VALUES (66, 'transactionType', '12', 11, NULL);
+INSERT INTO `t_dic_value` VALUES (67, 'transactionType', '1a', 11, NULL);
 
 -- ----------------------------
 -- Table structure for t_permission
@@ -484,15 +400,15 @@ INSERT INTO `t_dic_value` VALUES (66, 'transactionType', '12', 11, NULL);
 DROP TABLE IF EXISTS `t_permission`;
 CREATE TABLE `t_permission`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `code` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `url` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `code` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `url` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `parent_id` int NULL DEFAULT NULL,
   `order_no` int NULL DEFAULT NULL,
-  `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1112 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 69 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_permission
@@ -556,11 +472,9 @@ INSERT INTO `t_permission` VALUES (58, '系统管理-录入', 'system:add', NULL
 INSERT INTO `t_permission` VALUES (59, '系统管理-编辑', 'system:edit', NULL, 'button', 56, NULL, NULL);
 INSERT INTO `t_permission` VALUES (60, '系统管理-查看', 'system:view', NULL, 'button', 56, NULL, NULL);
 INSERT INTO `t_permission` VALUES (61, '系统管理-删除', 'system:delete', NULL, 'button', 56, NULL, NULL);
-INSERT INTO `t_permission` VALUES (62, '客户管理-编辑', 'customer:edit', NULL, 'button', 20, NULL, NULL);
-INSERT INTO `t_permission` VALUES (63, '客户管理-删除', 'customer:delete', NULL, 'button', 20, NULL, NULL);
-INSERT INTO `t_permission` VALUES (64, '交易管理-录入', 'tran:add', NULL, 'button', 25, NULL, NULL);
-INSERT INTO `t_permission` VALUES (65, '交易管理-编辑', 'tran:edit', NULL, 'button', 25, NULL, NULL);
-INSERT INTO `t_permission` VALUES (66, '交易管理-删除', 'tran:delete', NULL, 'button', 25, NULL, NULL);
+INSERT INTO `t_permission` VALUES (64, '权限管理', NULL, '/dashboard/perm', 'menu', 0, 8, 'Lock');
+INSERT INTO `t_permission` VALUES (65, '权限管理-列表', 'perm:list', NULL, 'button', 64, NULL, NULL);
+INSERT INTO `t_permission` VALUES (66, '权限管理-分配', 'perm:assign', NULL, 'button', 64, NULL, NULL);
 INSERT INTO `t_permission` VALUES (67, '权限管理', NULL, NULL, 'menu', 0, 8, 'Lock');
 INSERT INTO `t_permission` VALUES (68, '权限管理', NULL, '/dashboard/perm', 'menu', 67, 1, 'Key');
 
@@ -570,7 +484,7 @@ INSERT INTO `t_permission` VALUES (68, '权限管理', NULL, '/dashboard/perm', 
 DROP TABLE IF EXISTS `t_product`;
 CREATE TABLE `t_product`  (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '主键，自动增长，线索ID',
-  `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '产品名称',
+  `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '产品名称',
   `guide_price_s` decimal(10, 2) NULL DEFAULT NULL COMMENT '官方指导起始价',
   `guide_price_e` decimal(10, 2) NULL DEFAULT NULL COMMENT '官方指导最高价',
   `quotation` decimal(10, 2) NULL DEFAULT NULL COMMENT '经销商报价',
@@ -584,7 +498,7 @@ CREATE TABLE `t_product`  (
   INDEX `t_product_ibfk_2`(`edit_by` ASC) USING BTREE,
   CONSTRAINT `t_product_ibfk_1` FOREIGN KEY (`create_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_product_ibfk_2` FOREIGN KEY (`edit_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '产品表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '产品表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_product
@@ -598,6 +512,7 @@ INSERT INTO `t_product` VALUES (6, '秦PLUS DM-i', 9.98, 16.58, 9.06, 0, '2023-0
 INSERT INTO `t_product` VALUES (7, '秦PLUS EV', 12.98, 18.08, 12.38, 0, '2023-04-05 09:30:31', 1, NULL, NULL);
 INSERT INTO `t_product` VALUES (8, '海豹', 21.28, 28.98, 20.18, 0, '2023-04-02 10:31:08', 1, NULL, NULL);
 INSERT INTO `t_product` VALUES (9, '汉DM', 21.78, 32.18, 19.88, 0, '2023-04-07 16:31:45', 1, NULL, NULL);
+INSERT INTO `t_product` VALUES (10, '宋PLUS EV', 18.68, 20.38, 17.86, 0, '2023-03-18 21:33:08', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_role
@@ -605,10 +520,10 @@ INSERT INTO `t_product` VALUES (9, '汉DM', 21.78, 32.18, 19.88, 0, '2023-04-07 
 DROP TABLE IF EXISTS `t_role`;
 CREATE TABLE `t_role`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `role` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `role_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `role` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `role_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_role
@@ -632,7 +547,7 @@ CREATE TABLE `t_role_permission`  (
   INDEX `t_role_permission_ibfk_2`(`permission_id` ASC) USING BTREE,
   CONSTRAINT `t_role_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_role_permission_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `t_permission` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 82 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色权限关系表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 84 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色权限关系表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_role_permission
@@ -713,12 +628,9 @@ INSERT INTO `t_role_permission` VALUES (73, 2, 24);
 INSERT INTO `t_role_permission` VALUES (74, 2, 25);
 INSERT INTO `t_role_permission` VALUES (75, 2, 26);
 INSERT INTO `t_role_permission` VALUES (76, 2, 27);
-INSERT INTO `t_role_permission` VALUES (77, 1, 62);
-INSERT INTO `t_role_permission` VALUES (78, 1, 63);
 INSERT INTO `t_role_permission` VALUES (79, 1, 64);
 INSERT INTO `t_role_permission` VALUES (80, 1, 65);
 INSERT INTO `t_role_permission` VALUES (81, 1, 66);
-
 
 -- ----------------------------
 -- Table structure for t_system_info
@@ -733,7 +645,7 @@ CREATE TABLE `t_system_info`  (
   `title` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `description` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `keywords` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `shortcuticon` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `shortcuticon` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `tel` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
   `weixin` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
   `email` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
@@ -750,13 +662,13 @@ CREATE TABLE `t_system_info`  (
   INDEX `t_system_info_ibfk_2`(`edit_by` ASC) USING BTREE,
   CONSTRAINT `t_system_info_ibfk_1` FOREIGN KEY (`create_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_system_info_ibfk_2` FOREIGN KEY (`edit_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统信息表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_system_info
 -- ----------------------------
-INSERT INTO `t_system_info` VALUES (1, 'crm', '数字化营销与客户管理平台', 'http://www.localhost.com', 'http://localhost:8080/image/logo.png', '数字化营销与客户管理平台', 'CRM 企业客户智慧云管理', 'crm, 客户, 客户关系, 客户关系管理', 'http://www.localhost.com/favicon.ico', '010-84846003', '123456789', '123456789@qq.com', '广州市从化区太平镇企业湾10栋3层', '系统版本:1.1.0.bate', '网站维护中 数字化营销与客户管理平台 http://www.localhost.com', '1', '2023-11-08 13:28:18', 1, '2026-07-25 00:29:09', NULL);
-INSERT INTO `t_system_info` VALUES (3, 'Saas', '同事呼叫机', 'http//:localhost:8080', NULL, '呼叫机设计', '测试1111', '111', '11', '15875351885', NULL, NULL, NULL, 'v1.0', NULL, '1', '2026-07-25 15:25:14', NULL, NULL, NULL);
+INSERT INTO `t_system_info` VALUES (1, 'crm', '动力云客系统', 'http://www.bjpowernode.com', 'http://localhost:8080/image/logo.png', '动力云客系统', '动力CRM 企业客户智慧云管理', 'crm, 客户, 客户关系, 客户关系管理', 'http://www.bjpowernode.com/favicon.ico', '010-84846003', '123456789', '123456789@qq.com', '北京市大兴区大族企业湾10栋3层', '系统版本:1.1.0.bate', '网站维护中 动力云客系统 http://www.bjpowernode.com', 'true', '2023-11-08 13:28:18', 1, NULL, NULL);
+INSERT INTO `t_system_info` VALUES (2, 'call', '动力呼叫系统', 'http://www.bjpowernode.com', 'http://localhost:8080/image/logo.png', '动力呼叫系统', '动力CRM 企业客户智慧云管理', 'crm, 客户, 客户关系, 客户关系管理', 'http://www.bjpowernode.com/favicon.ico', '010-84846003', '123456789', '123456789@qq.com', '北京市大兴区大族企业湾10栋3层', '系统版本:1.1.0.bate', '网站维护中 动力呼叫系统 http://www.bjpowernode.com', 'true', '2023-11-08 13:28:21', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_tran
@@ -784,15 +696,15 @@ CREATE TABLE `t_tran`  (
   CONSTRAINT `t_tran_ibfk_2` FOREIGN KEY (`stage`) REFERENCES `t_dic_value` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_tran_ibfk_3` FOREIGN KEY (`create_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_tran_ibfk_4` FOREIGN KEY (`edit_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '交易表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '交易表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_tran
 -- ----------------------------
-INSERT INTO `t_tran` VALUES (5, '202311121932019431', 1, 120000.00, '2023-11-14 00:00:00', 42, '123131', '2023-11-29 00:00:00', '2023-11-12 19:32:02', 1, NULL, NULL);
-INSERT INTO `t_tran` VALUES (6, '202311121932019432', 1, 93000.00, '2023-11-12 00:00:00', 12, '123131', '2023-11-29 00:00:00', '2023-11-12 19:32:02', 1, NULL, NULL);
-INSERT INTO `t_tran` VALUES (12, '20260724225404708', 2, 123.00, '2026-07-15 00:00:00', 21, '123', '2026-07-31 00:00:00', '2026-07-24 22:54:05', 1, NULL, NULL);
-INSERT INTO `t_tran` VALUES (16, '20260724232315194', 2, 10000.00, '2026-07-01 00:00:00', 12, '测试', '2026-07-25 00:00:00', '2026-07-24 23:23:15', 1, '2026-07-24 23:23:24', 1);
+INSERT INTO `t_tran` VALUES (14, '20260729003326668', 2, 12313.00, '2026-07-24 00:00:00', 37, '1312', '2026-07-31 00:00:00', '2026-07-29 00:33:27', 1, NULL, NULL);
+INSERT INTO `t_tran` VALUES (15, '20260729003345816', 2, 123123.00, '2026-07-10 00:00:00', 42, '123', '2026-07-31 00:00:00', '2026-07-29 00:33:46', 1, NULL, NULL);
+INSERT INTO `t_tran` VALUES (17, '20260729105911486', 3, 20000.00, '2026-07-18 00:00:00', 40, '测试', '2026-07-25 00:00:00', '2026-07-29 10:59:11', 1, NULL, NULL);
+INSERT INTO `t_tran` VALUES (19, '20260729211637746', 13, 20000.00, '2026-07-08 00:00:00', 35, '商品已经交付给客户', '2026-07-31 00:00:00', '2026-07-29 21:16:38', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_tran_history
@@ -813,13 +725,15 @@ CREATE TABLE `t_tran_history`  (
   CONSTRAINT `t_tran_history_ibfk_1` FOREIGN KEY (`tran_id`) REFERENCES `t_tran` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_tran_history_ibfk_2` FOREIGN KEY (`stage`) REFERENCES `t_dic_value` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_tran_history_ibfk_3` FOREIGN KEY (`create_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '交易历史记录表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '交易历史记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_tran_history
 -- ----------------------------
-INSERT INTO `t_tran_history` VALUES (12, 12, 21, 123.00, '2026-07-15 00:00:00', '2026-07-24 22:54:05', 1);
-INSERT INTO `t_tran_history` VALUES (16, 16, 12, 10000.00, '2026-07-01 00:00:00', '2026-07-24 23:23:15', 1);
+INSERT INTO `t_tran_history` VALUES (8, 14, 37, 12313.00, '2026-07-24 00:00:00', '2026-07-29 00:33:27', 1);
+INSERT INTO `t_tran_history` VALUES (9, 15, 42, 123123.00, '2026-07-10 00:00:00', '2026-07-29 00:33:46', 1);
+INSERT INTO `t_tran_history` VALUES (11, 17, 40, 20000.00, '2026-07-18 00:00:00', '2026-07-29 10:59:12', 1);
+INSERT INTO `t_tran_history` VALUES (13, 19, 35, 20000.00, '2026-07-08 00:00:00', '2026-07-29 21:16:38', 1);
 
 -- ----------------------------
 -- Table structure for t_tran_remark
@@ -844,7 +758,7 @@ CREATE TABLE `t_tran_remark`  (
   CONSTRAINT `t_tran_remark_ibfk_2` FOREIGN KEY (`note_way`) REFERENCES `t_dic_value` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_tran_remark_ibfk_3` FOREIGN KEY (`create_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_tran_remark_ibfk_4` FOREIGN KEY (`edit_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '交易跟踪记录表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '交易跟踪记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_tran_remark
@@ -874,37 +788,65 @@ CREATE TABLE `t_user`  (
   UNIQUE INDEX `login_act`(`login_act` ASC) USING BTREE,
   UNIQUE INDEX `phone`(`phone` ASC) USING BTREE,
   UNIQUE INDEX `email`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES (1, 'admin', '$2a$10$FEILN6GvtMMRdQOGKgU5..nF/82baArEzJIsWiD9nD1TcVvdd0bSO', '管理员', '13700000000', 'admin@qq.com', 1, 1, 1, 1, '2023-02-22 09:37:12', NULL, '2026-07-25 00:34:34', NULL, '2023-12-10 21:18:59');
-INSERT INTO `t_user` VALUES (2, 'yuyan', '$2a$10$ZzzAd0nDuUGfGSjJDnZIyOaW7mUZkFzsYgOqiF/b07po/BGxBFjJ.', '于嫣', 'null', 'yuyan@163.com', 1, 1, 1, 1, '2023-02-28 12:11:40', NULL, '2023-05-23 00:21:14', NULL, '2023-11-29 20:14:31');
+INSERT INTO `t_user` VALUES (1, 'admin', '$2a$10$.XHjeiI/B4NgO9cgbxoeROyKc.gWLozSp05ONrS7NVBEKc1byfapy', '管理员', '13700000000', 'admin@qq.com', 1, 1, 1, 1, '2023-02-22 09:37:12', 2, '2024-11-11 20:45:58', 1, '2023-12-10 21:18:59');
+INSERT INTO `t_user` VALUES (2, 'yuyan', '$2a$10$ZzzAd0nDuUGfGSjJDnZIyOaW7mUZkFzsYgOqiF/b07po/BGxBFjJ.', '于嫣', '15222515131', 'yuyan@163.com', 1, 1, 1, 1, '2023-02-28 12:11:40', NULL, '2024-11-11 20:46:54', 1, '2023-11-29 20:14:31');
 INSERT INTO `t_user` VALUES (3, 'zhangqi', '$2a$10$Q0qTW6QqkabTzFyoilViw..YdrVzZkSKe5RvLmjgPgW/IrcPkBoF.', '张琪', '1362362323', 'zhangqi@qq.com', 1, 1, 1, 1, '2023-03-02 11:37:34', NULL, '2023-05-23 00:21:02', NULL, NULL);
-INSERT INTO `t_user` VALUES (4, 'suwanting', '$2a$10$3bambNLTCAKtQn2OXPiHb.f0SzH.MucTiLi6GPT6nQrYpsxsdxaFi', '苏婉婷', NULL, 'suwanting@qq.com', 1, 1, 1, 1, '2023-04-03 15:04:54', NULL, NULL, NULL, NULL);
+INSERT INTO `t_user` VALUES (4, 'suwanting', '$2a$10$3bambNLTCAKtQn2OXPiHb.f0SzH.MucTiLi6GPT6nQrYpsxsdxaFi', '苏婉婷', '13456789101', 'suwanting@qq.com', 1, 1, 1, 1, '2023-04-03 15:04:54', NULL, '2024-11-11 20:47:21', 1, NULL);
 INSERT INTO `t_user` VALUES (5, 'wuxiaoxiao', '$2a$10$Lmk5wXYkZzQMFJEcXVZAZegIQhnAm6ONHpz09X/.gbOh5ze5fU6MW', '吴潇潇', NULL, 'wuxiaoxiao@qq.com', 1, 1, 1, 1, '2023-01-27 12:15:26', NULL, NULL, NULL, NULL);
 INSERT INTO `t_user` VALUES (6, 'mengyan', '$2a$10$6zGT7CfeuJ/6jZPk1pAqcuiMYDnCJstrceThGD5DVVOA5XvOP/sQq', '孟岩', NULL, 'mengyan@163.com', 1, 1, 1, 1, '2023-03-19 10:17:28', NULL, NULL, NULL, NULL);
 INSERT INTO `t_user` VALUES (7, 'yuanhuimin', '$2a$10$mbsloGtPV7cDwfAVYxuvLemQRWumZKrDxVZxg4fnbfaocnfZFlYuu', '袁慧敏', NULL, 'yuanhuimin@11.com', 1, 1, 1, 1, '2023-04-11 20:18:50', NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (8, 'qinxuwen', '$2a$10$ir8uLlBrPMHRtGiu5Ajkv.UKcRacXWRen7zxelp9iUaco3WhGkJ36', '秦旭文', '13820000000', 'qinxuwen@163.com', 1, 1, 1, 1, '2023-03-19 21:11:37', NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (9, 'chengjie', '$2a$10$jQR8yyF/ailGP/zW6G4JOOffzWOXhe02Rgw7MZLfxL.IGFdM3cjM2', '程杰', '13500000000', 'chengjie@qq.com', 1, 1, 1, 1, '2023-04-16 07:16:19', NULL, '2023-04-20 21:42:21', NULL, NULL);
-INSERT INTO `t_user` VALUES (10, 'zhouliang', '$2a$10$0yOGdkAcG8JLEcoEmmCnfO8Vp6rcqBnn30k6pGor5Z0.eLMyLEd7.', '周亮', '13800000008', 'zhouliang@163.com', 1, 1, 1, 1, '2023-03-18 13:13:45', NULL, '2023-06-06 00:06:31', NULL, NULL);
 INSERT INTO `t_user` VALUES (11, 'zhangwei', '$2a$10$BfOgsdSAZ9VYBOzv692BM.oWGPLktcqhhjU3AaWESkGNRcW484N7O', '张伟', NULL, 'zhangwei@qq.com', 1, 1, 1, 1, '2023-03-06 09:18:23', NULL, NULL, NULL, NULL);
 INSERT INTO `t_user` VALUES (12, 'dengping', '$2a$10$hpN8orfqUFXb.WWbIoZBkOZrr6D8rdSbl/SWXsMQ0zEuqkldlkpW2', '邓萍', NULL, 'dengping@qq.com', 1, 1, 1, 1, '2023-02-19 20:10:58', NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (13, 'zhangxing', '$2a$10$uBVDcCCJQvTfoFCjbjwrf.MhyczNNJfCn76jD61CsAgsUlXjXhxzG', '张欣', NULL, 'zhangxing@qq.com', 1, 1, 1, 1, '2023-03-17 12:12:11', NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (14, 'zhangmeng', '$2a$10$MMHG2cQh4H4YFbdf48SnyO9IZ78F110x3.7IWGNExrgk2rFmhrd/u', '张萌', NULL, 'zhangmeng@qq.com', 1, 1, 1, 1, '2023-01-13 08:16:02', NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (15, 'shixixiang', '$2a$10$zYwq/QfevFPAZxw4b2DkCeQvjVQ52AUU9c4aC0uS0wTJaRr75G74y', '石喜祥', NULL, 'shixixiang@qq.com', 1, 1, 1, 1, '2023-03-10 15:19:49', NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (16, 'chengjiuming', '$2a$10$yNN5TcFkM4OqRsKGNM8CNeqAJhRYKQgXVFqbre5lQPicnIXT7THTu', '陈久明', NULL, 'chengjiuming@163.com', 1, 1, 1, 1, '2023-04-09 23:17:37', NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (17, 'genghao', '$2a$10$rWHo.vUpJCbqWLGMkPj95O5FlhaQLzro.LY7pVQ/UnVVAdvjEAy0K', '耿浩', NULL, 'genghao@qq.com', 1, 1, 1, 1, '2023-03-19 12:10:22', NULL, '2023-04-10 21:42:21', NULL, NULL);
-INSERT INTO `t_user` VALUES (18, 'hanmingyang', '$2a$10$PRMdG7a8nFIN1A3TD584Xe2BZI7Y0mktDL7Wp5lF88E1D1iPijFc6', '韩明洋', NULL, 'hanmingyang@163.com', 1, 1, 1, 1, '2023-02-12 18:13:01', NULL, '2023-04-13 23:43:25', NULL, NULL);
 INSERT INTO `t_user` VALUES (19, 'xuyan', '$2a$10$S7MF2dOqFcoOJPqpEH2nu.Muhn2XC0BlBTZ5gAoL3axrQxdJEJNnK', '徐燕', NULL, 'xuyan@qq.com', 1, 1, 1, 1, '2023-03-29 13:16:15', NULL, NULL, NULL, NULL);
 INSERT INTO `t_user` VALUES (20, 'chengjuan', '$2a$10$m1g5cxikApV05pR7Cx4cy.d4sT3efOl6UvDLvH27WzMjtpymQ5ANi', '程娟', NULL, 'chengjuan@qq.com', 1, 1, 1, 1, '2023-02-19 15:12:22', NULL, NULL, NULL, NULL);
 INSERT INTO `t_user` VALUES (21, 'huangxiao', '$2a$10$R/RwQd5.3OxYpSZBLIn8DeeYYNF0vgWCrCR4tcyL.c/HtnuIfBRIK', '黄潇', NULL, 'huangxiao@qq.com', 1, 1, 1, 1, '2023-03-26 22:11:37', NULL, NULL, NULL, NULL);
 INSERT INTO `t_user` VALUES (22, 'yangyuxin', '$2a$10$ucE/By6NLBb4tN5H3CUimOQ2eAtbjXFf2v77SJUPbHXRI9lTF97Ka', '杨雨欣', NULL, 'yangyuxin@163.com', 1, 1, 1, 1, '2023-04-13 18:14:59', NULL, NULL, NULL, NULL);
 INSERT INTO `t_user` VALUES (23, 'xiaojie', '$2a$10$A215.iFSp7/d99X5M6KE.eu5YvA7nJ5vNEJraxmpA8EUYJN6lx9rW', '肖捷', NULL, 'xiaojie@163.com', 1, 1, 1, 1, '2023-02-18 09:19:02', NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (32, '111', '$2a$10$A215.iFSp7/d99X5M6KE.eu5YvA7nJ5vNEJraxmpA8EUYJN6lx9rW', '1111', '1111', '111', 1, 1, 1, 1, '2023-04-25 17:42:36', NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (33, '222', '$2a$10$bBskT77XGhKDt1Oqg4aWseHOR2Yngv/Pozh76FprgM1JWDr6WWuFe', '22', '222', '222', 1, 1, 1, 1, '2023-04-25 17:46:07', NULL, '2023-06-20 22:23:48', NULL, NULL);
-INSERT INTO `t_user` VALUES (34, 'user', '$2a$10$rCUDpGSE..8PzLhAn.P7HeuOSDXkFrCh/eMZHtsGHW1TyMzJW3j2C', '张三', '15870001234', '123456@qq.com', 1, 1, 1, 1, '2026-07-25 15:34:32', 1, NULL, NULL, NULL);
+INSERT INTO `t_user` VALUES (30, 'chengxiaodan', '$2a$10$R2UnVBa7Tl.AMOjc4lyXNOOmlTzaitvWYMTEPpMuddvJon53eGG8.', '程晓丹', '19002034050', '2543673022@qq.com', 1, 1, 1, 1, '2026-07-29 14:35:59', 1, '2026-07-29 17:24:35', 1, NULL);
+INSERT INTO `t_user` VALUES (31, 'zhaoyun', '$2a$10$.do6hrVv3NAkWH7XLoZrX.pFVFf/azaZFOabDXKwWjF9yYU173Tsa', '赵云', '19002034011', '123456@qq.com', 1, 1, 1, 1, '2026-07-29 17:37:49', 1, NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for t_user_permission
+-- ----------------------------
+DROP TABLE IF EXISTS `t_user_permission`;
+CREATE TABLE `t_user_permission`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `user_id` int NOT NULL COMMENT '用户ID',
+  `permission_id` int NOT NULL COMMENT '权限ID',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `uk_user_perm`(`user_id` ASC, `permission_id` ASC) USING BTREE,
+  INDEX `fk_up_perm`(`permission_id` ASC) USING BTREE,
+  CONSTRAINT `fk_up_perm` FOREIGN KEY (`permission_id`) REFERENCES `t_permission` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `fk_up_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 54 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户个人权限表（补充角色权限以外的授权）' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_user_permission
+-- ----------------------------
+INSERT INTO `t_user_permission` VALUES (53, 4, 64);
+INSERT INTO `t_user_permission` VALUES (51, 4, 65);
+INSERT INTO `t_user_permission` VALUES (52, 4, 66);
+INSERT INTO `t_user_permission` VALUES (47, 30, 1);
+INSERT INTO `t_user_permission` VALUES (48, 30, 2);
+INSERT INTO `t_user_permission` VALUES (35, 30, 3);
+INSERT INTO `t_user_permission` VALUES (36, 30, 4);
+INSERT INTO `t_user_permission` VALUES (37, 30, 5);
+INSERT INTO `t_user_permission` VALUES (38, 30, 6);
+INSERT INTO `t_user_permission` VALUES (39, 30, 7);
+INSERT INTO `t_user_permission` VALUES (40, 30, 9);
+INSERT INTO `t_user_permission` VALUES (49, 30, 10);
+INSERT INTO `t_user_permission` VALUES (50, 30, 12);
+INSERT INTO `t_user_permission` VALUES (41, 30, 13);
+INSERT INTO `t_user_permission` VALUES (42, 30, 14);
+INSERT INTO `t_user_permission` VALUES (43, 30, 15);
+INSERT INTO `t_user_permission` VALUES (44, 30, 16);
+INSERT INTO `t_user_permission` VALUES (45, 30, 17);
+INSERT INTO `t_user_permission` VALUES (46, 30, 18);
 
 -- ----------------------------
 -- Table structure for t_user_role
@@ -919,7 +861,7 @@ CREATE TABLE `t_user_role`  (
   INDEX `t_user_role_ibfk_2`(`role_id` ASC) USING BTREE,
   CONSTRAINT `t_user_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_user_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色关系表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户角色关系表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_user_role
@@ -930,5 +872,18 @@ INSERT INTO `t_user_role` VALUES (3, 3, 2);
 INSERT INTO `t_user_role` VALUES (4, 4, 3);
 INSERT INTO `t_user_role` VALUES (5, 5, 4);
 INSERT INTO `t_user_role` VALUES (6, 6, 5);
+INSERT INTO `t_user_role` VALUES (7, 30, 4);
+
+-- ----------------------------
+-- Triggers structure for table t_clue
+-- ----------------------------
+DROP TRIGGER IF EXISTS `del_clue_remark`;
+delimiter ;;
+CREATE TRIGGER `del_clue_remark` BEFORE DELETE ON `t_clue` FOR EACH ROW BEGIN
+  DELETE from t_clue_remark where clue_id = old.id;
+  DELETE FROM t_customer where clue_id = old.id;
+END
+;;
+delimiter ;
 
 SET FOREIGN_KEY_CHECKS = 1;
