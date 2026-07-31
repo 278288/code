@@ -80,31 +80,9 @@ public class UserServiceImpl implements UserService {
         });
         tUser.setRoleList(stringRoleList);
 
-        // 加载菜单权限（前端菜单渲染用）
+        // 加载菜单权限（前端菜单渲染用，管理员通过角色数据获得权限管理菜单）
         List<TPermission> menuPermissionList = tPermissionMapper.selectMenuPermissionByUserId(tUser.getId());
-        // 管理员自动注入"权限管理"菜单（不可被授权，仅管理员可见）
-        if (stringRoleList.contains("admin")) {
-            TPermission permManageMenu = new TPermission();
-            permManageMenu.setId(67);
-            permManageMenu.setName("权限管理");
-            permManageMenu.setType("menu");
-            permManageMenu.setIcon("Lock");
-            permManageMenu.setOrderNo(8);
-
-            TPermission permManageChild = new TPermission();
-            permManageChild.setId(68);
-            permManageChild.setName("权限管理");
-            permManageChild.setUrl("/dashboard/perm");
-            permManageChild.setType("menu");
-            permManageChild.setIcon("Key");
-
-            List<TPermission> children = new ArrayList<>();
-            children.add(permManageChild);
-            permManageMenu.setSubPermissionList(children);
-
-            menuPermissionList.add(permManageMenu);
-        }
-        // 按orderNo排序，确保权限管理模块显示在正确位置
+        // 按orderNo排序，保证侧边栏菜单顺序稳定
         menuPermissionList.sort((a, b) -> {
             int orderA = a.getOrderNo() != null ? a.getOrderNo() : 0;
             int orderB = b.getOrderNo() != null ? b.getOrderNo() : 0;
@@ -126,7 +104,11 @@ public class UserServiceImpl implements UserService {
             List<TPermission> userPerms = tPermissionMapper.selectByIds(userPermIds);
             if (userPerms != null) {
                 userPerms.forEach(perm -> {
-                    if (perm.getCode() != null && !perm.getCode().isEmpty() && !stringPermissionList.contains(perm.getCode())) {
+                    // 只合并可授权权限（assignable=1），避免历史脏数据把权限管理模块的权限带给普通用户
+                    if (Integer.valueOf(1).equals(perm.getAssignable())
+                            && perm.getCode() != null
+                            && !perm.getCode().isEmpty()
+                            && !stringPermissionList.contains(perm.getCode())) {
                         stringPermissionList.add(perm.getCode());
                     }
                 });
@@ -169,6 +151,8 @@ public class UserServiceImpl implements UserService {
         Integer loginUserId = JWTUtils.parseUserFromJWT(userQuery.getToken()).getId();
         tUser.setCreateBy(loginUserId);
         int result = tUserMapper.insertSelective(tUser);
+        // 新用户主键回填到 userQuery，供调用方继续使用（如保存角色）
+        userQuery.setId(tUser.getId());
         // 新增用户后清除负责人缓存
         redisManager.delete(Constants.REDIS_OWNER_KEY);
         return result;

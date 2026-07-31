@@ -87,12 +87,17 @@ public class UserController {
     public R addUser(@Valid UserQuery userQuery, @RequestHeader(value = "Authorization") String token) {
         userQuery.setToken(token);
         int save = userService.saveUser(userQuery);
-        return save >= 1 ? R.OK() : R.FAIL();
+        // 返回新用户主键，前端用于保存角色等后续操作
+        return save >= 1 ? R.OK(userQuery.getId()) : R.FAIL();
     }
 
     @PreAuthorize(value = "hasAuthority('user:edit')")
     @PutMapping(value = "/api/user")
-    public R editUser(@Valid UserQuery userQuery, @RequestHeader(value = "Authorization") String token) {
+    public R editUser(@Valid UserQuery userQuery, @RequestHeader(value = "Authorization") String token,
+                      Authentication authentication) {
+        if (!canOperateTarget(authentication, userQuery.getId())) {
+            return R.FAIL("无权操作管理员账号");
+        }
         userQuery.setToken(token);
         int update = userService.updateUser(userQuery);
         return update >= 1 ? R.OK() : R.FAIL();
@@ -100,15 +105,23 @@ public class UserController {
 
     @PreAuthorize(value = "hasAuthority('user:delete')")
     @DeleteMapping(value = "/api/user/{id}")
-    public R delUser(@PathVariable(value = "id") Integer id) {
+    public R delUser(@PathVariable(value = "id") Integer id, Authentication authentication) {
+        if (!canOperateTarget(authentication, id)) {
+            return R.FAIL("无权删除管理员账号");
+        }
         int del = userService.delUserById(id);
         return del >= 1 ? R.OK() : R.FAIL();
     }
 
     @PreAuthorize(value = "hasAuthority('user:delete')")
     @DeleteMapping(value = "/api/user")
-    public R batchDelUser(@RequestParam(value = "ids") String ids) {
+    public R batchDelUser(@RequestParam(value = "ids") String ids, Authentication authentication) {
         List<String> idList = Arrays.asList(ids.split(","));
+        for (String idStr : idList) {
+            if (!canOperateTarget(authentication, Integer.parseInt(idStr.trim()))) {
+                return R.FAIL("批量删除中包含管理员账号，操作已取消");
+            }
+        }
         int batchDel = userService.batchDelUserIds(idList);
         return batchDel >= idList.size() ? R.OK() : R.FAIL();
     }
@@ -135,8 +148,8 @@ public class UserController {
         return R.OK(roles);
     }
 
-    /** 保存用户角色（先删后插） */
-    @PreAuthorize(value = "hasAuthority('user:edit')")
+    /** 保存用户角色（先删后插，仅管理员可用） */
+    @PreAuthorize(value = "hasAuthority('admin')")
     @PutMapping(value = "/api/user/{id}/roles")
     public R saveUserRoles(@PathVariable(value = "id") Integer id, @RequestBody List<Integer> roleIds) {
         tUserRoleMapper.deleteByUserId(id);
@@ -160,5 +173,21 @@ public class UserController {
         TUser currentUser = (TUser) authentication.getPrincipal();
         boolean result = userService.changePassword(currentUser.getId(), oldPwd, newPwd);
         return result ? R.OK() : R.FAIL("原密码错误");
+    }
+
+    /**
+     * 非 admin 用户不能编辑/删除带 admin 角色的用户（保护管理员账号）。
+     */
+    private boolean canOperateTarget(Authentication authentication, Integer targetUserId) {
+        if (targetUserId == null) {
+            return true;
+        }
+        TUser currentUser = (TUser) authentication.getPrincipal();
+        if (currentUser.getRoleList() != null && currentUser.getRoleList().contains("admin")) {
+            return true;
+        }
+        List<TRole> targetRoles = tRoleMapper.selectByUserId(targetUserId);
+        boolean targetIsAdmin = targetRoles.stream().anyMatch(role -> "admin".equals(role.getRole()));
+        return !targetIsAdmin;
     }
 }

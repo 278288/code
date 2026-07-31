@@ -22,8 +22,6 @@ public interface TPermissionMapper {
     /** 根据ID列表批量查询权限 */
     List<TPermission> selectByIds(@Param("list") List<Integer> ids);
 
-    /** 查询可授权模块（排除权限管理本身），每个模块包含其按钮子权限 */
-    List<TPermission> selectAssignableModules();
 
     int deleteByPrimaryKey(Integer id);
 

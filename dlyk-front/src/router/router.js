@@ -1,4 +1,5 @@
-﻿import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
+import { doGet } from "../http/httpRequest.js";
 
 let router = createRouter({
     history: createWebHistory(),
@@ -9,7 +10,6 @@ let router = createRouter({
                 { path: '', component : () => import('../view/StatisticView.vue') },
                 { path: 'user', component : () => import('../view/UserView.vue') },
                 { path: 'user/:id', component : () => import('../view/UserDetailView.vue') },
-                { path: 'user/perm/:id', component : () => import('../view/UserPermissionView.vue') },
                 { path: 'activity', component : () => import('../view/ActivityView.vue') },
                 { path: 'activity/add', component : () => import('../view/ActivityRecordView.vue') },
                 { path: 'activity/edit/:id', component : () => import('../view/ActivityRecordView.vue') },
@@ -42,4 +42,25 @@ let router = createRouter({
         { path: '/hello', component : () => import('../components/HelloWorld.vue') }
     ]
 })
+
+// 权限管理页面仅 admin 可进入（后端接口同样有 hasAuthority('admin') 校验，这里是前端兜底）
+router.beforeEach(async (to, from, next) => {
+    if (to.path === '/dashboard/perm') {
+        try {
+            const resp = await doGet('/api/login/info', {});
+            const user = resp.data && resp.data.data;
+            const roles = (user && user.roleList) || [];
+            if (roles.includes('admin')) {
+                next();
+            } else {
+                next('/dashboard');
+            }
+        } catch (e) {
+            next('/');
+        }
+    } else {
+        next();
+    }
+});
+
 export default router;

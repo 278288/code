@@ -53,6 +53,11 @@ public class TPermission implements Serializable {
     private String icon;
 
     /**
+     * 是否可授权给普通用户：1=可授权，0=仅管理员可见/不可授权
+     */
+    private Integer assignable;
+
+    /**
      * 一对多关联
      */
     private List<TPermission> subPermissionList;

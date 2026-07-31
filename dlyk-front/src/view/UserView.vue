@@ -99,7 +99,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="分配角色">
+      <el-form-item label="分配角色" v-if="isAdmin">
         <el-select v-model="userQuery.roleIds" multiple placeholder="请选择角色" style="width:100%">
           <el-option v-for="role in roleList" :key="role.id" :label="role.roleName" :value="role.id"/>
         </el-select>
@@ -181,12 +181,15 @@ export default defineComponent({
       //用户id的数组
       userIdArray : [],
       //角色列表
-      roleList : []
+      roleList : [],
+      //当前登录用户是否为管理员（分配角色仅管理员可见）
+      isAdmin : false
     }
   },
 
   mounted() {
     this.getData(1);
+    this.loadLoginUser();
   },
 
   methods : {
@@ -219,14 +222,20 @@ export default defineComponent({
       this.getData(current);
     },
 
+    //加载当前登录用户信息，判断是否为管理员（分配角色仅管理员可见）
+    loadLoginUser() {
+      doGet("/api/login/info", {}).then(resp => {
+        const user = resp.data && resp.data.data;
+        this.isAdmin = !!(user && user.roleList && user.roleList.includes('admin'));
+      });
+    },
+
     //详情
     view(id) {
       console.log(id);
       //跳转到/dashboard/user/1路由上
       this.$router.push("/dashboard/user/" + id);
     },
-
-
 
     //新增用户提交保存
     userSubmit() {
@@ -239,35 +248,41 @@ export default defineComponent({
 
           if (this.userQuery.id > 0) { /*编辑*/
             doPut("/api/user", formData).then(resp => {
-              // 保存角色
-              if (this.userQuery.roleIds) {
-                doPut("/api/user/" + this.userQuery.id + "/roles", this.userQuery.roleIds);
+              if (resp.data.code !== 200) {
+                messageTip("编辑失败", "error");
+                return;
               }
-              if (resp.data.code === 200) {
-                messageTip("编辑成功", "success");
+              // 保存角色（仅管理员可见该控件；失败时明确提示）
+              let roleSave = Promise.resolve(true);
+              if (this.isAdmin && this.userQuery.roleIds) {
+                roleSave = doPut("/api/user/" + this.userQuery.id + "/roles", this.userQuery.roleIds)
+                  .then(roleResp => roleResp.data.code === 200)
+                  .catch(() => false);
+              }
+              roleSave.then(roleOk => {
+                messageTip(roleOk ? "编辑成功" : "角色保存失败", roleOk ? "success" : "error");
                 //页面刷新
                 this.reload();
-              } else {
-                messageTip("编辑失败", "error");
-              }
+              });
             })
           } else {
             doPost("/api/user", formData).then(resp => {
-              // 保存角色（新建用户后）
-              if (this.userQuery.roleIds && resp.data.code === 200) {
-                doPut("/api/user/" + resp.data.data + "/roles", this.userQuery.roleIds);
-              }/*新增*/
-              if (resp.data.code === 200) {
-                messageTip("提交成功", "success");
+              if (resp.data.code !== 200) {
+                messageTip("提交失败", "error");
+                return;
+              }
+              // 保存角色（新建用户后，仅管理员可见该控件；失败时明确提示）
+              let roleSave = Promise.resolve(true);
+              if (this.isAdmin && this.userQuery.roleIds && resp.data.data) {
+                roleSave = doPut("/api/user/" + resp.data.data + "/roles", this.userQuery.roleIds)
+                  .then(roleResp => roleResp.data.code === 200)
+                  .catch(() => false);
+              }
+              roleSave.then(roleOk => {
+                messageTip(roleOk ? "提交成功" : "角色保存失败", roleOk ? "success" : "error");
                 //页面刷新
                 this.reload();
-                console.log(this.age)
-                console.log(this.content)
-                console.log(this.arr)
-                console.log(this.user)
-              } else {
-                messageTip("提交失败", "error");
-              }
+              });
             })
           }
         }
@@ -328,11 +343,6 @@ export default defineComponent({
       }).catch(() => { //用户点击“取消”按钮就会触发catch函数
         messageTip("取消删除", "warning");
       })
-    },
-
-    //权限管理
-    managePerm(id) {
-      this.$router.push("/dashboard/user/perm/" + id);
     },
 
     //批量删除

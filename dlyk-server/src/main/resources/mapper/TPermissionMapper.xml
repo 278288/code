@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bjpowernode.mapper.TPermissionMapper">
   <resultMap id="BaseResultMap" type="com.bjpowernode.model.TPermission">
@@ -10,6 +10,7 @@
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="order_no" jdbcType="INTEGER" property="orderNo" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="assignable" jdbcType="TINYINT" property="assignable" />
   </resultMap>
   
   <resultMap id="PermissionResultMap" type="com.bjpowernode.model.TPermission">
@@ -21,6 +22,7 @@
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="order_no" jdbcType="INTEGER" property="orderNo" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="assignable" jdbcType="TINYINT" property="assignable" />
     <!--一对多关联映射，一个父菜单下有多个子菜单-->
     <collection property="subPermissionList" ofType="com.bjpowernode.model.TPermission">
       <id column="cid" jdbcType="INTEGER" property="id" />
@@ -32,7 +34,7 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, `name`, code, url, `type`, parent_id, order_no, icon
+    id, `name`, code, url, `type`, parent_id, order_no, icon, assignable
   </sql>
 
     <select id="selectMenuPermissionByUserId" parameterType="java.lang.Integer" resultMap="PermissionResultMap">
@@ -61,7 +63,9 @@
       WHERE
         tup.user_id = #{userId, jdbcType=INTEGER}
         AND tp2.type = 'menu'
+        AND tp2.assignable = 1
         AND childTp2.type = 'menu'
+        AND childTp2.assignable = 1
     ) combined ORDER BY order_no
   </select>
 
@@ -198,14 +202,4 @@
   </select>
 
   <!-- 查询可授权模块（排除权限管理 id=67），每个模块包含其按钮子权限 -->
-  <select id="selectAssignableModules" resultMap="PermissionResultMap">
-    SELECT
-      p.id, p.name, p.code, p.url, p.type, p.parent_id, p.order_no, p.icon,
-      b.id as cid, b.name as cname, b.code as ccode, b.url as curl, b.type as ctype,
-      b.parent_id as cparent_id, b.order_no as corder_no, b.icon as cicon
-    FROM t_permission p
-    LEFT JOIN t_permission b ON p.id = b.parent_id AND b.type = 'button'
-    WHERE p.type = 'menu' AND p.parent_id = 0 AND p.id != 67
-    ORDER BY p.order_no, b.id
-  </select>
 </mapper>

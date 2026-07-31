@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="container">
     <div class="header">
       <h3>权限管理</h3>
@@ -169,8 +169,8 @@ export default defineComponent({
     loadUserPerms(userId) {
       return doGet('/api/user/' + userId + '/permissions').then(resp => {
         if (resp.data.code === 200) {
-          // 过滤掉权限管理模块自身的ID（67、68），这些不可授权
-          const allIds = (resp.data.data || []).filter(id => id !== 67 && id !== 68)
+          // 后端已过滤不可授权权限（权限管理模块），这里只保留当前模块列表中的按钮权限ID
+          const allIds = resp.data.data || []
           // 只保留可授权模块中的按钮权限ID
           const validBtnIds = new Set()
           this.modules.forEach(m => {
@@ -206,43 +206,16 @@ export default defineComponent({
     },
 
     savePermissions() {
-      // 模块ID到其子菜单ID的映射（用于确保用户能看到已授权的模块）
-      const moduleMenuMap = {
-        1: 2,    // 市场活动 → 市场活动子菜单
-        10: 12,  // 线索管理 → 线索管理子菜单
-        19: 20,  // 客户管理 → 客户管理子菜单
-        24: 25,  // 交易管理 → 交易管理子菜单
-        28: 29,  // 产品管理 → 产品管理子菜单
-        35: [36, 42],  // 字典管理 → 字典类型 + 字典数据子菜单
-        48: 49   // 用户管理 → 用户管理子菜单
-      }
-
-      const allPermIds = [...this.checkedPermIds]
-
-      // 根据选中的按钮权限，自动添加对应的模块菜单权限
-      this.modules.forEach(module => {
-        const hasChecked = (module.subPermissionList || []).some(p => this.checkedPermIds.includes(p.id))
-        if (hasChecked) {
-          allPermIds.push(module.id)  // 模块父菜单
-          const childMenuIds = moduleMenuMap[module.id]
-          if (Array.isArray(childMenuIds)) {
-            allPermIds.push(...childMenuIds)
-          } else if (childMenuIds) {
-            allPermIds.push(childMenuIds)
-          }
-        }
-      })
-
-      // 去重
-      const uniqueIds = [...new Set(allPermIds)]
+      // 前端只提交勾选的按钮权限ID，菜单链由后端根据权限父子关系自动补齐
+      const uniqueIds = [...new Set(this.checkedPermIds)]
 
       this.saving = true
       doPut('/api/user/' + this.currentUser.id + '/permissions', uniqueIds).then(resp => {
         if (resp.data.code === 200) {
-          messageTip('权限保存成功', 'success')
+          messageTip('权限保存成功，该用户重新登录后生效', 'success')
           this.dialogVisible = false
         } else {
-          messageTip('权限保存失败', 'error')
+          messageTip(resp.data.msg || '权限保存失败', 'error')
         }
       }).finally(() => {
         this.saving = false

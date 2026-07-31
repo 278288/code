@@ -11,7 +11,7 @@
  Target Server Version : 90701 (9.7.1)
  File Encoding         : 65001
 
- Date: 30/07/2026 11:10:46
+ Date: 01/08/2026 00:48:42
 */
 
 SET NAMES utf8mb4;
@@ -157,20 +157,21 @@ CREATE TABLE `t_clue`  (
   CONSTRAINT `t_clue_ibfk_7` FOREIGN KEY (`activity_id`) REFERENCES `t_activity` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_clue_ibfk_8` FOREIGN KEY (`need_loan`) REFERENCES `t_dic_value` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_clue_ibfk_9` FOREIGN KEY (`intention_state`) REFERENCES `t_dic_value` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1187 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '线索表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1189 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '线索表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_clue
 -- ----------------------------
-INSERT INTO `t_clue` VALUES (1, 1, 46, '王杰', 18, '13700000000', '13700000000', '13700000000', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 50, 46, 5, 24, 3, '近期在看车', '2023-04-27 10:33:47', '2023-07-17 15:17:52', NULL, '2023-11-29 20:10:28', 2, 23.84, 'D', '2026-07-29 23:51:02');
-INSERT INTO `t_clue` VALUES (2, 1, 47, '张峰', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 50, 47, 8, -1, 33, '通过打电话获取的线索', '2023-04-30 10:33:51', '2023-06-10 01:01:13', NULL, NULL, NULL, 12.11, 'D', '2026-07-29 23:46:38');
-INSERT INTO `t_clue` VALUES (3, 2, 7, '张翔', 18, '13876903226', '13876903226', '123456', NULL, 26, NULL, 9.00, '天津和平', 50, 48, 10, 30, 44, '有购车意向，需要跟踪', '2023-04-15 00:00:00', '2023-06-10 01:01:17', NULL, NULL, NULL, 12.11, 'D', '2026-07-30 10:52:10');
-INSERT INTO `t_clue` VALUES (1166, 7, 47, '张怡然', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 50, 46, 4, 6, 16, '通过打电话获取的线索', '2023-11-30 10:33:51', '2024-11-21 01:41:10', 1, NULL, NULL, 12.11, 'D', '2026-07-30 10:52:14');
-INSERT INTO `t_clue` VALUES (1167, 12, 7, '张翔宇', 18, '13876903226', '13876903226', '1298094321', NULL, 26, NULL, 9.00, '天津和平', 49, 48, 7, 30, 17, '有购车意向，需要跟踪', '2023-11-15 10:30:00', '2024-11-21 01:41:10', 1, NULL, NULL, 13.61, 'D', '2026-07-29 22:46:15');
-INSERT INTO `t_clue` VALUES (1168, 19, 46, '王世坤', 18, '13700000000', '13700000000', '209836613', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 50, 48, 6, 24, 17, '近期在看车', '2023-12-27 09:20:21', '2024-11-21 01:41:10', 1, NULL, NULL, 15.74, 'D', '2026-07-30 10:52:18');
-INSERT INTO `t_clue` VALUES (1169, 21, 47, '张珊珊', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 49, 47, 9, -1, 17, '通过打电话获取的线索', '2023-11-30 13:33:51', '2024-11-21 01:41:10', 1, NULL, NULL, 12.11, 'D', '2026-07-29 23:46:25');
-INSERT INTO `t_clue` VALUES (1185, 1, 54, '张杰', 18, '13456789101', '13456789101', '13456789101', 'zhangjie@email.com', 35, '程序员', 150000.00, '广州天河', 50, 46, 2, -1, 45, '真实有意向，可以争取', '2026-07-30 00:00:00', '2026-07-29 20:51:10', 1, '2026-07-29 20:58:54', 1, 49.73, 'C', '2026-07-30 10:52:23');
-INSERT INTO `t_clue` VALUES (1186, 1, 54, '宋小宝', 18, '15875351885', NULL, NULL, NULL, NULL, NULL, 50000.00, NULL, 49, 46, 1, 10, 16, NULL, '2026-07-31 00:00:00', '2026-07-29 20:58:40', 1, '2026-07-29 22:32:08', 1, 31.55, 'D', '2026-07-30 10:52:32');
+INSERT INTO `t_clue` VALUES (1, 1, 46, '王杰', 18, '13700000000', '13700000000', '13700000000', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 50, 46, 5, 24, 3, '近期在看车', '2023-04-27 10:33:47', '2023-07-17 15:17:52', NULL, '2023-11-29 20:10:28', 2, 37.42, 'D', '2026-07-31 18:38:42');
+INSERT INTO `t_clue` VALUES (2, 1, 47, '张峰', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 50, 47, 8, -1, 33, '通过打电话获取的线索', '2023-04-30 10:33:51', '2023-06-10 01:01:13', NULL, NULL, NULL, 29.62, 'D', '2026-07-31 18:38:32');
+INSERT INTO `t_clue` VALUES (3, 2, 7, '张翔', 18, '13876903226', '13876903226', '123456', NULL, 26, NULL, 9.00, '天津和平', 50, 48, 10, 30, 44, '有购车意向，需要跟踪', '2023-04-15 00:00:00', '2023-06-10 01:01:17', NULL, NULL, NULL, 24.85, 'D', '2026-07-31 18:38:35');
+INSERT INTO `t_clue` VALUES (1166, 7, 47, '张怡然', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 50, 46, 4, 6, 16, '通过打电话获取的线索', '2023-11-30 10:33:51', '2024-11-21 01:41:10', 1, NULL, NULL, 27.83, 'D', '2026-07-31 18:38:28');
+INSERT INTO `t_clue` VALUES (1167, 12, 7, '张翔宇', 18, '13876903226', '13876903226', '1298094321', NULL, 26, NULL, 9.00, '天津和平', 49, 48, 7, 30, 17, '有购车意向，需要跟踪', '2023-11-15 10:30:00', '2024-11-21 01:41:10', 1, NULL, NULL, 16.75, 'D', '2026-07-31 18:38:58');
+INSERT INTO `t_clue` VALUES (1168, 19, 46, '王世坤', 18, '13700000000', '13700000000', '209836613', 'wangjie@163.com', 32, '工程师', 10.00, '北京亦庄', 50, 48, 6, 24, 17, '近期在看车', '2023-12-27 09:20:21', '2024-11-21 01:41:10', 1, NULL, NULL, 27.66, 'D', '2026-07-31 18:38:46');
+INSERT INTO `t_clue` VALUES (1169, 21, 47, '张珊珊', 41, '13700000001', '13700000001', NULL, NULL, 28, NULL, 8.00, '河北廊坊', 49, 47, 9, -1, 17, '通过打电话获取的线索', '2023-11-30 13:33:51', '2024-11-21 01:41:10', 1, NULL, NULL, 21.51, 'D', '2026-07-31 18:38:50');
+INSERT INTO `t_clue` VALUES (1185, 1, 54, '张杰', 18, '13456789101', '13456789101', '13456789101', 'zhangjie@email.com', 35, '程序员', 150000.00, '广州天河', 50, 46, 2, -1, 45, '真实有意向，可以争取', '2026-07-30 00:00:00', '2026-07-29 20:51:10', 1, '2026-07-29 20:58:54', 1, 53.06, 'C', '2026-07-31 18:13:20');
+INSERT INTO `t_clue` VALUES (1186, 1, 54, '宋小宝', 18, '15875351885', NULL, NULL, NULL, NULL, NULL, 50000.00, NULL, 49, 46, 1, 10, 16, NULL, '2026-07-31 00:00:00', '2026-07-29 20:58:40', 1, '2026-07-29 22:32:08', 1, 31.55, 'D', '2026-07-31 22:24:21');
+INSERT INTO `t_clue` VALUES (1187, 1, 56, '宋小二', 18, '13413411000', '13413411000', '13413411000', '123@qq.com', 35, '科技公司业务经理', 300000.00, '北京市朝阳区', 50, 46, 5, -1, 43, '客户近期意向很大，近期需要主动联系。', '2026-08-02 00:13:00', '2026-07-31 11:56:41', 1, NULL, NULL, 78.68, 'B', '2026-07-31 18:37:01');
 
 -- ----------------------------
 -- Table structure for t_clue_remark
@@ -195,7 +196,7 @@ CREATE TABLE `t_clue_remark`  (
   CONSTRAINT `t_clue_remark_ibfk_2` FOREIGN KEY (`edit_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_clue_remark_ibfk_3` FOREIGN KEY (`clue_id`) REFERENCES `t_clue` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_clue_remark_ibfk_4` FOREIGN KEY (`note_way`) REFERENCES `t_dic_value` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '线索跟踪记录表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '线索跟踪记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_clue_remark
@@ -205,6 +206,7 @@ INSERT INTO `t_clue_remark` VALUES (15, 1, 65, '111111111111111', '2023-06-27 22
 INSERT INTO `t_clue_remark` VALUES (16, 1, 64, '1111111111111111111111222222222222222222222222', '2023-06-27 22:48:01', 1, NULL, NULL, NULL);
 INSERT INTO `t_clue_remark` VALUES (17, 1185, 61, '可以通过电话询问客户', '2026-07-29 20:56:39', 1, NULL, NULL, NULL);
 INSERT INTO `t_clue_remark` VALUES (18, 1186, NULL, '用户的意向很大，但是经济不是很高', '2026-07-29 22:47:51', 1, NULL, NULL, NULL);
+INSERT INTO `t_clue_remark` VALUES (19, 1187, 61, '客户主动联系，明确想要购买', '2026-07-31 11:59:43', 1, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_customer
@@ -229,7 +231,7 @@ CREATE TABLE `t_customer`  (
   CONSTRAINT `t_customer_ibfk_2` FOREIGN KEY (`product`) REFERENCES `t_product` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_customer_ibfk_3` FOREIGN KEY (`create_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_customer_ibfk_4` FOREIGN KEY (`edit_by`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '客户表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '客户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_customer
@@ -239,6 +241,7 @@ INSERT INTO `t_customer` VALUES (3, 3, 6, '1232强21312', '2023-05-06 00:00:00',
 INSERT INTO `t_customer` VALUES (6, 2, 2, '是的啊所大', '2023-05-05 00:00:00', '2023-04-28 15:59:33', 1, NULL, NULL);
 INSERT INTO `t_customer` VALUES (12, 1169, 2, '有意向客户，意向很大', '2026-07-30 00:00:00', '2026-07-29 20:57:29', 1, NULL, NULL);
 INSERT INTO `t_customer` VALUES (13, 1185, 2, '在周二询问客户是否全款买下', '2027-08-02 00:00:00', '2026-07-29 20:59:31', 1, NULL, NULL);
+INSERT INTO `t_customer` VALUES (14, 1187, 5, '客户明确想要购买', '2026-08-01 00:00:00', '2026-07-31 11:59:06', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_customer_remark
@@ -407,76 +410,76 @@ CREATE TABLE `t_permission`  (
   `parent_id` int NULL DEFAULT NULL,
   `order_no` int NULL DEFAULT NULL,
   `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `assignable` tinyint NOT NULL DEFAULT 1 COMMENT '是否可授权给普通用户：1=可授权，0=仅管理员',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 69 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_permission
 -- ----------------------------
-INSERT INTO `t_permission` VALUES (1, '市场活动', NULL, NULL, 'menu', 0, 1, 'OfficeBuilding');
-INSERT INTO `t_permission` VALUES (2, '市场活动', NULL, '/dashboard/activity', 'menu', 1, 1, 'CreditCard');
-INSERT INTO `t_permission` VALUES (3, '市场活动-列表', 'activity:list', NULL, 'button', 2, NULL, NULL);
-INSERT INTO `t_permission` VALUES (4, '市场活动-录入', 'activity:add', NULL, 'button', 2, NULL, NULL);
-INSERT INTO `t_permission` VALUES (5, '市场活动-编辑', 'activity:edit', NULL, 'button', 2, NULL, NULL);
-INSERT INTO `t_permission` VALUES (6, '市场活动-查看', 'activity:view', NULL, 'button', 2, NULL, NULL);
-INSERT INTO `t_permission` VALUES (7, '市场活动-删除', 'activity:delete', NULL, 'button', 2, NULL, NULL);
-INSERT INTO `t_permission` VALUES (9, '市场活动-搜索', 'activity:search', NULL, 'button', 2, NULL, NULL);
-INSERT INTO `t_permission` VALUES (10, '线索管理', NULL, NULL, 'menu', 0, 2, 'Magnet');
-INSERT INTO `t_permission` VALUES (12, '线索管理', NULL, '/dashboard/clue', 'menu', 10, 1, 'Paperclip');
-INSERT INTO `t_permission` VALUES (13, '线索管理-列表', 'clue:list', NULL, 'button', 12, NULL, NULL);
-INSERT INTO `t_permission` VALUES (14, '线索管理-录入', 'clue:add', NULL, 'button', 12, NULL, NULL);
-INSERT INTO `t_permission` VALUES (15, '线索管理-编辑', 'clue:edit', NULL, 'button', 12, NULL, NULL);
-INSERT INTO `t_permission` VALUES (16, '线索管理-查看', 'clue:view', NULL, 'button', 12, NULL, NULL);
-INSERT INTO `t_permission` VALUES (17, '线索管理-删除', 'clue:delete', NULL, 'button', 12, NULL, NULL);
-INSERT INTO `t_permission` VALUES (18, '线索管理-导入', 'clue:import', NULL, 'button', 12, NULL, NULL);
-INSERT INTO `t_permission` VALUES (19, '客户管理', NULL, NULL, 'menu', 0, 3, 'User');
-INSERT INTO `t_permission` VALUES (20, '客户管理', NULL, '/dashboard/customer', 'menu', 19, 1, 'UserFilled');
-INSERT INTO `t_permission` VALUES (21, '客户管理-列表', 'customer:list', NULL, 'button', 20, NULL, NULL);
-INSERT INTO `t_permission` VALUES (22, '客户管理-查看', 'customer:view', NULL, 'button', 20, NULL, NULL);
-INSERT INTO `t_permission` VALUES (23, '客户管理-导出', 'customer:export', NULL, 'button', 20, NULL, NULL);
-INSERT INTO `t_permission` VALUES (24, '交易管理', NULL, NULL, 'menu', 0, 4, 'Wallet');
-INSERT INTO `t_permission` VALUES (25, '交易管理', NULL, '/dashboard/tran', 'menu', 24, 1, 'Coin');
-INSERT INTO `t_permission` VALUES (26, '交易管理-列表', 'tran:list', NULL, 'button', 25, NULL, NULL);
-INSERT INTO `t_permission` VALUES (27, '交易管理-查看', 'tran:view', NULL, 'button', 25, NULL, NULL);
-INSERT INTO `t_permission` VALUES (28, '产品管理', NULL, NULL, 'menu', 0, 5, 'Memo');
-INSERT INTO `t_permission` VALUES (29, '产品管理', NULL, '/dashboard/product', 'menu', 28, 1, 'SetUp');
-INSERT INTO `t_permission` VALUES (30, '产品管理-列表', 'product:list', NULL, 'button', 29, NULL, NULL);
-INSERT INTO `t_permission` VALUES (31, '产品管理-录入', 'product:add', NULL, 'button', 29, NULL, NULL);
-INSERT INTO `t_permission` VALUES (32, '产品管理-编辑', 'product:edit', NULL, 'button', 29, NULL, NULL);
-INSERT INTO `t_permission` VALUES (33, '产品管理-查看', 'product:view', NULL, 'button', 29, NULL, NULL);
-INSERT INTO `t_permission` VALUES (34, '产品管理-删除', 'product:delete', NULL, 'button', 29, NULL, NULL);
-INSERT INTO `t_permission` VALUES (35, '字典管理', NULL, NULL, 'menu', 0, 6, 'Grid');
-INSERT INTO `t_permission` VALUES (36, '字典类型', NULL, '/dashboard/dictype', 'menu', 35, 1, 'Postcard');
-INSERT INTO `t_permission` VALUES (37, '字典类型-列表', 'dictype:list', NULL, 'button', 36, NULL, NULL);
-INSERT INTO `t_permission` VALUES (38, '字典类型-录入', 'dictype:add', NULL, 'button', 36, NULL, NULL);
-INSERT INTO `t_permission` VALUES (39, '字典类型-编辑', 'dictype:edit', NULL, 'button', 36, NULL, NULL);
-INSERT INTO `t_permission` VALUES (40, '字典类型-查看', 'dictype:view', NULL, 'button', 36, NULL, NULL);
-INSERT INTO `t_permission` VALUES (41, '字典类型-删除', 'dictype:delete', NULL, 'button', 36, NULL, NULL);
-INSERT INTO `t_permission` VALUES (42, '字典数据', '', '/dashboard/dicvalue', 'menu', 35, 2, 'DataAnalysis');
-INSERT INTO `t_permission` VALUES (43, '字典数据-列表', 'dicvalue:list', NULL, 'button', 42, NULL, NULL);
-INSERT INTO `t_permission` VALUES (44, '字典数据-录入', 'dicvalue:add', NULL, 'button', 42, NULL, NULL);
-INSERT INTO `t_permission` VALUES (45, '字典数据-编辑', 'dicvalue:edit', NULL, 'button', 42, NULL, NULL);
-INSERT INTO `t_permission` VALUES (46, '字典数据-查看', 'dicvalue:view', NULL, 'button', 42, NULL, NULL);
-INSERT INTO `t_permission` VALUES (47, '字典数据-删除', 'dicvalue:delete', NULL, 'button', 42, NULL, NULL);
-INSERT INTO `t_permission` VALUES (48, '用户管理', NULL, NULL, 'menu', 0, 7, 'Stamp');
-INSERT INTO `t_permission` VALUES (49, '用户管理', NULL, '/dashboard/user', 'menu', 48, 1, 'User');
-INSERT INTO `t_permission` VALUES (50, '用户管理-列表', 'user:list', NULL, 'button', 49, NULL, NULL);
-INSERT INTO `t_permission` VALUES (51, '用户管理-录入', 'user:add', NULL, 'button', 49, NULL, NULL);
-INSERT INTO `t_permission` VALUES (52, '用户管理-编辑', 'user:edit', NULL, 'button', 49, NULL, NULL);
-INSERT INTO `t_permission` VALUES (53, '用户管理-查看', 'user:view', NULL, 'button', 49, NULL, NULL);
-INSERT INTO `t_permission` VALUES (54, '用户管理-删除', 'user:delete', NULL, 'button', 49, NULL, NULL);
-INSERT INTO `t_permission` VALUES (55, '系统管理', NULL, NULL, 'menu', 0, 9, 'Setting');
-INSERT INTO `t_permission` VALUES (56, '系统管理', NULL, '/dashboard/system', 'menu', 55, 1, 'Tools');
-INSERT INTO `t_permission` VALUES (57, '系统管理-列表', 'system:list', NULL, 'button', 56, NULL, NULL);
-INSERT INTO `t_permission` VALUES (58, '系统管理-录入', 'system:add', NULL, 'button', 56, NULL, NULL);
-INSERT INTO `t_permission` VALUES (59, '系统管理-编辑', 'system:edit', NULL, 'button', 56, NULL, NULL);
-INSERT INTO `t_permission` VALUES (60, '系统管理-查看', 'system:view', NULL, 'button', 56, NULL, NULL);
-INSERT INTO `t_permission` VALUES (61, '系统管理-删除', 'system:delete', NULL, 'button', 56, NULL, NULL);
-INSERT INTO `t_permission` VALUES (64, '权限管理', NULL, '/dashboard/perm', 'menu', 0, 8, 'Lock');
-INSERT INTO `t_permission` VALUES (65, '权限管理-列表', 'perm:list', NULL, 'button', 64, NULL, NULL);
-INSERT INTO `t_permission` VALUES (66, '权限管理-分配', 'perm:assign', NULL, 'button', 64, NULL, NULL);
-INSERT INTO `t_permission` VALUES (67, '权限管理', NULL, NULL, 'menu', 0, 8, 'Lock');
-INSERT INTO `t_permission` VALUES (68, '权限管理', NULL, '/dashboard/perm', 'menu', 67, 1, 'Key');
+INSERT INTO `t_permission` VALUES (1, '市场活动', NULL, NULL, 'menu', 0, 1, 'OfficeBuilding', 1);
+INSERT INTO `t_permission` VALUES (2, '市场活动', NULL, '/dashboard/activity', 'menu', 1, 1, 'CreditCard', 1);
+INSERT INTO `t_permission` VALUES (3, '市场活动-列表', 'activity:list', NULL, 'button', 2, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (4, '市场活动-录入', 'activity:add', NULL, 'button', 2, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (5, '市场活动-编辑', 'activity:edit', NULL, 'button', 2, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (6, '市场活动-查看', 'activity:view', NULL, 'button', 2, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (7, '市场活动-删除', 'activity:delete', NULL, 'button', 2, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (9, '市场活动-搜索', 'activity:search', NULL, 'button', 2, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (10, '线索管理', NULL, NULL, 'menu', 0, 2, 'Magnet', 1);
+INSERT INTO `t_permission` VALUES (12, '线索管理', NULL, '/dashboard/clue', 'menu', 10, 1, 'Paperclip', 1);
+INSERT INTO `t_permission` VALUES (13, '线索管理-列表', 'clue:list', NULL, 'button', 12, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (14, '线索管理-录入', 'clue:add', NULL, 'button', 12, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (15, '线索管理-编辑', 'clue:edit', NULL, 'button', 12, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (16, '线索管理-查看', 'clue:view', NULL, 'button', 12, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (17, '线索管理-删除', 'clue:delete', NULL, 'button', 12, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (18, '线索管理-导入', 'clue:import', NULL, 'button', 12, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (19, '客户管理', NULL, NULL, 'menu', 0, 3, 'User', 1);
+INSERT INTO `t_permission` VALUES (20, '客户管理', NULL, '/dashboard/customer', 'menu', 19, 1, 'UserFilled', 1);
+INSERT INTO `t_permission` VALUES (21, '客户管理-列表', 'customer:list', NULL, 'button', 20, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (22, '客户管理-查看', 'customer:view', NULL, 'button', 20, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (23, '客户管理-导出', 'customer:export', NULL, 'button', 20, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (24, '交易管理', NULL, NULL, 'menu', 0, 4, 'Wallet', 1);
+INSERT INTO `t_permission` VALUES (25, '交易管理', NULL, '/dashboard/tran', 'menu', 24, 1, 'Coin', 1);
+INSERT INTO `t_permission` VALUES (26, '交易管理-列表', 'tran:list', NULL, 'button', 25, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (27, '交易管理-查看', 'tran:view', NULL, 'button', 25, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (28, '产品管理', NULL, NULL, 'menu', 0, 5, 'Memo', 1);
+INSERT INTO `t_permission` VALUES (29, '产品管理', NULL, '/dashboard/product', 'menu', 28, 1, 'SetUp', 1);
+INSERT INTO `t_permission` VALUES (30, '产品管理-列表', 'product:list', NULL, 'button', 29, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (31, '产品管理-录入', 'product:add', NULL, 'button', 29, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (32, '产品管理-编辑', 'product:edit', NULL, 'button', 29, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (33, '产品管理-查看', 'product:view', NULL, 'button', 29, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (34, '产品管理-删除', 'product:delete', NULL, 'button', 29, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (35, '字典管理', NULL, NULL, 'menu', 0, 6, 'Grid', 1);
+INSERT INTO `t_permission` VALUES (36, '字典类型', NULL, '/dashboard/dictype', 'menu', 35, 1, 'Postcard', 1);
+INSERT INTO `t_permission` VALUES (37, '字典类型-列表', 'dictype:list', NULL, 'button', 36, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (38, '字典类型-录入', 'dictype:add', NULL, 'button', 36, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (39, '字典类型-编辑', 'dictype:edit', NULL, 'button', 36, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (40, '字典类型-查看', 'dictype:view', NULL, 'button', 36, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (41, '字典类型-删除', 'dictype:delete', NULL, 'button', 36, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (42, '字典数据', '', '/dashboard/dicvalue', 'menu', 35, 2, 'DataAnalysis', 1);
+INSERT INTO `t_permission` VALUES (43, '字典数据-列表', 'dicvalue:list', NULL, 'button', 42, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (44, '字典数据-录入', 'dicvalue:add', NULL, 'button', 42, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (45, '字典数据-编辑', 'dicvalue:edit', NULL, 'button', 42, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (46, '字典数据-查看', 'dicvalue:view', NULL, 'button', 42, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (47, '字典数据-删除', 'dicvalue:delete', NULL, 'button', 42, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (48, '用户管理', NULL, NULL, 'menu', 0, 7, 'Stamp', 1);
+INSERT INTO `t_permission` VALUES (49, '用户管理', NULL, '/dashboard/user', 'menu', 48, 1, 'User', 1);
+INSERT INTO `t_permission` VALUES (50, '用户管理-列表', 'user:list', NULL, 'button', 49, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (51, '用户管理-录入', 'user:add', NULL, 'button', 49, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (52, '用户管理-编辑', 'user:edit', NULL, 'button', 49, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (53, '用户管理-查看', 'user:view', NULL, 'button', 49, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (54, '用户管理-删除', 'user:delete', NULL, 'button', 49, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (55, '系统管理', NULL, NULL, 'menu', 0, 9, 'Setting', 1);
+INSERT INTO `t_permission` VALUES (56, '系统管理', NULL, '/dashboard/system', 'menu', 55, 1, 'Tools', 1);
+INSERT INTO `t_permission` VALUES (57, '系统管理-列表', 'system:list', NULL, 'button', 56, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (58, '系统管理-录入', 'system:add', NULL, 'button', 56, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (59, '系统管理-编辑', 'system:edit', NULL, 'button', 56, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (60, '系统管理-查看', 'system:view', NULL, 'button', 56, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (61, '系统管理-删除', 'system:delete', NULL, 'button', 56, NULL, NULL, 1);
+INSERT INTO `t_permission` VALUES (64, '权限管理', NULL, '/dashboard/perm', 'menu', 0, 8, 'Lock', 0);
+INSERT INTO `t_permission` VALUES (65, '权限管理-列表', 'perm:list', NULL, 'button', 64, NULL, NULL, 0);
+INSERT INTO `t_permission` VALUES (66, '权限管理-分配', 'perm:assign', NULL, 'button', 64, NULL, NULL, 0);
+INSERT INTO `t_permission` VALUES (68, '权限管理', NULL, '/dashboard/perm', 'menu', 64, 1, 'Key', 0);
 
 -- ----------------------------
 -- Table structure for t_product
@@ -788,7 +791,7 @@ CREATE TABLE `t_user`  (
   UNIQUE INDEX `login_act`(`login_act` ASC) USING BTREE,
   UNIQUE INDEX `phone`(`phone` ASC) USING BTREE,
   UNIQUE INDEX `email`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_user
@@ -798,7 +801,7 @@ INSERT INTO `t_user` VALUES (2, 'yuyan', '$2a$10$ZzzAd0nDuUGfGSjJDnZIyOaW7mUZkFz
 INSERT INTO `t_user` VALUES (3, 'zhangqi', '$2a$10$Q0qTW6QqkabTzFyoilViw..YdrVzZkSKe5RvLmjgPgW/IrcPkBoF.', '张琪', '1362362323', 'zhangqi@qq.com', 1, 1, 1, 1, '2023-03-02 11:37:34', NULL, '2023-05-23 00:21:02', NULL, NULL);
 INSERT INTO `t_user` VALUES (4, 'suwanting', '$2a$10$3bambNLTCAKtQn2OXPiHb.f0SzH.MucTiLi6GPT6nQrYpsxsdxaFi', '苏婉婷', '13456789101', 'suwanting@qq.com', 1, 1, 1, 1, '2023-04-03 15:04:54', NULL, '2024-11-11 20:47:21', 1, NULL);
 INSERT INTO `t_user` VALUES (5, 'wuxiaoxiao', '$2a$10$Lmk5wXYkZzQMFJEcXVZAZegIQhnAm6ONHpz09X/.gbOh5ze5fU6MW', '吴潇潇', NULL, 'wuxiaoxiao@qq.com', 1, 1, 1, 1, '2023-01-27 12:15:26', NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (6, 'mengyan', '$2a$10$6zGT7CfeuJ/6jZPk1pAqcuiMYDnCJstrceThGD5DVVOA5XvOP/sQq', '孟岩', NULL, 'mengyan@163.com', 1, 1, 1, 1, '2023-03-19 10:17:28', NULL, NULL, NULL, NULL);
+INSERT INTO `t_user` VALUES (6, 'mengyan', '$2a$10$6zGT7CfeuJ/6jZPk1pAqcuiMYDnCJstrceThGD5DVVOA5XvOP/sQq', '孟岩', '15875661222', 'mengyan@163.com', 1, 1, 1, 1, '2023-03-19 10:17:28', NULL, '2026-07-31 23:30:54', 1, NULL);
 INSERT INTO `t_user` VALUES (7, 'yuanhuimin', '$2a$10$mbsloGtPV7cDwfAVYxuvLemQRWumZKrDxVZxg4fnbfaocnfZFlYuu', '袁慧敏', NULL, 'yuanhuimin@11.com', 1, 1, 1, 1, '2023-04-11 20:18:50', NULL, NULL, NULL, NULL);
 INSERT INTO `t_user` VALUES (11, 'zhangwei', '$2a$10$BfOgsdSAZ9VYBOzv692BM.oWGPLktcqhhjU3AaWESkGNRcW484N7O', '张伟', NULL, 'zhangwei@qq.com', 1, 1, 1, 1, '2023-03-06 09:18:23', NULL, NULL, NULL, NULL);
 INSERT INTO `t_user` VALUES (12, 'dengping', '$2a$10$hpN8orfqUFXb.WWbIoZBkOZrr6D8rdSbl/SWXsMQ0zEuqkldlkpW2', '邓萍', NULL, 'dengping@qq.com', 1, 1, 1, 1, '2023-02-19 20:10:58', NULL, NULL, NULL, NULL);
@@ -807,8 +810,9 @@ INSERT INTO `t_user` VALUES (20, 'chengjuan', '$2a$10$m1g5cxikApV05pR7Cx4cy.d4sT
 INSERT INTO `t_user` VALUES (21, 'huangxiao', '$2a$10$R/RwQd5.3OxYpSZBLIn8DeeYYNF0vgWCrCR4tcyL.c/HtnuIfBRIK', '黄潇', NULL, 'huangxiao@qq.com', 1, 1, 1, 1, '2023-03-26 22:11:37', NULL, NULL, NULL, NULL);
 INSERT INTO `t_user` VALUES (22, 'yangyuxin', '$2a$10$ucE/By6NLBb4tN5H3CUimOQ2eAtbjXFf2v77SJUPbHXRI9lTF97Ka', '杨雨欣', NULL, 'yangyuxin@163.com', 1, 1, 1, 1, '2023-04-13 18:14:59', NULL, NULL, NULL, NULL);
 INSERT INTO `t_user` VALUES (23, 'xiaojie', '$2a$10$A215.iFSp7/d99X5M6KE.eu5YvA7nJ5vNEJraxmpA8EUYJN6lx9rW', '肖捷', NULL, 'xiaojie@163.com', 1, 1, 1, 1, '2023-02-18 09:19:02', NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (30, 'chengxiaodan', '$2a$10$R2UnVBa7Tl.AMOjc4lyXNOOmlTzaitvWYMTEPpMuddvJon53eGG8.', '程晓丹', '19002034050', '2543673022@qq.com', 1, 1, 1, 1, '2026-07-29 14:35:59', 1, '2026-07-29 17:24:35', 1, NULL);
+INSERT INTO `t_user` VALUES (30, 'chengxiaodan', '$2a$10$R2UnVBa7Tl.AMOjc4lyXNOOmlTzaitvWYMTEPpMuddvJon53eGG8.', '程晓丹', '19002034050', '2543673022@qq.com', 1, 1, 1, 1, '2026-07-29 14:35:59', 1, '2026-07-31 23:17:14', 30, NULL);
 INSERT INTO `t_user` VALUES (31, 'zhaoyun', '$2a$10$.do6hrVv3NAkWH7XLoZrX.pFVFf/azaZFOabDXKwWjF9yYU173Tsa', '赵云', '19002034011', '123456@qq.com', 1, 1, 1, 1, '2026-07-29 17:37:49', 1, NULL, NULL, NULL);
+INSERT INTO `t_user` VALUES (35, 'chenglong', '$2a$10$MoFejn/4eERGNirzefODGOmlNZCSyoupmTDgv3JX7DeISjN.Z1/xu', '成龙', '13717851885', '787595@qq.com', 1, 1, 1, 1, '2026-07-31 23:33:31', 30, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_user_permission
@@ -823,30 +827,34 @@ CREATE TABLE `t_user_permission`  (
   INDEX `fk_up_perm`(`permission_id` ASC) USING BTREE,
   CONSTRAINT `fk_up_perm` FOREIGN KEY (`permission_id`) REFERENCES `t_permission` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `fk_up_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 54 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户个人权限表（补充角色权限以外的授权）' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 121 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户个人权限表（补充角色权限以外的授权）' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_permission
 -- ----------------------------
-INSERT INTO `t_user_permission` VALUES (53, 4, 64);
-INSERT INTO `t_user_permission` VALUES (51, 4, 65);
-INSERT INTO `t_user_permission` VALUES (52, 4, 66);
-INSERT INTO `t_user_permission` VALUES (47, 30, 1);
-INSERT INTO `t_user_permission` VALUES (48, 30, 2);
-INSERT INTO `t_user_permission` VALUES (35, 30, 3);
-INSERT INTO `t_user_permission` VALUES (36, 30, 4);
-INSERT INTO `t_user_permission` VALUES (37, 30, 5);
-INSERT INTO `t_user_permission` VALUES (38, 30, 6);
-INSERT INTO `t_user_permission` VALUES (39, 30, 7);
-INSERT INTO `t_user_permission` VALUES (40, 30, 9);
-INSERT INTO `t_user_permission` VALUES (49, 30, 10);
-INSERT INTO `t_user_permission` VALUES (50, 30, 12);
-INSERT INTO `t_user_permission` VALUES (41, 30, 13);
-INSERT INTO `t_user_permission` VALUES (42, 30, 14);
-INSERT INTO `t_user_permission` VALUES (43, 30, 15);
-INSERT INTO `t_user_permission` VALUES (44, 30, 16);
-INSERT INTO `t_user_permission` VALUES (45, 30, 17);
-INSERT INTO `t_user_permission` VALUES (46, 30, 18);
+INSERT INTO `t_user_permission` VALUES (100, 30, 1);
+INSERT INTO `t_user_permission` VALUES (99, 30, 2);
+INSERT INTO `t_user_permission` VALUES (98, 30, 3);
+INSERT INTO `t_user_permission` VALUES (101, 30, 4);
+INSERT INTO `t_user_permission` VALUES (102, 30, 5);
+INSERT INTO `t_user_permission` VALUES (103, 30, 6);
+INSERT INTO `t_user_permission` VALUES (104, 30, 7);
+INSERT INTO `t_user_permission` VALUES (105, 30, 9);
+INSERT INTO `t_user_permission` VALUES (108, 30, 10);
+INSERT INTO `t_user_permission` VALUES (107, 30, 12);
+INSERT INTO `t_user_permission` VALUES (106, 30, 13);
+INSERT INTO `t_user_permission` VALUES (109, 30, 14);
+INSERT INTO `t_user_permission` VALUES (110, 30, 15);
+INSERT INTO `t_user_permission` VALUES (111, 30, 16);
+INSERT INTO `t_user_permission` VALUES (112, 30, 17);
+INSERT INTO `t_user_permission` VALUES (113, 30, 18);
+INSERT INTO `t_user_permission` VALUES (116, 30, 48);
+INSERT INTO `t_user_permission` VALUES (115, 30, 49);
+INSERT INTO `t_user_permission` VALUES (114, 30, 50);
+INSERT INTO `t_user_permission` VALUES (117, 30, 51);
+INSERT INTO `t_user_permission` VALUES (118, 30, 52);
+INSERT INTO `t_user_permission` VALUES (119, 30, 53);
+INSERT INTO `t_user_permission` VALUES (120, 30, 54);
 
 -- ----------------------------
 -- Table structure for t_user_role
@@ -861,7 +869,7 @@ CREATE TABLE `t_user_role`  (
   INDEX `t_user_role_ibfk_2`(`role_id` ASC) USING BTREE,
   CONSTRAINT `t_user_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `t_user_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户角色关系表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户角色关系表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_user_role
@@ -871,8 +879,9 @@ INSERT INTO `t_user_role` VALUES (2, 2, 2);
 INSERT INTO `t_user_role` VALUES (3, 3, 2);
 INSERT INTO `t_user_role` VALUES (4, 4, 3);
 INSERT INTO `t_user_role` VALUES (5, 5, 4);
-INSERT INTO `t_user_role` VALUES (6, 6, 5);
 INSERT INTO `t_user_role` VALUES (7, 30, 4);
+INSERT INTO `t_user_role` VALUES (8, 6, 5);
+INSERT INTO `t_user_role` VALUES (9, 6, 2);
 
 -- ----------------------------
 -- Triggers structure for table t_clue
