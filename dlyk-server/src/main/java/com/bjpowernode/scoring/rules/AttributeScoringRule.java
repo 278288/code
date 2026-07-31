@@ -16,28 +16,28 @@ import java.util.Map;
  */
 @Component
 public class AttributeScoringRule implements ScoringRule {
-    
+
     @Override
     public String getRuleName() {
         return "基础属性评分";
     }
-    
+
     @Override
     public String getRuleType() {
         return "ATTRIBUTE";
     }
-    
+
     @Override
     public double getDefaultWeight() {
         return 0.4;
     }
-    
+
     @Override
     public ScoringResult evaluate(ScoringContext context) {
         TClue clue = context.getClue();
         double score = 0;
         Map<String, Object> details = new HashMap<>();
-        
+
         // 1. 年收入评分（0-20分）
         if (clue.getYearIncome() != null) {
             BigDecimal income = clue.getYearIncome();
@@ -54,11 +54,11 @@ public class AttributeScoringRule implements ScoringRule {
                 details.put("年收入", income + "（<10万，+0分）");
             }
         }
-        
+
         // 2. 职业评分（0-15分）
         if (clue.getJob() != null && !clue.getJob().isEmpty()) {
             String job = clue.getJob();
-            if (job.contains("金融") || job.contains("IT") || job.contains("互联网") 
+            if (job.contains("金融") || job.contains("IT") || job.contains("互联网")
                 || job.contains("医生") || job.contains("律师") || job.contains("企业主")) {
                 score += 15;
                 details.put("职业", job + "（优质职业，+15分）");
@@ -70,7 +70,7 @@ public class AttributeScoringRule implements ScoringRule {
                 details.put("职业", job + "（普通职业，+5分）");
             }
         }
-        
+
         // 3. 年龄评分（0-10分）
         if (clue.getAge() != null) {
             int age = clue.getAge();
@@ -87,18 +87,18 @@ public class AttributeScoringRule implements ScoringRule {
                 details.put("年龄", age + "岁（非目标年龄段，+0分）");
             }
         }
-        
+
         // 4. 贷款需求评分（0-10分）
-        if (clue.getNeedLoan() != null && clue.getNeedLoan() == 1) {
+        if (clue.getNeedLoan() != null && clue.getNeedLoan() == 50) {
             score += 10;
-            details.put("贷款需求", "需要贷款（+10分）");
+            details.put("贷款需求", "不需要贷款（+10分）");
         } else {
-            details.put("贷款需求", "不需要贷款（+0分）");
+            details.put("贷款需求", "需要贷款（+0分）");
         }
-        
+
         // 归一化到0-100（满分55分 -> 100分）
         double normalizedScore = (score / 55.0) * 100;
-        
+
         ScoringResult result = new ScoringResult(getRuleName(), normalizedScore, getDefaultWeight());
         result.setDetails(details);
         return result;

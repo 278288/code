@@ -136,7 +136,8 @@ public class AiScoringRule implements ScoringRule {
         sb.append("3. 严格按照以下JSON格式返回：\n");
         sb.append("{\"score\": 分数, \"analysis\": \"分析理由\"}\n\n");
         sb.append("注意：只返回JSON，不要有其他内容。");
-
+        //System.out.println("===========================================================================");
+        //System.out.println("AI Prompt: " + sb);
         return sb.toString();
     }
 
