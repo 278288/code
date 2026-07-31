@@ -25,3 +25,4 @@ Thumbs.db
 .env.local
 CHANGELOG-2026-07-28.md
 CHANGELOG-*.md
+SCORING_ENGINE_README.md
