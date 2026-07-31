@@ -1,4 +1,4 @@
-﻿# 线索智能评分引擎 - 实现文档
+# 线索智能评分引擎 - 实现文档
 
 ## 概述
 
@@ -277,16 +277,19 @@ public class CustomScoringRule implements ScoringRule {
 - model/TScoringRule.java - 评分规则模型
 - model/TScoringLog.java - 评分日志模型
 - mapper/TScoringRuleMapper.java - 评分规则Mapper
-- esources/mapper/TScoringRuleMapper.xml - Mapper XML
+- 
+esources/mapper/TScoringRuleMapper.xml - Mapper XML
 - service/ClueScoringService.java - 评分服务
 - controller/ClueScoringController.java - 评分API
 - 	ask/ClueScoringTask.java - 定时任务
 - service/impl/ClueServiceImpl.java - 更新：触发评分
 - model/TClue.java - 更新：新增评分字段
-- esources/mapper/TClueMapper.xml - 更新：评分字段映射
+- 
+esources/mapper/TClueMapper.xml - 更新：评分字段映射
 - mapper/TClueMapper.java - 更新：新增方法
 - mapper/TClueRemarkMapper.java - 更新：新增方法
-- esources/mapper/TClueRemarkMapper.xml - 更新：新增SQL
+- 
+esources/mapper/TClueRemarkMapper.xml - 更新：新增SQL
 
 ### 前端文件
 - iew/ClueView.vue - 更新：评分展示和交互
