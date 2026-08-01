@@ -6,6 +6,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,6 +19,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    /**
+     * 文件上传大小超限异常（multipart 解析阶段触发，如 Excel 导入文件过大）。
+     * 单独处理并返回中文提示，避免落到通用异常兜底显示英文堆栈信息。
+     */
+    @ExceptionHandler(value = MaxUploadSizeExceededException.class)
+    public R handException(MaxUploadSizeExceededException e) {
+        return R.FAIL("上传文件大小超出限制（最大50MB）");
+    }
 
     /**
      * 通用异常兜底，捕获所有未精确匹配的异常。

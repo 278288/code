@@ -26,3 +26,5 @@ Thumbs.db
 CHANGELOG-2026-07-28.md
 CHANGELOG-*.md
 SCORING_ENGINE_README.md
+# 测试数据文件
+线索导入测试10000条.xlsx

@@ -1,10 +1,15 @@
-﻿server:
+server:
   port: 8089
   servlet:
     context-path: /
 
 #配置数据库连接相关信息
 spring:
+  #文件上传大小限制（线索Excel批量导入等，与前端提示的50MB保持一致）
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/dlyk?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
